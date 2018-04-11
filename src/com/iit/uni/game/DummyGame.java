@@ -9,6 +9,7 @@ import com.iit.uni.engine.IGameLogic;
 import com.iit.uni.engine.Texture2D;
 import com.iit.uni.engine.Window;
 import com.iit.uni.engine.math.Vector2D;
+import java.awt.event.KeyEvent;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -150,7 +151,15 @@ public class DummyGame implements IGameLogic {
 			left = 0;
 		}
 
+		if(window.isKeyPressed(GLFW_KEY_DOWN)) {
+			down = 1;
+		} else {
+			down = 0;
+		}
 
+		if (down == 1 && right ==1) {
+
+		}
 
 		if (left == 1) {
 			direction = -1;
@@ -169,7 +178,7 @@ public class DummyGame implements IGameLogic {
 		}
 
 
-		if (right==0 && left ==0) {
+		if (right==0 && left ==0 && down == 0) {
 			if (direction == 1) {
 				gameItem.SetCurrentFrame(0);
 			} else {
@@ -179,7 +188,6 @@ public class DummyGame implements IGameLogic {
 
 
 	}
-
 
 	@Override
 	public void update(float interval) {
