@@ -3,15 +3,9 @@ package com.iit.uni.game;
 import com.iit.uni.engine.GameEngine;
 import com.iit.uni.engine.IGameLogic;
 
-/**
- * Simple tutorial for 2D texture loading and rendering
- * 
- * @author Mileff Peter
- * 
- *         University of Miskolc
- *
- */
-
+/*
+csak a hatter es kamera
+* */
 
 //Hello
 public class Scece2DDemo {
