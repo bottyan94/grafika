@@ -11,7 +11,7 @@ import com.iit.uni.engine.IGameLogic;
  *         University of Miskolc
  *
  */
-//Hello
+
 public class Scece2DDemo {
 
 	public static void main(String[] args) {
