@@ -1,6 +1,21 @@
 package com.iit.uni.game;
 
-import com.iit.uni.engine.*;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
+
+import java.util.ArrayList;
+
+import com.iit.uni.engine.C2DGraphicsLayer;
+import com.iit.uni.engine.C2DScene;
+import com.iit.uni.engine.C2DSceneManager;
+import com.iit.uni.engine.CSprite;
+import com.iit.uni.engine.GameObject2D;
+import com.iit.uni.engine.IGameLogic;
+import com.iit.uni.engine.Texture2D;
+import com.iit.uni.engine.Window;
+
 import com.iit.uni.engine.math.Vector2D;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -16,7 +31,7 @@ public class DummyGame implements IGameLogic {
 
 	// 2D GameObject items
 	private GameObject2D gameItem;
-	private GameObject2D gameItemMonster;
+	private GameObject2D itemsOnGround;
 	// Global Scene manager
 	public static C2DSceneManager sceneManager;
 
@@ -26,6 +41,8 @@ public class DummyGame implements IGameLogic {
 		renderer = new Renderer();
 	}
 
+	private int a=5;
+	
 	@Override
 	public void init(Window window) throws Exception {
 		renderer.init(window);
@@ -34,11 +51,6 @@ public class DummyGame implements IGameLogic {
 		/**
 		 * Creating an animated game object
 		 */
-		gameItemMonster = new GameObject2D();
-		CSprite monster = new CSprite("textures/space",1,10,10);
-		gameItemMonster.AddFrame(monster);
-		gameItemMonster.SetPosition(200,100);
-		
 		
 		gameItem = new GameObject2D();
 
@@ -102,8 +114,50 @@ public class DummyGame implements IGameLogic {
 		C2DGraphicsLayer playerLayer = new C2DGraphicsLayer();
 		playerLayer.AddGameObject(gameItem);
 		
-		C2DGraphicsLayer monsterLayer = new C2DGraphicsLayer();
-		playerLayer.AddGameObject(gameItemMonster);
+		//ItemsOnGround--------------------------------------------------------------------------------------------
+		
+		ArrayList<GameObject2D> AllItems = new ArrayList<>();
+		//itemsOnGround = new GameObject2D();
+		
+		C2DGraphicsLayer itemLayer = new C2DGraphicsLayer();
+		
+		
+		ArrayList<GameObject2D> gems = new ArrayList<>();
+		CSprite gem = new CSprite("textures/items/gem", 4, 200, 200, 3);
+	
+
+		for(int i=0;i< a;i++){
+			itemsOnGround = new GameObject2D();
+			gem.SetScale(2);
+			itemsOnGround.AddFrame(gem);
+			itemsOnGround.SetPosition(500+i*130, 200);
+			
+			gems.add(itemsOnGround);
+			
+			//itemLayer.AddGameObject(itemsOnGround);
+			//System.out.println(ar.get(i).GetPosition().getX());
+		}
+		
+		
+		
+		ArrayList<GameObject2D> potion = new ArrayList<>();
+		CSprite Potion = new CSprite("textures/items/glass02blue", 1, 200, 200);
+
+		for(int i=0;i< a;i++){
+			itemsOnGround = new GameObject2D();
+			Potion.SetScale(2);
+			itemsOnGround.AddFrame(Potion);
+			itemsOnGround.SetPosition(450+i*150, 560);
+			
+			potion.add(itemsOnGround);
+		}
+		
+		
+		AllItems.addAll(gems);
+		AllItems.addAll(potion);
+		
+		itemLayer.AddGameObject(AllItems);
+		//ItemsOnGround--------------------------------------------------------------------------------------------END
 		
 		// register layer at the scene
 		scene.RegisterLayer(layer0);
@@ -112,7 +166,8 @@ public class DummyGame implements IGameLogic {
 		scene.RegisterLayer(layer3);
 		scene.RegisterLayer(layer4);
 		scene.RegisterLayer(playerLayer);
-		scene.RegisterLayer(monsterLayer);
+		scene.RegisterLayer(itemLayer);
+		
 
 		// Register scene at the manager
 		sceneManager.RegisterScene(scene);
@@ -182,6 +237,7 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void render(Window window) {
 		renderer.render(window, backgrounds, camera);
+>
 	}
 
 	@Override

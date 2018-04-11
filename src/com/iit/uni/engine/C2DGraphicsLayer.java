@@ -67,6 +67,21 @@ public class C2DGraphicsLayer {
 		}
 		return -1;
 	}
+	
+	public int AddGameObject(ArrayList<GameObject2D> gameobject) {
+		
+		if (gameobject != null) {
+			
+			for (int j = 0; j < gameobject.size(); j++) {
+				System.out.println(j);
+				mObjectList.add(gameobject.get(j));	
+			}
+			
+			return mObjectList.size() - 1;
+		}
+		return -1;
+	}
+	
 
 	///
 	/// Add background/static texture
