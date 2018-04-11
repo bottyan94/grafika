@@ -87,13 +87,13 @@ public class DummyGame implements IGameLogic {
 		gameItem.AddFrame(slideLeft);
 		gameItem.AddFrame(idleLeft);
 
-		gameItem.SetPosition(200, 154);
+		gameItem.SetPosition(400, 220);
 
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
 
 
-
+        /*
 		// Create a background texture
 		Texture2D background = new Texture2D();
 		background.CreateTexture("textures/background/layer_sd_01.png");
@@ -130,7 +130,7 @@ public class DummyGame implements IGameLogic {
 		layer3.AddTexture(trees);
 
 		C2DGraphicsLayer layer4 = new C2DGraphicsLayer();
-		layer4.AddTexture(ground);
+		layer4.AddTexture(ground);*/
 
 		C2DGraphicsLayer playerLayer = new C2DGraphicsLayer();
 		playerLayer.AddGameObject(gameItem);
@@ -181,11 +181,11 @@ public class DummyGame implements IGameLogic {
 		//ItemsOnGround--------------------------------------------------------------------------------------------END
 		
 		// register layer at the scene
-		scene.RegisterLayer(layer0);
+		/*scene.RegisterLayer(layer0);
 		scene.RegisterLayer(layer1);
 		scene.RegisterLayer(layer2);
 		scene.RegisterLayer(layer3);
-		scene.RegisterLayer(layer4);
+		scene.RegisterLayer(layer4);*/
 		scene.RegisterLayer(playerLayer);
 		scene.RegisterLayer(itemLayer);
 		
@@ -198,7 +198,7 @@ public class DummyGame implements IGameLogic {
 		Texture2D background3 = new Texture2D();
 
 		background1.CreateTexture("textures/background.png");
-		background1.setPosition(-1280, 0, -1);
+		background1.setPosition(0, 0, -1);
 
 		background2.CreateTexture("textures/background.png");
 		background2.setPosition(1280, 0, -1);
