@@ -56,6 +56,20 @@ public class CSprite {
 
 		m_vSpritePosition = new Vector2D(X, Y);
 	}
+	
+	
+	public CSprite(String filenames, int numOfFrames, float X, float Y, int speed) {
+		m_iActualFrame = 0;
+		m_iLastUpdate = System.currentTimeMillis();
+		m_iFps = speed; // default FPS animation rate
+		m_vFrames = new ArrayList<CSpriteFrame>();
+
+		/** Loading textures */
+		LoadTextures(filenames, numOfFrames);
+
+		m_vSpritePosition = new Vector2D(X, Y);
+	}
+
 
 	/**
 	 * Loads sprite textures
