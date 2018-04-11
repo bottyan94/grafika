@@ -18,7 +18,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
 import java.util.ArrayList;
 
 import com.iit.uni.engine.*;
-
+import com.iit.uni.engine.math.Vector2D;
 
 
 public class DummyGame implements IGameLogic {
