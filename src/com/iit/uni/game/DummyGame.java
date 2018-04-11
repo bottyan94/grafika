@@ -7,14 +7,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
 
 import java.util.ArrayList;
 
-import com.iit.uni.engine.C2DGraphicsLayer;
-import com.iit.uni.engine.C2DScene;
-import com.iit.uni.engine.C2DSceneManager;
-import com.iit.uni.engine.CSprite;
-import com.iit.uni.engine.GameObject2D;
-import com.iit.uni.engine.IGameLogic;
-import com.iit.uni.engine.Texture2D;
-import com.iit.uni.engine.Window;
+import com.iit.uni.engine.*;
 
 import com.iit.uni.engine.math.Vector2D;
 
@@ -237,12 +230,10 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void render(Window window) {
 		renderer.render(window, backgrounds, camera);
->
 	}
 
 	@Override
 	public void cleanup() {
-
 		renderer.cleanup();
 		for (int i = 0; i < backgrounds.length; i++)
 			backgrounds[i].cleanup();
