@@ -1,10 +1,5 @@
 package com.iit.uni.game;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
-
 import com.iit.uni.engine.C2DGraphicsLayer;
 import com.iit.uni.engine.C2DScene;
 import com.iit.uni.engine.C2DSceneManager;
@@ -15,7 +10,14 @@ import com.iit.uni.engine.Texture2D;
 import com.iit.uni.engine.Window;
 import com.iit.uni.engine.math.Vector2D;
 
+import static org.lwjgl.glfw.GLFW.*;
+
 public class DummyGame implements IGameLogic {
+
+	private int down = 0;
+	private int up = 0;
+	private int right = 0;
+	private int left = 0;
 
 	private final Renderer renderer;
 	private int direction = 0;
@@ -39,10 +41,6 @@ public class DummyGame implements IGameLogic {
 		/**
 		 * Creating an animated game object
 		 */
-		gameItemMonster = new GameObject2D();
-		CSprite monster = new CSprite("textures/space",1,10,10);
-		gameItemMonster.AddFrame(monster);
-		gameItemMonster.SetPosition(200,100);
 		
 		
 		gameItem = new GameObject2D();
@@ -56,6 +54,15 @@ public class DummyGame implements IGameLogic {
 		CSprite slideLeft = new CSprite("textures/ninja/Slide_left", 10, 200, 200);
 		CSprite idleLeft = new CSprite("textures/ninja/Idle_left", 10, 200, 200);
 
+		idle.SetScale(0.5f);
+		frameRunLeft.SetScale(0.5f);
+		frameRunRight.SetScale(0.5f);
+		jumpLeft.SetScale(0.5f);
+		jumpRight.SetScale(0.5f);
+		slide.SetScale(0.5f);
+		slideLeft.SetScale(0.5f);
+		idleLeft.SetScale(0.5f);
+
 		gameItem.AddFrame(idle);
 		gameItem.AddFrame(frameRunRight);
 		gameItem.AddFrame(frameRunLeft);
@@ -65,7 +72,7 @@ public class DummyGame implements IGameLogic {
 		gameItem.AddFrame(slideLeft);
 		gameItem.AddFrame(idleLeft);
 
-		gameItem.SetPosition(200, 504);
+		gameItem.SetPosition(200, 154);
 
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
@@ -130,47 +137,49 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void input(Window window) {
 
-		if (window.isKeyPressed(GLFW_KEY_UP)) {
 
-			if (direction == 1) {
-				gameItem.SetCurrentFrame(3);
-			} else {
-				gameItem.SetCurrentFrame(4);
-			}
-			Vector2D pos = gameItem.GetPosition();
-			pos.y -= 5;
-			gameItem.SetPosition(pos);
+		if(window.isKeyPressed(GLFW_KEY_RIGHT)) {
+			right = 1;
+		} else {
+			right = 0;
+		}
 
-		} else if (window.isKeyPressed(GLFW_KEY_DOWN)) {
-			if(direction == 1) {
-				gameItem.SetCurrentFrame(5);
-			} else {
-				gameItem.SetCurrentFrame(6);
-			}
-			Vector2D pos = gameItem.GetPosition();
-			pos.y += 5;
-			gameItem.SetPosition(pos);
+		if(window.isKeyPressed(GLFW_KEY_LEFT)) {
+			left = 1;
+		} else {
+			left = 0;
+		}
 
-		} else if (window.isKeyPressed(GLFW_KEY_LEFT)) {
+
+
+		if (left == 1) {
 			direction = -1;
 			gameItem.SetCurrentFrame(2);
 			Vector2D pos = gameItem.GetPosition();
 			pos.x -= 5;
 			gameItem.SetPosition(pos);
-		} else if (window.isKeyPressed(GLFW_KEY_RIGHT)) {
+		}
+
+		if (right == 1) {
 			direction = 1;
 			gameItem.SetCurrentFrame(1);
 			Vector2D pos = gameItem.GetPosition();
 			pos.x += 5;
 			gameItem.SetPosition(pos);
-		} else {
-			if(direction == 1) {
+		}
+
+
+		if (right==0 && left ==0) {
+			if (direction == 1) {
 				gameItem.SetCurrentFrame(0);
 			} else {
 				gameItem.SetCurrentFrame(7);
 			}
 		}
+
+
 	}
+
 
 	@Override
 	public void update(float interval) {
