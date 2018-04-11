@@ -1,5 +1,6 @@
 package com.iit.uni.game;
 
+
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
@@ -9,11 +10,12 @@ import org.joml.Matrix4f;
 
 import com.iit.uni.engine.CCamera2D;
 import com.iit.uni.engine.Texture2D;
+
 import com.iit.uni.engine.Utils;
 import com.iit.uni.engine.Window;
 import com.iit.uni.engine.graph.ShaderProgram;
 import com.iit.uni.engine.graph.Transformation;
-import com.iit.uni.engine.math.MATRIX4X4;
+
 
 /**
  * Simple renderer class

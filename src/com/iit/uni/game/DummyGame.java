@@ -1,5 +1,15 @@
 package com.iit.uni.game;
 
+
+import com.iit.uni.engine.C2DGraphicsLayer;
+import com.iit.uni.engine.C2DScene;
+import com.iit.uni.engine.C2DSceneManager;
+import com.iit.uni.engine.CSprite;
+import com.iit.uni.engine.GameObject2D;
+import com.iit.uni.engine.IGameLogic;
+import com.iit.uni.engine.Texture2D;
+import com.iit.uni.engine.Window;
+
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
@@ -9,11 +19,14 @@ import java.util.ArrayList;
 
 import com.iit.uni.engine.*;
 
-import com.iit.uni.engine.math.Vector2D;
 
-import static org.lwjgl.glfw.GLFW.*;
 
 public class DummyGame implements IGameLogic {
+
+	private int down = 0;
+	private int up = 0;
+	private int right = 0;
+	private int left = 0;
 
 	private final Renderer renderer;
 	private int direction = 0;
@@ -47,19 +60,34 @@ public class DummyGame implements IGameLogic {
 		
 		gameItem = new GameObject2D();
 
-		CSprite frameRunRight = new CSprite("textures/Run", 8, 200, 200);
-		CSprite frameRunLeft = new CSprite("textures/Run_left", 8, 200, 200);
-		CSprite idle = new CSprite("textures/Idle", 10, 200, 200);
-		CSprite jumpRight = new CSprite("textures/Jump_right_", 10, 200, 200);
-		CSprite jumpLeft = new CSprite("textures/Jump_left_", 10, 200, 200);
+		CSprite frameRunRight = new CSprite("textures/ninja/Run", 10, 200, 200);
+		CSprite frameRunLeft = new CSprite("textures/ninja/Run_left", 10, 200, 200);
+		CSprite idle = new CSprite("textures/ninja/Idle", 10, 200, 200);
+		CSprite jumpRight = new CSprite("textures/ninja/Jump", 10, 200, 200);
+		CSprite jumpLeft = new CSprite("textures/ninja/Jump_left", 10, 200, 200);
+		CSprite slide = new CSprite("textures/ninja/Slide", 10, 200, 200);
+		CSprite slideLeft = new CSprite("textures/ninja/Slide_left", 10, 200, 200);
+		CSprite idleLeft = new CSprite("textures/ninja/Idle_left", 10, 200, 200);
+
+		idle.SetScale(0.5f);
+		frameRunLeft.SetScale(0.5f);
+		frameRunRight.SetScale(0.5f);
+		jumpLeft.SetScale(0.5f);
+		jumpRight.SetScale(0.5f);
+		slide.SetScale(0.5f);
+		slideLeft.SetScale(0.5f);
+		idleLeft.SetScale(0.5f);
 
 		gameItem.AddFrame(idle);
 		gameItem.AddFrame(frameRunRight);
 		gameItem.AddFrame(frameRunLeft);
 		gameItem.AddFrame(jumpRight);
 		gameItem.AddFrame(jumpLeft);
+		gameItem.AddFrame(slide);
+		gameItem.AddFrame(slideLeft);
+		gameItem.AddFrame(idleLeft);
 
-		gameItem.SetPosition(200, 504);
+		gameItem.SetPosition(200, 154);
 
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
@@ -189,30 +217,39 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void input(Window window) {
 
-		if (window.isKeyPressed(GLFW_KEY_UP)) {
 
-			if (direction == 1) {
-				gameItem.SetCurrentFrame(3);
-			} else {
-				gameItem.SetCurrentFrame(4);
-			}
-			Vector2D pos = gameItem.GetPosition();
-			pos.y -= 5;
-			gameItem.SetPosition(pos);
+		if(window.isKeyPressed(GLFW_KEY_RIGHT)) {
+			right = 1;
+		} else {
+			right = 0;
+		}
 
-		} else if (window.isKeyPressed(GLFW_KEY_DOWN)) {
-			Vector2D pos = gameItem.GetPosition();
-			pos.y += 5;
-			gameItem.SetPosition(pos);
+		if(window.isKeyPressed(GLFW_KEY_LEFT)) {
+			left = 1;
+		} else {
+			left = 0;
+		}
 
-		} else if (window.isKeyPressed(GLFW_KEY_LEFT)) {
+		if(window.isKeyPressed(GLFW_KEY_DOWN)) {
+			down = 1;
+		} else {
+			down = 0;
+		}
+
+		/*if (down == 1 && right ==1) {
+
+		}*/
+
+		if (left == 1) {
 			direction = -1;
 			gameItem.SetCurrentFrame(2);
 			Vector2D pos = gameItem.GetPosition();
 			pos.x -= 5;
 			camera.MoveLeft(5);
 			gameItem.SetPosition(pos);
-		} else if (window.isKeyPressed(GLFW_KEY_RIGHT)) {
+		}
+
+		if (right == 1) {
 			direction = 1;
 			gameItem.SetCurrentFrame(1);
 			Vector2D pos = gameItem.GetPosition();
@@ -220,6 +257,17 @@ public class DummyGame implements IGameLogic {
 			camera.MoveRight(5);
 			gameItem.SetPosition(pos);
 		}
+
+
+		if (right==0 && left ==0 && down == 0) {
+			if (direction == 1) {
+				gameItem.SetCurrentFrame(0);
+			} else {
+				gameItem.SetCurrentFrame(7);
+			}
+		}
+
+
 	}
 
 	@Override
