@@ -47,17 +47,23 @@ public class DummyGame implements IGameLogic {
 		
 		gameItem = new GameObject2D();
 
-		CSprite frameRunRight = new CSprite("textures/Run", 8, 200, 200);
-		CSprite frameRunLeft = new CSprite("textures/Run_left", 8, 200, 200);
-		CSprite idle = new CSprite("textures/Idle", 10, 200, 200);
-		CSprite jumpRight = new CSprite("textures/Jump_right_", 10, 200, 200);
-		CSprite jumpLeft = new CSprite("textures/Jump_left_", 10, 200, 200);
+		CSprite frameRunRight = new CSprite("textures/ninja/Run", 10, 200, 200);
+		CSprite frameRunLeft = new CSprite("textures/ninja/Run_left", 10, 200, 200);
+		CSprite idle = new CSprite("textures/ninja/Idle", 10, 200, 200);
+		CSprite jumpRight = new CSprite("textures/ninja/Jump", 10, 200, 200);
+		CSprite jumpLeft = new CSprite("textures/ninja/Jump_left", 10, 200, 200);
+		CSprite slide = new CSprite("textures/ninja/Slide", 10, 200, 200);
+		CSprite slideLeft = new CSprite("textures/ninja/Slide_left", 10, 200, 200);
+		CSprite idleLeft = new CSprite("textures/ninja/Idle_left", 10, 200, 200);
 
 		gameItem.AddFrame(idle);
 		gameItem.AddFrame(frameRunRight);
 		gameItem.AddFrame(frameRunLeft);
 		gameItem.AddFrame(jumpRight);
 		gameItem.AddFrame(jumpLeft);
+		gameItem.AddFrame(slide);
+		gameItem.AddFrame(slideLeft);
+		gameItem.AddFrame(idleLeft);
 
 		gameItem.SetPosition(200, 504);
 
@@ -136,6 +142,11 @@ public class DummyGame implements IGameLogic {
 			gameItem.SetPosition(pos);
 
 		} else if (window.isKeyPressed(GLFW_KEY_DOWN)) {
+			if(direction == 1) {
+				gameItem.SetCurrentFrame(5);
+			} else {
+				gameItem.SetCurrentFrame(6);
+			}
 			Vector2D pos = gameItem.GetPosition();
 			pos.y += 5;
 			gameItem.SetPosition(pos);
@@ -152,6 +163,12 @@ public class DummyGame implements IGameLogic {
 			Vector2D pos = gameItem.GetPosition();
 			pos.x += 5;
 			gameItem.SetPosition(pos);
+		} else {
+			if(direction == 1) {
+				gameItem.SetCurrentFrame(0);
+			} else {
+				gameItem.SetCurrentFrame(7);
+			}
 		}
 	}
 
