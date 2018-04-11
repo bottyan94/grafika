@@ -157,9 +157,9 @@ public class DummyGame implements IGameLogic {
 			down = 0;
 		}
 
-		if (down == 1 && right ==1) {
+		/*if (down == 1 && right ==1) {
 
-		}
+		}*/
 
 		if (left == 1) {
 			direction = -1;
