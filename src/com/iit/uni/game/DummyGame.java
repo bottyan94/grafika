@@ -1,5 +1,6 @@
 package com.iit.uni.game;
 
+
 import com.iit.uni.engine.C2DGraphicsLayer;
 import com.iit.uni.engine.C2DScene;
 import com.iit.uni.engine.C2DSceneManager;
@@ -8,10 +9,17 @@ import com.iit.uni.engine.GameObject2D;
 import com.iit.uni.engine.IGameLogic;
 import com.iit.uni.engine.Texture2D;
 import com.iit.uni.engine.Window;
-import com.iit.uni.engine.math.Vector2D;
-import java.awt.event.KeyEvent;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
+
+import java.util.ArrayList;
+
+import com.iit.uni.engine.*;
+
+
 
 public class DummyGame implements IGameLogic {
 
@@ -23,9 +31,13 @@ public class DummyGame implements IGameLogic {
 	private final Renderer renderer;
 	private int direction = 0;
 
+	// 2D Texture items
+	private Texture2D[] backgrounds;
+	private CCamera2D camera;
+
 	// 2D GameObject items
 	private GameObject2D gameItem;
-	private GameObject2D gameItemMonster;
+	private GameObject2D itemsOnGround;
 	// Global Scene manager
 	public static C2DSceneManager sceneManager;
 
@@ -35,14 +47,16 @@ public class DummyGame implements IGameLogic {
 		renderer = new Renderer();
 	}
 
+	private int a=5;
+	
 	@Override
 	public void init(Window window) throws Exception {
 		renderer.init(window);
 
+
 		/**
 		 * Creating an animated game object
 		 */
-		
 		
 		gameItem = new GameObject2D();
 
@@ -77,6 +91,8 @@ public class DummyGame implements IGameLogic {
 
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
+
+
 
 		// Create a background texture
 		Texture2D background = new Texture2D();
@@ -119,8 +135,50 @@ public class DummyGame implements IGameLogic {
 		C2DGraphicsLayer playerLayer = new C2DGraphicsLayer();
 		playerLayer.AddGameObject(gameItem);
 		
-		C2DGraphicsLayer monsterLayer = new C2DGraphicsLayer();
-		playerLayer.AddGameObject(gameItemMonster);
+		//ItemsOnGround--------------------------------------------------------------------------------------------
+		
+		ArrayList<GameObject2D> AllItems = new ArrayList<>();
+		//itemsOnGround = new GameObject2D();
+		
+		C2DGraphicsLayer itemLayer = new C2DGraphicsLayer();
+		
+		
+		ArrayList<GameObject2D> gems = new ArrayList<>();
+		CSprite gem = new CSprite("textures/items/gem", 4, 200, 200, 3);
+	
+
+		for(int i=0;i< a;i++){
+			itemsOnGround = new GameObject2D();
+			gem.SetScale(2);
+			itemsOnGround.AddFrame(gem);
+			itemsOnGround.SetPosition(500+i*130, 200);
+			
+			gems.add(itemsOnGround);
+			
+			//itemLayer.AddGameObject(itemsOnGround);
+			//System.out.println(ar.get(i).GetPosition().getX());
+		}
+		
+		
+		
+		ArrayList<GameObject2D> potion = new ArrayList<>();
+		CSprite Potion = new CSprite("textures/items/glass02blue", 1, 200, 200);
+
+		for(int i=0;i< a;i++){
+			itemsOnGround = new GameObject2D();
+			Potion.SetScale(2);
+			itemsOnGround.AddFrame(Potion);
+			itemsOnGround.SetPosition(450+i*150, 560);
+			
+			potion.add(itemsOnGround);
+		}
+		
+		
+		AllItems.addAll(gems);
+		AllItems.addAll(potion);
+		
+		itemLayer.AddGameObject(AllItems);
+		//ItemsOnGround--------------------------------------------------------------------------------------------END
 		
 		// register layer at the scene
 		scene.RegisterLayer(layer0);
@@ -129,10 +187,31 @@ public class DummyGame implements IGameLogic {
 		scene.RegisterLayer(layer3);
 		scene.RegisterLayer(layer4);
 		scene.RegisterLayer(playerLayer);
-		scene.RegisterLayer(monsterLayer);
+		scene.RegisterLayer(itemLayer);
+		
 
 		// Register scene at the manager
 		sceneManager.RegisterScene(scene);
+
+		Texture2D background1 = new Texture2D();
+		Texture2D background2 = new Texture2D();
+		Texture2D background3 = new Texture2D();
+
+		background1.CreateTexture("textures/background.png");
+		background1.setPosition(-1280, 0, -1);
+
+		background2.CreateTexture("textures/background.png");
+		background2.setPosition(1280, 0, -1);
+
+		background3.CreateTexture("textures/background.png");
+		background3.setPosition(2560, 0, -1);
+
+		backgrounds = new Texture2D[3];
+		backgrounds[0] = background1;
+		backgrounds[1] = background2;
+		backgrounds[2] = background3;
+
+		camera = new CCamera2D();
 	}
 
 	@Override
@@ -166,6 +245,7 @@ public class DummyGame implements IGameLogic {
 			gameItem.SetCurrentFrame(2);
 			Vector2D pos = gameItem.GetPosition();
 			pos.x -= 5;
+			camera.MoveLeft(5);
 			gameItem.SetPosition(pos);
 		}
 
@@ -174,6 +254,7 @@ public class DummyGame implements IGameLogic {
 			gameItem.SetCurrentFrame(1);
 			Vector2D pos = gameItem.GetPosition();
 			pos.x += 5;
+			camera.MoveRight(5);
 			gameItem.SetPosition(pos);
 		}
 
@@ -196,12 +277,14 @@ public class DummyGame implements IGameLogic {
 
 	@Override
 	public void render(Window window) {
-		renderer.render(window);
+		renderer.render(window, backgrounds, camera);
 	}
 
 	@Override
 	public void cleanup() {
 		renderer.cleanup();
+		for (int i = 0; i < backgrounds.length; i++)
+			backgrounds[i].cleanup();
 		gameItem.cleanUp();
 	}
 }
