@@ -1,24 +1,18 @@
 package com.iit.uni.game;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
-
-import com.iit.uni.engine.C2DGraphicsLayer;
-import com.iit.uni.engine.C2DScene;
-import com.iit.uni.engine.C2DSceneManager;
-import com.iit.uni.engine.CSprite;
-import com.iit.uni.engine.GameObject2D;
-import com.iit.uni.engine.IGameLogic;
-import com.iit.uni.engine.Texture2D;
-import com.iit.uni.engine.Window;
+import com.iit.uni.engine.*;
 import com.iit.uni.engine.math.Vector2D;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 public class DummyGame implements IGameLogic {
 
 	private final Renderer renderer;
 	private int direction = 0;
+
+	// 2D Texture items
+	private Texture2D[] backgrounds;
+	private CCamera2D camera;
 
 	// 2D GameObject items
 	private GameObject2D gameItem;
@@ -35,6 +29,7 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void init(Window window) throws Exception {
 		renderer.init(window);
+
 
 		/**
 		 * Creating an animated game object
@@ -63,6 +58,8 @@ public class DummyGame implements IGameLogic {
 
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
+
+
 
 		// Create a background texture
 		Texture2D background = new Texture2D();
@@ -119,6 +116,26 @@ public class DummyGame implements IGameLogic {
 
 		// Register scene at the manager
 		sceneManager.RegisterScene(scene);
+
+		Texture2D background1 = new Texture2D();
+		Texture2D background2 = new Texture2D();
+		Texture2D background3 = new Texture2D();
+
+		background1.CreateTexture("textures/background.png");
+		background1.setPosition(-1280, 0, -1);
+
+		background2.CreateTexture("textures/background.png");
+		background2.setPosition(1280, 0, -1);
+
+		background3.CreateTexture("textures/background.png");
+		background3.setPosition(2560, 0, -1);
+
+		backgrounds = new Texture2D[3];
+		backgrounds[0] = background1;
+		backgrounds[1] = background2;
+		backgrounds[2] = background3;
+
+		camera = new CCamera2D();
 	}
 
 	@Override
@@ -145,12 +162,14 @@ public class DummyGame implements IGameLogic {
 			gameItem.SetCurrentFrame(2);
 			Vector2D pos = gameItem.GetPosition();
 			pos.x -= 5;
+			camera.MoveLeft(5);
 			gameItem.SetPosition(pos);
 		} else if (window.isKeyPressed(GLFW_KEY_RIGHT)) {
 			direction = 1;
 			gameItem.SetCurrentFrame(1);
 			Vector2D pos = gameItem.GetPosition();
 			pos.x += 5;
+			camera.MoveRight(5);
 			gameItem.SetPosition(pos);
 		}
 	}
@@ -162,12 +181,15 @@ public class DummyGame implements IGameLogic {
 
 	@Override
 	public void render(Window window) {
-		renderer.render(window);
+		renderer.render(window, backgrounds, camera);
 	}
 
 	@Override
 	public void cleanup() {
+
 		renderer.cleanup();
+		for (int i = 0; i < backgrounds.length; i++)
+			backgrounds[i].cleanup();
 		gameItem.cleanUp();
 	}
 }

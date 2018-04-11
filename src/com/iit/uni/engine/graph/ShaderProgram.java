@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
+
+import com.iit.uni.engine.math.MATRIX4X4;
+
 import static org.lwjgl.opengl.GL20.*;
 
 public class ShaderProgram {
@@ -40,6 +43,10 @@ public class ShaderProgram {
         glUniformMatrix4fv(uniforms.get(uniformName), false, fb);
     }
 
+    public void setUniform(String uniformName, MATRIX4X4 value) {
+        glUniformMatrix4fv(uniforms.get(uniformName), false, value.getMatrix());
+    }
+    
 	public void setUniform4f(String uniformName, float v0, float v1, float v2, float v3) {
 		glUniform4f(uniforms.get(uniformName), v0, v1, v2, v3);
 	}
