@@ -89,7 +89,7 @@ public class DummyGame implements IGameLogic {
 		gameItem.AddFrame(idleLeft);
 
 
-		gameItem.SetPosition(400, 220);
+		gameItem.SetPosition(400, 225);
 
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
@@ -243,6 +243,7 @@ public class DummyGame implements IGameLogic {
 
 
 		camera = new CCamera2D();
+
 	}
 
 	@Override
@@ -275,8 +276,10 @@ public class DummyGame implements IGameLogic {
 			direction = -1;
 			gameItem.SetCurrentFrame(2);
 			Vector2D pos = gameItem.GetPosition();
+			if(pos.x>=5)
 			pos.x -= 5;
-			camera.MoveLeft(5);
+			if(pos.x>=400 && pos.x<=2960){
+			camera.MoveLeft(5);}
 			gameItem.SetPosition(pos);
 		}
 
@@ -284,8 +287,10 @@ public class DummyGame implements IGameLogic {
 			direction = 1;
 			gameItem.SetCurrentFrame(1);
 			Vector2D pos = gameItem.GetPosition();
+			if(pos.x<=3570)
 			pos.x += 5;
-			camera.MoveRight(5);
+			if(pos.x >= 400 && pos.x <=2960){
+			camera.MoveRight(5);}
 			gameItem.SetPosition(pos);
 		}
 
