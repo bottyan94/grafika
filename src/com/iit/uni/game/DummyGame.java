@@ -283,6 +283,7 @@ public class DummyGame implements IGameLogic {
 			gameItem.SetPosition(pos);
 		}
 
+
 		if (right == 1) {
 			direction = 1;
 			gameItem.SetCurrentFrame(1);
