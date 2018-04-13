@@ -48,7 +48,7 @@ public class DummyGame implements IGameLogic {
 	}
 
 	private int a=5;
-	
+
 	@Override
 	public void init(Window window) throws Exception {
 		renderer.init(window);
@@ -57,8 +57,9 @@ public class DummyGame implements IGameLogic {
 		/**
 		 * Creating an animated game object
 		 */
-		
+
 		gameItem = new GameObject2D();
+
 
 		CSprite frameRunRight = new CSprite("textures/ninja/Run", 10, 200, 200);
 		CSprite frameRunLeft = new CSprite("textures/ninja/Run_left", 10, 200, 200);
@@ -87,32 +88,61 @@ public class DummyGame implements IGameLogic {
 		gameItem.AddFrame(slideLeft);
 		gameItem.AddFrame(idleLeft);
 
+
 		gameItem.SetPosition(400, 220);
 
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
 
-
-        /*
 		// Create a background texture
 		Texture2D background = new Texture2D();
 		background.CreateTexture("textures/background/layer_sd_01.png");
+		background.setPosition(0, 0, -1);
+		Texture2D background1 = new Texture2D();
+		background1.CreateTexture("textures/background/layer_sd_01.png");
+		background1.setPosition(1280, 0, -1);
+		Texture2D background2 = new Texture2D();
+		background2.CreateTexture("textures/background/layer_sd_01.png");
+		background2.setPosition(2560, 0, -1);
 
 		// Create a cloud layer
 		Texture2D clouds = new Texture2D();
 		clouds.CreateTexture("textures/background/layer_sd_02.png");
-
+		Texture2D clouds1 = new Texture2D();
+		clouds1.CreateTexture("textures/background/layer_sd_02.png");
+		clouds1.setPosition(1280,0,0);
+		Texture2D clouds2 = new Texture2D();
+		clouds2.CreateTexture("textures/background/layer_sd_02.png");
+		clouds2.setPosition(2560,0,0);
 		// Create a mountain layer
 		Texture2D mountains = new Texture2D();
 		mountains.CreateTexture("textures/background/layer_sd_03.png");
+		Texture2D mountains1 = new Texture2D();
+		mountains1.setPosition(1280,0,0);
+		mountains1.CreateTexture("textures/background/layer_sd_03.png");
+		Texture2D mountains2 = new Texture2D();
+		mountains2.CreateTexture("textures/background/layer_sd_03.png");
+		mountains2.setPosition(2560,0,0);
 
 		// Create a tree layer
 		Texture2D trees = new Texture2D();
 		trees.CreateTexture("textures/background/layer_sd_04.png");
+		Texture2D trees1 = new Texture2D();
+		trees1.CreateTexture("textures/background/layer_sd_04.png");
+		trees1.setPosition(1280,0,0);
+		Texture2D trees2 = new Texture2D();
+		trees2.CreateTexture("textures/background/layer_sd_04.png");
+		trees2.setPosition(2506,0,0);
 
 		// Create a ground layer
 		Texture2D ground = new Texture2D();
 		ground.CreateTexture("textures/background/layer_sd_05.png");
+		Texture2D ground1 = new Texture2D();
+		ground1.CreateTexture("textures/background/layer_sd_05.png");
+		ground1.setPosition(1280,0,0);
+		Texture2D ground2 = new Texture2D();
+		ground2.CreateTexture("textures/background/layer_sd_05.png");
+		ground2.setPosition(2560,0,0);
 
 		// Create graphics layer
 		C2DGraphicsLayer layer0 = new C2DGraphicsLayer();
@@ -130,37 +160,37 @@ public class DummyGame implements IGameLogic {
 		layer3.AddTexture(trees);
 
 		C2DGraphicsLayer layer4 = new C2DGraphicsLayer();
-		layer4.AddTexture(ground);*/
+		layer4.AddTexture(ground);
 
 		C2DGraphicsLayer playerLayer = new C2DGraphicsLayer();
 		playerLayer.AddGameObject(gameItem);
-		
+
 		//ItemsOnGround--------------------------------------------------------------------------------------------
-		
+
 		ArrayList<GameObject2D> AllItems = new ArrayList<>();
 		//itemsOnGround = new GameObject2D();
-		
+
 		C2DGraphicsLayer itemLayer = new C2DGraphicsLayer();
-		
-		
+
+
 		ArrayList<GameObject2D> gems = new ArrayList<>();
 		CSprite gem = new CSprite("textures/items/gem", 4, 200, 200, 3);
-	
+
 
 		for(int i=0;i< a;i++){
 			itemsOnGround = new GameObject2D();
 			gem.SetScale(2);
 			itemsOnGround.AddFrame(gem);
 			itemsOnGround.SetPosition(500+i*130, 200);
-			
+
 			gems.add(itemsOnGround);
-			
+
 			//itemLayer.AddGameObject(itemsOnGround);
 			//System.out.println(ar.get(i).GetPosition().getX());
 		}
-		
-		
-		
+
+
+
 		ArrayList<GameObject2D> potion = new ArrayList<>();
 		CSprite Potion = new CSprite("textures/items/glass02blue", 1, 200, 200);
 
@@ -169,47 +199,48 @@ public class DummyGame implements IGameLogic {
 			Potion.SetScale(2);
 			itemsOnGround.AddFrame(Potion);
 			itemsOnGround.SetPosition(450+i*150, 560);
-			
+
 			potion.add(itemsOnGround);
 		}
-		
-		
+
+
 		AllItems.addAll(gems);
 		AllItems.addAll(potion);
-		
+
 		itemLayer.AddGameObject(AllItems);
 		//ItemsOnGround--------------------------------------------------------------------------------------------END
-		
+
 		// register layer at the scene
-		/*scene.RegisterLayer(layer0);
+		scene.RegisterLayer(layer0);
 		scene.RegisterLayer(layer1);
 		scene.RegisterLayer(layer2);
 		scene.RegisterLayer(layer3);
-		scene.RegisterLayer(layer4);*/
+		scene.RegisterLayer(layer4);
 		scene.RegisterLayer(playerLayer);
 		scene.RegisterLayer(itemLayer);
-		
+
 
 		// Register scene at the manager
 		sceneManager.RegisterScene(scene);
 
-		Texture2D background1 = new Texture2D();
-		Texture2D background2 = new Texture2D();
-		Texture2D background3 = new Texture2D();
+		backgrounds = new Texture2D[15];
+		backgrounds[0] = background;
+		backgrounds[1] = background1;
+		backgrounds[2] = background2;
+		backgrounds[3] = clouds;
+		backgrounds[4] = clouds1;
+		backgrounds[5] = clouds2;
+		backgrounds[6] = mountains;
+		backgrounds[7] = mountains1;
+		backgrounds[8] = mountains2;
+		backgrounds[9] = trees;
+		backgrounds[10] = trees1;
+		backgrounds[11] = trees2;
+		backgrounds[12] = ground;
+		backgrounds[13] = ground1;
+		backgrounds[14] = ground2;
 
-		background1.CreateTexture("textures/background.png");
-		background1.setPosition(0, 0, -1);
 
-		background2.CreateTexture("textures/background.png");
-		background2.setPosition(1280, 0, -1);
-
-		background3.CreateTexture("textures/background.png");
-		background3.setPosition(2560, 0, -1);
-
-		backgrounds = new Texture2D[3];
-		backgrounds[0] = background1;
-		backgrounds[1] = background2;
-		backgrounds[2] = background3;
 
 		camera = new CCamera2D();
 	}
@@ -278,6 +309,7 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void render(Window window) {
 		renderer.render(window, backgrounds, camera);
+
 	}
 
 	@Override
