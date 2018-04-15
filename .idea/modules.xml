@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/grafika.iml" filepath="$PROJECT_DIR$/grafika.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LWJGL2DScene.iml" filepath="$PROJECT_DIR$/LWJGL2DScene.iml" />
     </modules>
   </component>
 </project>

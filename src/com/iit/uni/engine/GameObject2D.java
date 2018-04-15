@@ -87,6 +87,14 @@ public class GameObject2D {
 		mCollidable = true;
 	}
 
+	public float GetX(){
+		return m_vPosition.getX();
+	}
+
+	public float GetY(){
+		return m_vPosition.getY();
+	}
+
 	///
 	/// Add new frame to the animation array
 	///

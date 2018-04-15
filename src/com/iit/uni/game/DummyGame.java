@@ -10,15 +10,12 @@ import com.iit.uni.engine.IGameLogic;
 import com.iit.uni.engine.Texture2D;
 import com.iit.uni.engine.Window;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
-
 import java.util.ArrayList;
 
 import com.iit.uni.engine.*;
 import com.iit.uni.engine.math.Vector2D;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 
 public class DummyGame implements IGameLogic {
@@ -27,6 +24,10 @@ public class DummyGame implements IGameLogic {
 	private int up = 0;
 	private int right = 0;
 	private int left = 0;
+
+	private float speedY = 0f;
+	private float gravity = 0.2f;
+	private int spacePushed = 0;
 
 	private final Renderer renderer;
 	private int direction = 0;
@@ -89,7 +90,7 @@ public class DummyGame implements IGameLogic {
 		gameItem.AddFrame(idleLeft);
 
 
-		gameItem.SetPosition(400, 225);
+		gameItem.SetPosition(400, 235);
 
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
@@ -268,13 +269,21 @@ public class DummyGame implements IGameLogic {
 			down = 0;
 		}
 
+		if(window.isKeyPressed(GLFW_KEY_SPACE) && spacePushed == 0 ) {
+			speedY = -25;
+			up = 1;
+			spacePushed = 1;
+		}
+
 		/*if (down == 1 && right ==1) {
 
 		}*/
 
 		if (left == 1) {
 			direction = -1;
-			gameItem.SetCurrentFrame(2);
+			if(spacePushed == 0) {
+				gameItem.SetCurrentFrame(2);
+			}
 			Vector2D pos = gameItem.GetPosition();
 			if(pos.x>=5)
 			pos.x -= 5;
@@ -286,7 +295,9 @@ public class DummyGame implements IGameLogic {
 
 		if (right == 1) {
 			direction = 1;
-			gameItem.SetCurrentFrame(1);
+			if(spacePushed == 0) {
+				gameItem.SetCurrentFrame(1);
+			}
 			Vector2D pos = gameItem.GetPosition();
 			if(pos.x<=3570)
 			pos.x += 5;
@@ -296,7 +307,7 @@ public class DummyGame implements IGameLogic {
 		}
 
 
-		if (right==0 && left ==0 && down == 0) {
+		if (right==0 && left ==0 && down == 0 && speedY == 0 && gameItem.GetY() == 235) {
 			if (direction == 1) {
 				gameItem.SetCurrentFrame(0);
 			} else {
@@ -309,6 +320,36 @@ public class DummyGame implements IGameLogic {
 
 	@Override
 	public void update(float interval) {
+
+		System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
+
+		/*if(gameItem.GetY() == 235){
+			speedY = 0;
+		} else {
+			Vector2D pos = gameItem.GetPosition();
+			pos.y += speedY + speedY-gravity;
+			gameItem.SetPosition(pos);
+		}*/
+
+		if(up == 1) {
+			if (direction == 1) {
+				gameItem.SetCurrentFrame(3);
+			} else {
+				gameItem.SetCurrentFrame(4);
+			}
+			Vector2D pos = gameItem.GetPosition();
+			pos.y += speedY;
+			speedY = speedY + 2.0f;
+			gameItem.SetPosition(pos);
+			if(gameItem.GetY() >= 235){
+				speedY = 0;
+				up = 0;
+				pos.y = 235;
+				gameItem.SetPosition(pos);
+				spacePushed = 0;
+			}
+		}
+
 
 	}
 
