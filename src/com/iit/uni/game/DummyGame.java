@@ -91,7 +91,7 @@ public class DummyGame implements IGameLogic {
 
 
 		gameItem.SetPosition(400, 235);
-		gameItem.SetScale(0.5f);
+		//gameItem.SetScale(0.5f);
 
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
@@ -289,8 +289,8 @@ public class DummyGame implements IGameLogic {
 			Vector2D pos = gameItem.GetPosition();
 			if(pos.x>=5)
 			pos.x -= 5;
-			if(pos.x>=400 && pos.x<=2960){
-			camera.MoveLeft(5);}
+			/*if(pos.x>=400 && pos.x<=2960){
+			camera.SetPosition(pos.x, pos.y);}*/
 			gameItem.SetPosition(pos);
 		}
 
@@ -303,8 +303,8 @@ public class DummyGame implements IGameLogic {
 			Vector2D pos = gameItem.GetPosition();
 			if(pos.x<=3570)
 			pos.x += 5;
-			if(pos.x >= 400 && pos.x <=2960){
-			camera.MoveRight(5);}
+			/*if(pos.x >= 400 && pos.x <=2960){
+			camera.SetPosition(pos.x, pos.y);}*/
 			gameItem.SetPosition(pos);
 		}
 

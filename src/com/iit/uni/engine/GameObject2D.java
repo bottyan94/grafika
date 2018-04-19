@@ -38,8 +38,8 @@ public class GameObject2D {
 
 	private int m_iZindex; // Z index of the object
 
-	private BoundingBox2D mBBoxOriginal;
-	private BoundingBox2D mBBoxTransformed;
+	private BoundingBox2D mBBoxOriginal = new BoundingBox2D();
+	private BoundingBox2D mBBoxTransformed = new BoundingBox2D();
 
 	///
 	/// Default Constructor
@@ -308,18 +308,23 @@ public class GameObject2D {
 
 	public void SetBoundingBox() {
 
-		Vector2D maxpoint = new Vector2D(GetPositionX() + 320f, GetPositionY() + 640f);
-
-		mBBoxOriginal = new BoundingBox2D(GetPosition() , maxpoint);
-		mBBoxTransformed = new BoundingBox2D(GetPosition() , maxpoint);
+		mBBoxOriginal.SetPoints(new Vector2D(0f, 0f), new Vector2D(300f, 600f));
+		mBBoxTransformed.SetPoints(new Vector2D(0f, 0f), new Vector2D(300f, 600f));
 	}
 
 	public void DrawBoundingBox() {
-		System.out.println(mBBoxOriginal.WriteBB());
+		GetCurrentBBox();
+		System.out.println(mBBoxTransformed.WriteBB());
 	}
 
 	public BoundingBox2D GetCurrentBBox() {
-		return mBBoxOriginal;
+
+		mBBoxTransformed.SetPoints(mBBoxOriginal.GetMinPoint(), mBBoxOriginal.GetMaxPoint());
+		mBBoxTransformed.transformByRotate(0, 0, 0, 1);
+		mBBoxTransformed.transformByScale(new Vector2D(GetScale(), GetScale()));
+		mBBoxTransformed.transformByTranslate(new Vector2D(GetPositionX(), GetPositionY()));
+
+		return mBBoxTransformed;
 	}
 
 	///
