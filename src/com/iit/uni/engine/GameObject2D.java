@@ -38,6 +38,9 @@ public class GameObject2D {
 
 	private int m_iZindex; // Z index of the object
 
+	private BoundingBox2D mBBoxOriginal;
+	private BoundingBox2D mBBoxTransformed;
+
 	///
 	/// Default Constructor
 	///
@@ -152,6 +155,14 @@ public class GameObject2D {
 	///
 	public Vector2D GetPosition() {
 		return m_vPosition;
+	}
+
+	public float GetPositionX() {
+		return m_vPosition.x;
+	}
+
+	public float GetPositionY() {
+		return m_vPosition.y;
 	}
 
 	///
@@ -294,8 +305,17 @@ public class GameObject2D {
 	///
 	/// Draw the Bounding Box
 	///
-	public void DrawBoundingBox() {
 
+	public void SetBoundingBox() {
+
+		Vector2D maxpoint = new Vector2D(GetPositionX() + 30f, GetPositionY() + 30f);
+
+		mBBoxOriginal = new BoundingBox2D(GetPosition() , maxpoint);
+		mBBoxTransformed = new BoundingBox2D(GetPosition() , maxpoint);
+	}
+
+	public void DrawBoundingBox() {
+		System.out.println(mBBoxOriginal.WriteBB());
 	}
 
 	///

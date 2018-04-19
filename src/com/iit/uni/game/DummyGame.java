@@ -321,7 +321,9 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void update(float interval) {
 
-		System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
+		gameItem.SetBoundingBox();
+		//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
+		gameItem.DrawBoundingBox();
 
 		/*if(gameItem.GetY() == 235){
 			speedY = 0;

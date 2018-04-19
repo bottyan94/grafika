@@ -101,6 +101,7 @@ mRenderer=this;
         }
         DummyGame.sceneManager.Render();
         shaderProgram.unbind();
+
     }
 
 

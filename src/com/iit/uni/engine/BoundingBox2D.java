@@ -60,6 +60,10 @@ public class BoundingBox2D {
 	/// BB is usable or not
 	private boolean mEnabled;
 
+	public String WriteBB() {
+		return "1x : " + bbPoints[0].x + " 1y: " + bbPoints[0].y + " 2x: " + bbPoints[1].x + " 2y: " + bbPoints[1].y + " 3x: " + bbPoints[2].x + " 3y: " + bbPoints[2].y + " 4x: " + bbPoints[3].x + " 4y: " + bbPoints[3].y;
+	}
+
 	public BoundingBox2D() {
 		boxHalfWidth = 0;
 		boxHalfHeight = 0;
