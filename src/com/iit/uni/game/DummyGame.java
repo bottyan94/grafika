@@ -26,7 +26,7 @@ public class DummyGame implements IGameLogic {
 	private int left = 0;
 
 	private float speedY = 0f;
-	private float gravity = 0.2f;
+	private float gravity = 2f;
 	private int spacePushed = 0;
 
 	private final Renderer renderer;
@@ -71,6 +71,7 @@ public class DummyGame implements IGameLogic {
 		CSprite slideLeft = new CSprite("textures/ninja/Slide_left", 10, 200, 200);
 		CSprite idleLeft = new CSprite("textures/ninja/Idle_left", 10, 200, 200);
 
+
 		/*idle.SetScale(0.5f);
 		frameRunLeft.SetScale(0.5f);
 		frameRunRight.SetScale(0.5f);
@@ -91,7 +92,7 @@ public class DummyGame implements IGameLogic {
 
 
 		gameItem.SetPosition(400, 235);
-		//gameItem.SetScale(0.5f);
+		gameItem.SetScale(0.5f);
 
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
@@ -287,7 +288,7 @@ public class DummyGame implements IGameLogic {
 				gameItem.SetCurrentFrame(2);
 			}
 			Vector2D pos = gameItem.GetPosition();
-			if(pos.x>=5)
+			if(gameItem.GetBBoxMinX()>=5)
 			pos.x -= 5;
 			/*if(pos.x>=400 && pos.x<=2960){
 			camera.SetPosition(pos.x, pos.y);}*/
@@ -301,7 +302,7 @@ public class DummyGame implements IGameLogic {
 				gameItem.SetCurrentFrame(1);
 			}
 			Vector2D pos = gameItem.GetPosition();
-			if(pos.x<=3570)
+			if(gameItem.GetBBoxMaxX()<=1285)
 			pos.x += 5;
 			/*if(pos.x >= 400 && pos.x <=2960){
 			camera.SetPosition(pos.x, pos.y);}*/
@@ -327,13 +328,6 @@ public class DummyGame implements IGameLogic {
 		System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
 		gameItem.DrawBoundingBox();
 
-		/*if(gameItem.GetY() == 235){
-			speedY = 0;
-		} else {
-			Vector2D pos = gameItem.GetPosition();
-			pos.y += speedY + speedY-gravity;
-			gameItem.SetPosition(pos);
-		}*/
 
 		if(up == 1) {
 			if (direction == 1) {
@@ -345,7 +339,8 @@ public class DummyGame implements IGameLogic {
 			pos.y += speedY;
 			speedY = speedY + 2.0f;
 			gameItem.SetPosition(pos);
-			if(gameItem.GetY() >= 235){
+			if(gameItem.GetBBoxMaxY() >= 630)
+			{
 				speedY = 0;
 				up = 0;
 				pos.y = 235;
@@ -353,8 +348,6 @@ public class DummyGame implements IGameLogic {
 				spacePushed = 0;
 			}
 		}
-
-
 	}
 
 	@Override
