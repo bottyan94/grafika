@@ -177,6 +177,7 @@ public class DummyGame implements IGameLogic {
 		//layer1.AddTexture(clouds1);
 		//layer1.AddTexture(clouds2);
 
+
 		/*// Create graphics layer
 		C2DGraphicsLayer layer2 = new C2DGraphicsLayer();
 		layer2.AddTexture(mountains);
