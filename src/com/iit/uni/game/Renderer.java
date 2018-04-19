@@ -6,14 +6,10 @@ import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glViewport;
 
+import com.iit.uni.engine.*;
 import com.iit.uni.engine.math.MATRIX4X4;
 import org.joml.Matrix4f;
 
-import com.iit.uni.engine.CCamera2D;
-import com.iit.uni.engine.Texture2D;
-
-import com.iit.uni.engine.Utils;
-import com.iit.uni.engine.Window;
 import com.iit.uni.engine.graph.ShaderProgram;
 import com.iit.uni.engine.graph.Transformation;
 
@@ -102,6 +98,68 @@ mRenderer=this;
         DummyGame.sceneManager.Render();
         shaderProgram.unbind();
 
+
+    }
+
+    public void render(Window window, Texture2D[] textures, CCamera2D camera, GameObject2D gameItem) {
+        clear();
+
+        if (window.isResized()) {
+            glViewport(0, 0, window.getWidth(), window.getHeight());
+            window.setResized(false);
+        }
+
+        shaderProgram.bind();
+
+        shaderProgram.setUniform("projectionMatrix", projectionMatrix);
+        shaderProgram.setUniform("texture_sampler", 0);
+
+        MATRIX4X4 viewMatrix = camera.GetViewMatrix();
+
+        shaderProgram.setUniform("viewMatrix", viewMatrix);
+
+        for (int i = 0; i < textures.length; i++) {
+            // Render each gameItem
+            Matrix4f worldMatrix = textures[i].getWorldMatrix();
+            shaderProgram.setUniform("worldMatrix", worldMatrix);
+
+            // Render the sprite
+            textures[i].render();
+        }
+        DummyGame.sceneManager.Render();
+
+        gameItem.Draw();
+        shaderProgram.unbind();
+
+
+        gameItem.GetCurrentBBox().Draw();
+    }
+
+    public void render(Window window,  CCamera2D camera, GameObject2D gameItem) {
+        clear();
+
+        if (window.isResized()) {
+            glViewport(0, 0, window.getWidth(), window.getHeight());
+            window.setResized(false);
+        }
+
+        shaderProgram.bind();
+
+        shaderProgram.setUniform("projectionMatrix", projectionMatrix);
+        shaderProgram.setUniform("texture_sampler", 0);
+
+        MATRIX4X4 viewMatrix = camera.GetViewMatrix();
+
+        shaderProgram.setUniform("viewMatrix", viewMatrix);
+
+
+        DummyGame.sceneManager.Render();
+
+        gameItem.Draw();
+        //shaderProgram.unbind();
+
+
+        gameItem.GetCurrentBBox().Draw();
     }
 
 

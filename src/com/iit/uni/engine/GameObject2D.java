@@ -308,7 +308,7 @@ public class GameObject2D {
 
 	public void SetBoundingBox() {
 
-		Vector2D maxpoint = new Vector2D(GetPositionX() + 30f, GetPositionY() + 30f);
+		Vector2D maxpoint = new Vector2D(GetPositionX() + 320f, GetPositionY() + 640f);
 
 		mBBoxOriginal = new BoundingBox2D(GetPosition() , maxpoint);
 		mBBoxTransformed = new BoundingBox2D(GetPosition() , maxpoint);
@@ -316,6 +316,10 @@ public class GameObject2D {
 
 	public void DrawBoundingBox() {
 		System.out.println(mBBoxOriginal.WriteBB());
+	}
+
+	public BoundingBox2D GetCurrentBBox() {
+		return mBBoxOriginal;
 	}
 
 	///
@@ -342,7 +346,7 @@ public class GameObject2D {
 	///
 	/// Sets scale of the object. All object's animation frame will be scaled.
 	///
-	void SetScale(float size) {
+	public void SetScale(float size) {
 
 		mScale = size;
 

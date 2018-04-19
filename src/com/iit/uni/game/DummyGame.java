@@ -37,7 +37,7 @@ public class DummyGame implements IGameLogic {
 	private CCamera2D camera;
 
 	// 2D GameObject items
-	private GameObject2D gameItem;
+	public GameObject2D gameItem;
 	private GameObject2D itemsOnGround;
 	// Global Scene manager
 	public static C2DSceneManager sceneManager;
@@ -71,14 +71,14 @@ public class DummyGame implements IGameLogic {
 		CSprite slideLeft = new CSprite("textures/ninja/Slide_left", 10, 200, 200);
 		CSprite idleLeft = new CSprite("textures/ninja/Idle_left", 10, 200, 200);
 
-		idle.SetScale(0.5f);
+		/*idle.SetScale(0.5f);
 		frameRunLeft.SetScale(0.5f);
 		frameRunRight.SetScale(0.5f);
 		jumpLeft.SetScale(0.5f);
 		jumpRight.SetScale(0.5f);
 		slide.SetScale(0.5f);
 		slideLeft.SetScale(0.5f);
-		idleLeft.SetScale(0.5f);
+		idleLeft.SetScale(0.5f);*/
 
 		gameItem.AddFrame(idle);
 		gameItem.AddFrame(frameRunRight);
@@ -91,11 +91,12 @@ public class DummyGame implements IGameLogic {
 
 
 		gameItem.SetPosition(400, 235);
+		gameItem.SetScale(0.5f);
 
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
 
-		// Create a background texture
+		/*// Create a background texture
 		Texture2D background = new Texture2D();
 		background.CreateTexture("textures/background/layer_sd_01.png");
 		background.setPosition(0, 0, -1);
@@ -133,19 +134,20 @@ public class DummyGame implements IGameLogic {
 		trees1.setPosition(1280,0,0);
 		Texture2D trees2 = new Texture2D();
 		trees2.CreateTexture("textures/background/layer_sd_04.png");
-		trees2.setPosition(2506,0,0);
+		trees2.setPosition(2506,0,0);*/
 
 		// Create a ground layer
 		Texture2D ground = new Texture2D();
 		ground.CreateTexture("textures/background/layer_sd_05.png");
+		ground.setPosition(0,0,-1);
 		Texture2D ground1 = new Texture2D();
 		ground1.CreateTexture("textures/background/layer_sd_05.png");
-		ground1.setPosition(1280,0,0);
+		ground1.setPosition(1280,0,-1);
 		Texture2D ground2 = new Texture2D();
 		ground2.CreateTexture("textures/background/layer_sd_05.png");
-		ground2.setPosition(2560,0,0);
+		ground2.setPosition(2560,0,-1);
 
-		// Create graphics layer
+		/*// Create graphics layer
 		C2DGraphicsLayer layer0 = new C2DGraphicsLayer();
 		layer0.AddTexture(background);
 
@@ -158,7 +160,7 @@ public class DummyGame implements IGameLogic {
 		layer2.AddTexture(mountains);
 
 		C2DGraphicsLayer layer3 = new C2DGraphicsLayer();
-		layer3.AddTexture(trees);
+		layer3.AddTexture(trees);*/
 
 		C2DGraphicsLayer layer4 = new C2DGraphicsLayer();
 		layer4.AddTexture(ground);
@@ -212,10 +214,10 @@ public class DummyGame implements IGameLogic {
 		//ItemsOnGround--------------------------------------------------------------------------------------------END
 
 		// register layer at the scene
-		scene.RegisterLayer(layer0);
+		/*scene.RegisterLayer(layer0);
 		scene.RegisterLayer(layer1);
 		scene.RegisterLayer(layer2);
-		scene.RegisterLayer(layer3);
+		scene.RegisterLayer(layer3);*/
 		scene.RegisterLayer(layer4);
 		scene.RegisterLayer(playerLayer);
 		scene.RegisterLayer(itemLayer);
@@ -224,8 +226,8 @@ public class DummyGame implements IGameLogic {
 		// Register scene at the manager
 		sceneManager.RegisterScene(scene);
 
-		backgrounds = new Texture2D[15];
-		backgrounds[0] = background;
+		backgrounds = new Texture2D[0];
+		/*backgrounds[0] = background;
 		backgrounds[1] = background1;
 		backgrounds[2] = background2;
 		backgrounds[3] = clouds;
@@ -239,7 +241,7 @@ public class DummyGame implements IGameLogic {
 		backgrounds[11] = trees2;
 		backgrounds[12] = ground;
 		backgrounds[13] = ground1;
-		backgrounds[14] = ground2;
+		backgrounds[14] = ground2;*/
 
 
 
@@ -322,7 +324,7 @@ public class DummyGame implements IGameLogic {
 	public void update(float interval) {
 
 		gameItem.SetBoundingBox();
-		//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
+		System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
 		gameItem.DrawBoundingBox();
 
 		/*if(gameItem.GetY() == 235){
@@ -357,7 +359,7 @@ public class DummyGame implements IGameLogic {
 
 	@Override
 	public void render(Window window) {
-		renderer.render(window, backgrounds, camera);
+		renderer.render(window, camera, gameItem);
 
 	}
 
