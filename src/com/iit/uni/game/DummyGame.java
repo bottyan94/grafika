@@ -195,7 +195,7 @@ public class DummyGame implements IGameLogic {
 			gem.SetScale(2);
 			itemsOnGround.AddFrame(gem);
 			itemsOnGround.SetPosition(500+i*130, 200);
-			itemsOnGround.SetID(ID);
+			itemsOnGround.SetID(1);
 			ID++;
 			itemsOnGround.SetBoundingBox(gem.GetHeight(), gem.GetWidth());
 
@@ -220,7 +220,7 @@ public class DummyGame implements IGameLogic {
 			Potion.SetScale(1);
 			itemsOnGround.AddFrame(Potion);
 			itemsOnGround.SetPosition(450 + i * 150, 560);
-			itemsOnGround.SetID(ID);
+			itemsOnGround.SetID(2);
 			ID++;
 			
 			itemsOnGround.SetBoundingBox(Potion.GetHeight(),Potion.GetWidth());
@@ -356,10 +356,21 @@ public class DummyGame implements IGameLogic {
 		//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
 		//gameItem.DrawBoundingBox();
 		
+		gameItem.GetCurrentBBox();
+		
 		for(int i=0;i<AllItems.size();i++){
 			
-			if(gameItem.GetBBox().CheckOverlapping(AllItems.get(i).GetCurrentBBox()) == true){
-				AllItems.get(i).SetVisible(false);
+			if((gameItem.GetBBox().CheckOverlapping(AllItems.get(i).GetCurrentBBox()) == true) && (AllItems.get(i).GetVisible() == true)){
+				
+				
+					AllItems.get(i).SetVisible(false);
+				
+				
+				if(AllItems.get(i).GetID() == 1){
+					System.out.println("gem");
+				}else if(AllItems.get(i).GetID() == 2){
+					System.out.println("poti");
+				}
 			};
 		}
 

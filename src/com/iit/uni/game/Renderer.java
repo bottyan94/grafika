@@ -214,13 +214,13 @@ mRenderer=this;
         DummyGame.sceneManager.Render();
 
         gameItem.Draw();
-        //shaderProgram.unbind();
-        for(int i=0;i<items.size();i++){
+        shaderProgram.unbind();
+       /* for(int i=0;i<items.size();i++){
 	        items.get(i).Draw();
 	        items.get(i).GetCurrentBBox().Draw();
-        }
+        }*/
 
-        gameItem.GetCurrentBBox().Draw();
+        //gameItem.GetCurrentBBox().Draw();
     }
 
 
