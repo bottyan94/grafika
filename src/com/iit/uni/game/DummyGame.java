@@ -38,8 +38,10 @@ public class DummyGame implements IGameLogic {
 
 	// 2D GameObject items
 	public GameObject2D gameItem;
-	private GameObject2D itemsOnGround = new GameObject2D();
+	private GameObject2D itemsOnGround;
 	private GameObject2D gyemant;
+	
+	private ArrayList<GameObject2D> AllItems;
 
 	// Global Scene manager
 	public static C2DSceneManager sceneManager;
@@ -174,7 +176,7 @@ public class DummyGame implements IGameLogic {
 
 		//ItemsOnGround--------------------------------------------------------------------------------------------
 
-		ArrayList<GameObject2D> AllItems = new ArrayList<>();
+		AllItems = new ArrayList<>();
 		//itemsOnGround = new GameObject2D();
 
 		C2DGraphicsLayer itemLayer = new C2DGraphicsLayer();
@@ -185,10 +187,13 @@ public class DummyGame implements IGameLogic {
 
 
 		for(int i=0;i< a;i++){
-			//itemsOnGround ;
+			
+			itemsOnGround = new GameObject2D();
 			gem.SetScale(2);
 			itemsOnGround.AddFrame(gem);
 			itemsOnGround.SetPosition(500+i*130, 200);
+			
+			itemsOnGround.SetBoundingBox(gem.GetHeight(), gem.GetWidth());
 
 			gems.add(itemsOnGround);
 
@@ -196,10 +201,10 @@ public class DummyGame implements IGameLogic {
 			//System.out.println(ar.get(i).GetPosition().getX());
 		}
 
-		gyemant = new GameObject2D();
+		/*gyemant = new GameObject2D();
 		gyemant.AddFrame(gem);
 		gyemant.SetPosition(500, 200);
-		gyemant.SetBoundingBox(gem.GetHeight(), gem.GetWidth());
+		gyemant.SetBoundingBox(gem.GetHeight(), gem.GetWidth());*/
 
 
 
@@ -208,10 +213,11 @@ public class DummyGame implements IGameLogic {
 
 		for(int i=0;i< a;i++){
 			itemsOnGround = new GameObject2D();
-			Potion.SetScale(2);
+			Potion.SetScale(1);
 			itemsOnGround.AddFrame(Potion);
 			itemsOnGround.SetPosition(450 + i * 150, 560);
-			itemsOnGround.SetBoundingBox();
+			
+			itemsOnGround.SetBoundingBox(Potion.GetHeight(),Potion.GetWidth());
 
 			potion.add(itemsOnGround);
 		}
@@ -361,7 +367,7 @@ public class DummyGame implements IGameLogic {
 
 	@Override
 	public void render(Window window) {
-		renderer.render(window, camera, gameItem, gyemant);
+		renderer.render(window, camera, gameItem, AllItems);
 
 	}
 

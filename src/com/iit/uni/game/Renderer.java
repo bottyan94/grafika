@@ -6,6 +6,8 @@ import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glViewport;
 
+import java.util.ArrayList;
+
 import com.iit.uni.engine.*;
 import com.iit.uni.engine.math.MATRIX4X4;
 import org.joml.Matrix4f;
@@ -190,6 +192,37 @@ mRenderer=this;
 
         gameItem.GetCurrentBBox().Draw();
     }
+    
+    public void render(Window window,  CCamera2D camera, GameObject2D gameItem, ArrayList<GameObject2D> items) {
+        clear();
+
+        if (window.isResized()) {
+            glViewport(0, 0, window.getWidth(), window.getHeight());
+            window.setResized(false);
+        }
+
+        shaderProgram.bind();
+
+        shaderProgram.setUniform("projectionMatrix", projectionMatrix);
+        shaderProgram.setUniform("texture_sampler", 0);
+
+        MATRIX4X4 viewMatrix = camera.GetViewMatrix();
+
+        shaderProgram.setUniform("viewMatrix", viewMatrix);
+
+
+        DummyGame.sceneManager.Render();
+
+        gameItem.Draw();
+        //shaderProgram.unbind();
+        for(int i=0;i<items.size();i++){
+	        items.get(i).Draw();
+	        items.get(i).GetCurrentBBox().Draw();
+        }
+
+        gameItem.GetCurrentBBox().Draw();
+    }
+
 
 
     public void cleanup() {
