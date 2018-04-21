@@ -350,6 +350,8 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void update(float interval) {
 
+		//System.out.println(gameItem.mBBoxTransformed.CheckOverlapping(AllItems.get(1).GetCurrentBBox()));
+
 		//gameItem.SetBoundingBox();
 		//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
 		//gameItem.DrawBoundingBox();

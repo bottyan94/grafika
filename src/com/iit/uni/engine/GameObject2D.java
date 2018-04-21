@@ -442,4 +442,8 @@ public class GameObject2D {
 		return m_Animations.get(GetID()).GetWidth();
 	}
 
+	public BoundingBox2D GetBBox () {
+		return mBBoxTransformed;
+	}
+
 }
