@@ -42,6 +42,9 @@ public class DummyGame implements IGameLogic {
 	private GameObject2D gyemant;
 	
 	private ArrayList<GameObject2D> AllItems;
+	
+	
+	private int ID=0;
 
 	// Global Scene manager
 	public static C2DSceneManager sceneManager;
@@ -192,7 +195,8 @@ public class DummyGame implements IGameLogic {
 			gem.SetScale(2);
 			itemsOnGround.AddFrame(gem);
 			itemsOnGround.SetPosition(500+i*130, 200);
-			
+			itemsOnGround.SetID(ID);
+			ID++;
 			itemsOnGround.SetBoundingBox(gem.GetHeight(), gem.GetWidth());
 
 			gems.add(itemsOnGround);
@@ -216,6 +220,8 @@ public class DummyGame implements IGameLogic {
 			Potion.SetScale(1);
 			itemsOnGround.AddFrame(Potion);
 			itemsOnGround.SetPosition(450 + i * 150, 560);
+			itemsOnGround.SetID(ID);
+			ID++;
 			
 			itemsOnGround.SetBoundingBox(Potion.GetHeight(),Potion.GetWidth());
 
@@ -225,6 +231,11 @@ public class DummyGame implements IGameLogic {
 
 		AllItems.addAll(gems);
 		AllItems.addAll(potion);
+		
+		
+		for(int i=0;i<AllItems.size();i++){
+			System.out.println(AllItems.get(i).GetID());
+		}
 
 		itemLayer.AddGameObject(AllItems);
 		//ItemsOnGround--------------------------------------------------------------------------------------------END
@@ -340,8 +351,8 @@ public class DummyGame implements IGameLogic {
 	public void update(float interval) {
 
 		//gameItem.SetBoundingBox();
-		System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
-		gameItem.DrawBoundingBox();
+		//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
+		//gameItem.DrawBoundingBox();
 
 
 		if(up == 1) {

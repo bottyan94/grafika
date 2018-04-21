@@ -73,7 +73,7 @@ public class C2DGraphicsLayer {
 		if (gameobject != null) {
 			
 			for (int j = 0; j < gameobject.size(); j++) {
-				System.out.println(j);
+				//System.out.println(j);
 				mObjectList.add(gameobject.get(j));	
 			}
 			
