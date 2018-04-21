@@ -38,7 +38,9 @@ public class DummyGame implements IGameLogic {
 
 	// 2D GameObject items
 	public GameObject2D gameItem;
-	private GameObject2D itemsOnGround;
+	private GameObject2D itemsOnGround = new GameObject2D();
+	private GameObject2D gyemant;
+
 	// Global Scene manager
 	public static C2DSceneManager sceneManager;
 
@@ -93,6 +95,7 @@ public class DummyGame implements IGameLogic {
 
 		gameItem.SetPosition(400, 235);
 		gameItem.SetScale(0.5f);
+		gameItem.SetBoundingBox(gameItem.GetHeight(), gameItem.GetWidth());
 
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
@@ -182,7 +185,7 @@ public class DummyGame implements IGameLogic {
 
 
 		for(int i=0;i< a;i++){
-			itemsOnGround = new GameObject2D();
+			//itemsOnGround ;
 			gem.SetScale(2);
 			itemsOnGround.AddFrame(gem);
 			itemsOnGround.SetPosition(500+i*130, 200);
@@ -193,6 +196,11 @@ public class DummyGame implements IGameLogic {
 			//System.out.println(ar.get(i).GetPosition().getX());
 		}
 
+		gyemant = new GameObject2D();
+		gyemant.AddFrame(gem);
+		gyemant.SetPosition(500, 200);
+		gyemant.SetBoundingBox(gem.GetHeight(), gem.GetWidth());
+
 
 
 		ArrayList<GameObject2D> potion = new ArrayList<>();
@@ -202,7 +210,8 @@ public class DummyGame implements IGameLogic {
 			itemsOnGround = new GameObject2D();
 			Potion.SetScale(2);
 			itemsOnGround.AddFrame(Potion);
-			itemsOnGround.SetPosition(450+i*150, 560);
+			itemsOnGround.SetPosition(450 + i * 150, 560);
+			itemsOnGround.SetBoundingBox();
 
 			potion.add(itemsOnGround);
 		}
@@ -324,7 +333,7 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void update(float interval) {
 
-		gameItem.SetBoundingBox();
+		//gameItem.SetBoundingBox();
 		System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
 		gameItem.DrawBoundingBox();
 
@@ -352,7 +361,7 @@ public class DummyGame implements IGameLogic {
 
 	@Override
 	public void render(Window window) {
-		renderer.render(window, camera, gameItem);
+		renderer.render(window, camera, gameItem, gyemant);
 
 	}
 

@@ -312,6 +312,12 @@ public class GameObject2D {
 		mBBoxTransformed.SetPoints(new Vector2D(0f, 0f), new Vector2D(300f, 500f));
 	}
 
+	public void SetBoundingBox(float height, float width) {
+
+		mBBoxOriginal.SetPoints(new Vector2D(0f, 0f), new Vector2D(width, height));
+		mBBoxTransformed.SetPoints(new Vector2D(0f, 0f), new Vector2D(width, height));
+	}
+
 	public void DrawBoundingBox() {
 		GetCurrentBBox();
 		System.out.println(mBBoxTransformed.WriteBB());
@@ -323,8 +329,8 @@ public class GameObject2D {
 		mBBoxTransformed.transformByRotate(0, 0, 0, 1);
 		if(GetScale()!=1){
 			mBBoxTransformed.transformByScale(new Vector2D(GetScale(), GetScale()));
-			float segedx = (mBBoxTransformed.GetMaxPoint().x - mBBoxTransformed.GetMinPoint().x)*(1f-(GetScale()));
-			float segedy = (mBBoxTransformed.GetMaxPoint().y - mBBoxTransformed.GetMinPoint().y)*(1f-(GetScale()));
+			float segedx = (mBBoxTransformed.GetMaxPoint().x - mBBoxTransformed.GetMinPoint().x)*(GetScale());
+			float segedy = (mBBoxTransformed.GetMaxPoint().y - mBBoxTransformed.GetMinPoint().y)*(GetScale());
 			mBBoxTransformed.transformByTranslate(new Vector2D(GetPositionX()+segedx, GetPositionY()+segedy));
 		} else {
 			mBBoxTransformed.transformByTranslate(new Vector2D(GetPositionX(), GetPositionY()));
@@ -426,6 +432,14 @@ public class GameObject2D {
 
 	public void SetName(String name) {
 		mName = name;
+	}
+
+	public float GetHeight() {
+		return m_Animations.get(GetID()).GetHeight();
+	}
+
+	public float GetWidth() {
+		return m_Animations.get(GetID()).GetWidth();
 	}
 
 }

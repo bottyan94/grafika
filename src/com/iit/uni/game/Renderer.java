@@ -162,6 +162,35 @@ mRenderer=this;
         gameItem.GetCurrentBBox().Draw();
     }
 
+    public void render(Window window,  CCamera2D camera, GameObject2D gameItem, GameObject2D items) {
+        clear();
+
+        if (window.isResized()) {
+            glViewport(0, 0, window.getWidth(), window.getHeight());
+            window.setResized(false);
+        }
+
+        shaderProgram.bind();
+
+        shaderProgram.setUniform("projectionMatrix", projectionMatrix);
+        shaderProgram.setUniform("texture_sampler", 0);
+
+        MATRIX4X4 viewMatrix = camera.GetViewMatrix();
+
+        shaderProgram.setUniform("viewMatrix", viewMatrix);
+
+
+        DummyGame.sceneManager.Render();
+
+        gameItem.Draw();
+        //shaderProgram.unbind();
+
+        items.Draw();
+        items.GetCurrentBBox().Draw();
+
+        gameItem.GetCurrentBBox().Draw();
+    }
+
 
     public void cleanup() {
         if (shaderProgram != null) {

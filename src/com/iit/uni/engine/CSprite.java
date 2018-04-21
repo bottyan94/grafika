@@ -301,4 +301,13 @@ public class CSprite {
 			tex.cleanup();
 		}
 	}
+
+	public float GetHeight() {
+		return m_vFrames.get(m_iActualFrame).GetHeight();
+	}
+
+	public float GetWidth() {
+		return m_vFrames.get(m_iActualFrame).GetWidth();
+	}
+
 }

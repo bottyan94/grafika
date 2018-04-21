@@ -43,6 +43,14 @@ public class CSpriteFrame {
 		mName = name;
 	}
 
+	public float GetHeight(){
+		return mFrame.GetHeight();
+	}
+
+	public float GetWidth(){
+		return mFrame.GetWidth();
+	}
+
 	///
 	/// Add a bounding box
 	///
