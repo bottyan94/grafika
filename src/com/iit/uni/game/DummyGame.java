@@ -234,7 +234,7 @@ public class DummyGame implements IGameLogic {
 		
 		
 		for(int i=0;i<AllItems.size();i++){
-			System.out.println(AllItems.get(i).GetID());
+			System.out.println("ID:"+AllItems.get(i).GetID());
 		}
 
 		itemLayer.AddGameObject(AllItems);
@@ -355,7 +355,13 @@ public class DummyGame implements IGameLogic {
 		//gameItem.SetBoundingBox();
 		//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
 		//gameItem.DrawBoundingBox();
-
+		
+		for(int i=0;i<AllItems.size();i++){
+			
+			if(gameItem.GetBBox().CheckOverlapping(AllItems.get(i).GetCurrentBBox()) == true){
+				AllItems.get(i).SetVisible(false);
+			};
+		}
 
 		if(up == 1) {
 			if (direction == 1) {
