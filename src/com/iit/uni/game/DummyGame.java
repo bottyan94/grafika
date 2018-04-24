@@ -46,7 +46,8 @@ public class DummyGame implements IGameLogic {
 	
 	private ArrayList<GameObject2D> AllItems;
 	private ArrayList<GameObject2D> Alltestfold;
-	
+	private ArrayList<GameObject2D> AllLebegoFold;
+
 	
 	private int ID=0;
 
@@ -70,29 +71,65 @@ public class DummyGame implements IGameLogic {
 		 * Creating an animated game object
 		 */
 
+
+
+
 		platform = new GameObject2D();
-		CSprite platLeft = new CSprite("textures/platform/Plat1", 1, 128, 128);
-		platform.AddFrame(platLeft);
-		platform.SetPosition(700, 250);
+		AllLebegoFold = new ArrayList<>();
+		CSprite lebegoBal = new CSprite("textures/platform/Plat1", 1, 128, 128);
+		platform.AddFrame(lebegoBal);
+		platform.SetPosition(500, 250);
 		platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
+		AllLebegoFold.add(platform);
+
+		platform = new GameObject2D();
+		CSprite lebegoKozep = new CSprite("textures/platform/Plat2", 1, 128, 128);
+		platform.AddFrame(lebegoKozep);
+		platform.SetPosition(628, 250);
+		platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
+		AllLebegoFold.add(platform);
+
+		platform = new GameObject2D();
+		CSprite lebegoJob = new CSprite("textures/platform/Plat3", 1, 128, 128);
+		platform.AddFrame(lebegoJob);
+		platform.SetPosition(756, 250);
+		platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
+		AllLebegoFold.add(platform);
 
 
 		Alltestfold = new ArrayList<>();
 
 
-		testfold = new GameObject2D();
-		CSprite test = new CSprite("textures/platform/Plat2", 1, 128, 128);
-		testfold.AddFrame(test);
-		testfold.SetPosition(0, 595);
-		testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
+		CSprite test = new CSprite("textures/platform/Tile (2)", 1, 128, 128);
+		CSprite testBal = new CSprite("textures/platform/Tile (1)", 1, 128, 128);
+		CSprite testJob = new CSprite("textures/platform/Tile (3)", 1, 128, 128);
+		for(int i=1; i<9; i++){
+			if(i==1){
+				testfold = new GameObject2D();
+				testfold.AddFrame(testBal);
+				testfold.SetPosition(0 + i * 128, 595);
+				testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
 
-		testfold2 = new GameObject2D();
-		testfold2.AddFrame(test);
-		testfold2.SetPosition(128, 595);
-		testfold2.SetBoundingBox(testfold2.GetHeight(), testfold2.GetWidth());
+				Alltestfold.add(testfold);
 
-		Alltestfold.add(testfold);
-		Alltestfold.add(testfold2);
+			}else if(i==8){
+				testfold = new GameObject2D();
+				testfold.AddFrame(testJob);
+				testfold.SetPosition(0 + i * 128, 595);
+				testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
+
+				Alltestfold.add(testfold);
+
+			}else
+			testfold = new GameObject2D();
+			testfold.AddFrame(test);
+			testfold.SetPosition(0 + i * 128, 595);
+			testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
+
+			Alltestfold.add(testfold);
+		}
+
+
 
 		gameItem = new GameObject2D();
 
@@ -206,6 +243,7 @@ public class DummyGame implements IGameLogic {
 		playerLayer.AddGameObject(gameItem);
 		playerLayer.AddGameObject(platform);
 		playerLayer.AddGameObject(Alltestfold);
+		playerLayer.AddGameObject(AllLebegoFold);
 
 		//ItemsOnGround--------------------------------------------------------------------------------------------
 
