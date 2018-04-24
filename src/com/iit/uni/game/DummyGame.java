@@ -219,6 +219,7 @@ public class DummyGame implements IGameLogic {
 			//System.out.println(ar.get(i).GetPosition().getX());
 		}
 
+
 		/*gyemant = new GameObject2D();
 		gyemant.AddFrame(gem);
 		gyemant.SetPosition(500, 200);
