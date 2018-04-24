@@ -42,8 +42,10 @@ public class DummyGame implements IGameLogic {
 	private GameObject2D itemsOnGround;
 	private GameObject2D platform;
 	private GameObject2D testfold;
+	private GameObject2D testfold2;
 	
 	private ArrayList<GameObject2D> AllItems;
+	private ArrayList<GameObject2D> Alltestfold;
 	
 	
 	private int ID=0;
@@ -69,20 +71,28 @@ public class DummyGame implements IGameLogic {
 		 */
 
 		platform = new GameObject2D();
-		CSprite platLeft = new CSprite("textures/platform/Plat1", 1, 125, 125);
+		CSprite platLeft = new CSprite("textures/platform/Plat1", 1, 128, 128);
 		platform.AddFrame(platLeft);
 		platform.SetPosition(700, 250);
 		platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
 
 
+		Alltestfold = new ArrayList<>();
+
+
 		testfold = new GameObject2D();
-		CSprite test = new CSprite("textures/background/layer_sd_05", 1, 200, 200);
+		CSprite test = new CSprite("textures/platform/Plat2", 1, 128, 128);
 		testfold.AddFrame(test);
-		testfold.SetPosition(1280, 0);
+		testfold.SetPosition(0, 595);
 		testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
 
+		testfold2 = new GameObject2D();
+		testfold2.AddFrame(test);
+		testfold2.SetPosition(128, 595);
+		testfold2.SetBoundingBox(testfold2.GetHeight(), testfold2.GetWidth());
 
-
+		Alltestfold.add(testfold);
+		Alltestfold.add(testfold2);
 
 		gameItem = new GameObject2D();
 
@@ -139,7 +149,7 @@ public class DummyGame implements IGameLogic {
 		clouds.CreateTexture("textures/background/layer_sd_02.png");
 		Texture2D clouds1 = new Texture2D();
 		clouds1.CreateTexture("textures/background/layer_sd_02.png");
-		clouds1.setPosition(1280,0,0);
+		clouds1.setPosition(1280,0, 0);
 		Texture2D clouds2 = new Texture2D();
 		clouds2.CreateTexture("textures/background/layer_sd_02.png");
 		clouds2.setPosition(2560, 0, 0);
@@ -158,7 +168,7 @@ public class DummyGame implements IGameLogic {
 		trees.CreateTexture("textures/background/layer_sd_04.png");
 		Texture2D trees1 = new Texture2D();
 		trees1.CreateTexture("textures/background/layer_sd_04.png");
-		trees1.setPosition(1280,0,0);
+		trees1.setPosition(1280,0, 0);
 		Texture2D trees2 = new Texture2D();
 		trees2.CreateTexture("textures/background/layer_sd_04.png");
 		trees2.setPosition(2506,0,0);
@@ -195,7 +205,7 @@ public class DummyGame implements IGameLogic {
 		C2DGraphicsLayer playerLayer = new C2DGraphicsLayer();
 		playerLayer.AddGameObject(gameItem);
 		playerLayer.AddGameObject(platform);
-		playerLayer.AddGameObject(testfold);
+		playerLayer.AddGameObject(Alltestfold);
 
 		//ItemsOnGround--------------------------------------------------------------------------------------------
 
@@ -430,7 +440,7 @@ public class DummyGame implements IGameLogic {
 
 	@Override
 	public void render(Window window) {
-		renderer.render(window, camera, gameItem, testfold);
+		renderer.render(window, camera, gameItem, Alltestfold);
 
 	}
 
