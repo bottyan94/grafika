@@ -41,6 +41,7 @@ public class DummyGame implements IGameLogic {
 	public GameObject2D gameItem;
 	private GameObject2D itemsOnGround;
 	private GameObject2D platform;
+	private GameObject2D testfold;
 	
 	private ArrayList<GameObject2D> AllItems;
 	
@@ -68,13 +69,17 @@ public class DummyGame implements IGameLogic {
 		 */
 
 		platform = new GameObject2D();
-
 		CSprite platLeft = new CSprite("textures/platform/Plat1", 1, 125, 125);
-
 		platform.AddFrame(platLeft);
-
-		platform.SetPosition(700, 200);
+		platform.SetPosition(700, 250);
 		platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
+
+
+		testfold = new GameObject2D();
+		CSprite test = new CSprite("textures/background/layer_sd_05", 1, 200, 200);
+		testfold.AddFrame(test);
+		testfold.SetPosition(1280, 0);
+		testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
 
 
 
@@ -190,6 +195,7 @@ public class DummyGame implements IGameLogic {
 		C2DGraphicsLayer playerLayer = new C2DGraphicsLayer();
 		playerLayer.AddGameObject(gameItem);
 		playerLayer.AddGameObject(platform);
+		playerLayer.AddGameObject(testfold);
 
 		//ItemsOnGround--------------------------------------------------------------------------------------------
 
@@ -424,7 +430,7 @@ public class DummyGame implements IGameLogic {
 
 	@Override
 	public void render(Window window) {
-		renderer.render(window, camera, gameItem, platform);
+		renderer.render(window, camera, gameItem, testfold);
 
 	}
 
