@@ -98,6 +98,7 @@ public class DummyGame implements IGameLogic {
 
 
 		Alltestfold = new ArrayList<>();
+		//asd
 
 
 		CSprite test = new CSprite("textures/platform/Tile (2)", 1, 128, 128);
