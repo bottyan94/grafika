@@ -412,12 +412,48 @@ public class DummyGame implements IGameLogic {
 			}
 		}
 
+		if (speedY > 2 || speedY < 0) {
+			if (direction == 1) {
+				gameItem.SetCurrentFrame(3);
+			} else {
+				gameItem.SetCurrentFrame(4);
+			}
+		}
+
 
 	}
 
 	@Override
 	public void update(float interval) {
 
+		UtkozesekVizsgalata();
+		Gravity();
+
+	}
+
+	@Override
+	public void render(Window window) {
+		renderer.render(window, camera, gameItem, Alltestfold);
+
+	}
+
+	@Override
+	public void cleanup() {
+		renderer.cleanup();
+		for (int i = 0; i < backgrounds.length; i++)
+			backgrounds[i].cleanup();
+		gameItem.cleanUp();
+	}
+
+	public void Gravity() {
+		Vector2D pos = gameItem.GetPosition();
+		pos.y += speedY;
+		speedY = speedY + gravity;
+		gameItem.SetPosition(pos);
+		System.out.println(speedY);
+	}
+
+	public void UtkozesekVizsgalata() {
 		for(int k=0; k<Alltestfold.size(); k++) {
 			if (gameItem.GetCurrentBBox().CheckOverlapping(Alltestfold.get(k).GetCurrentBBox())) {
 				if (gameItem.GetBBoxMaxY() > Alltestfold.get(k).GetBBoxMinY()-30f && gameItem.GetBBoxMaxY() < Alltestfold.get(k).GetBBoxMinY() + 35f && (gameItem.GetBBoxMaxX() > Alltestfold.get(k).GetBBoxMinX() || gameItem.GetBBoxMinX() < Alltestfold.get(k).GetBBoxMaxX())) {
@@ -474,42 +510,6 @@ public class DummyGame implements IGameLogic {
 			}
 		}*/
 
-
-
-		Gravity();
-
-
-		if (speedY > 2 || speedY < 0) {
-			if (direction == 1) {
-				gameItem.SetCurrentFrame(3);
-			} else {
-				gameItem.SetCurrentFrame(4);
-			}
-		}
-
-
-	}
-
-	@Override
-	public void render(Window window) {
-		renderer.render(window, camera, gameItem, Alltestfold);
-
-	}
-
-	@Override
-	public void cleanup() {
-		renderer.cleanup();
-		for (int i = 0; i < backgrounds.length; i++)
-			backgrounds[i].cleanup();
-		gameItem.cleanUp();
-	}
-
-	public void Gravity() {
-		Vector2D pos = gameItem.GetPosition();
-		pos.y += speedY;
-		speedY = speedY + gravity;
-		gameItem.SetPosition(pos);
-		System.out.println(speedY);
 	}
 
 
