@@ -219,7 +219,6 @@ mRenderer=this;
 	        items.get(i).Draw();
 	        items.get(i).GetCurrentBBox().Draw();
         }
-
         gameItem.GetCurrentBBox().Draw();
     }
 

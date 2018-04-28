@@ -109,7 +109,7 @@ public class DummyGame implements IGameLogic {
 				testfold = new GameObject2D();
 				testfold.AddFrame(testBal);
 				testfold.SetPosition(0 + i * 128, 595);
-				//testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
+				testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
 
 				Alltestfold.add(testfold);
 
@@ -117,7 +117,7 @@ public class DummyGame implements IGameLogic {
 				testfold = new GameObject2D();
 				testfold.AddFrame(testJob);
 				testfold.SetPosition(0 + i * 128, 595);
-				//testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
+				testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
 
 				Alltestfold.add(testfold);
 
@@ -125,7 +125,7 @@ public class DummyGame implements IGameLogic {
 				testfold = new GameObject2D();
 			testfold.AddFrame(test);
 			testfold.SetPosition(0 + i * 128, 595);
-			//testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
+			testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
 
 			Alltestfold.add(testfold);
 		}
@@ -165,7 +165,7 @@ public class DummyGame implements IGameLogic {
 
 		gameItem.SetPosition(400, 235);
 		gameItem.SetScale(0.5f);
-		//gameItem.SetBoundingBox(gameItem.GetHeight(), gameItem.GetWidth());
+		gameItem.SetBoundingBox(gameItem.GetHeight(), gameItem.GetWidth());
 
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
@@ -381,14 +381,14 @@ public class DummyGame implements IGameLogic {
 				gameItem.SetCurrentFrame(2);
 			}
 			Vector2D pos = gameItem.GetPosition();
-			if (gameItem.GetBBoxMinX() >= 5)
+			if (gameItem.GetCurrentBBox().GetMinPoint().x >= 5) {
 				pos.x -= 5f;
 				recentcameraX = camera.GetX();
 				camera.MoveLeft(5f);
 				newcameraX = camera.GetX();
 			/*if(pos.x>=400 && pos.x<=2960){
 			camera.SetPosition(pos.x, pos.y);}*/
-			gameItem.SetPosition(pos);
+			gameItem.SetPosition(pos); }
 		}
 
 
@@ -398,14 +398,14 @@ public class DummyGame implements IGameLogic {
 				gameItem.SetCurrentFrame(1);
 			}
 			Vector2D pos = gameItem.GetPosition();
-			if (gameItem.GetBBoxMaxX() <= 1285)
+			if (gameItem.GetCurrentBBox().GetMaxPoint().x <= 1285) {
 				pos.x += 5f;
 				recentcameraX = camera.GetX();
 				camera.MoveRight(5f);
 				newcameraX = camera.GetX();
 			/*if(pos.x >= 400 && pos.x <=2960){
 			camera.SetPosition(pos.x, pos.y);}*/
-			gameItem.SetPosition(pos);
+			gameItem.SetPosition(pos); }
 		}
 
 
@@ -502,8 +502,14 @@ public class DummyGame implements IGameLogic {
 
 	public void SetAllBBox() {
 		gameItem.SetKulonbseg(GetCameraMove());
-		gameItem.SetBoundingBox(gameItem.GetHeight(), gameItem.GetWidth());
+		//gameItem.SetBoundingBox(gameItem.GetHeight(), gameItem.GetWidth());
 		gameItem.GetCurrentBBox();
+
+		for (int i = 1; i < 9; i++){
+			//Alltestfold.get(i).SetBoundingBox(Alltestfold.get(i).GetHeight(), Alltestfold.get(i).GetWidth());
+			Alltestfold.get(i).GetCurrentBBox();
+			Alltestfold.get(i).DrawBoundingBox();
+		}
 
 		//System.out.println("KarakterX: " + gameItem.GetX() + " KarakterY:" + gameItem.GetY());
 		//System.out.println("BBox    X: " + gameItem.GetBBoxMinX() + " BBox    Y: " + gameItem.GetBBoxMinY());

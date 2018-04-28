@@ -326,21 +326,23 @@ public class GameObject2D {
 
 	public BoundingBox2D GetCurrentBBox() {
 
+
+
 		mBBoxTransformed.SetPoints(mBBoxOriginal.GetMinPoint(), mBBoxOriginal.GetMaxPoint());
 		mBBoxTransformed.transformByRotate(0, 0, 0, 1);
 		if(GetScale()!=1){
 			mBBoxTransformed.transformByScale(new Vector2D(GetScale(), GetScale()));
 			float segedx = (mBBoxTransformed.GetMaxPoint().x - mBBoxTransformed.GetMinPoint().x)*(GetScale());
 			float segedy = (mBBoxTransformed.GetMaxPoint().y - mBBoxTransformed.GetMinPoint().y)*(GetScale());
-			mBBoxTransformed.transformByTranslate(new Vector2D(GetPositionX()+segedx-kulonbseg, GetPositionY()+segedy));
+			mBBoxTransformed.transformByTranslate(new Vector2D(GetPositionX()+segedx, GetPositionY()+segedy));
 		} else {
-			mBBoxTransformed.transformByTranslate(new Vector2D(GetPositionX()-kulonbseg, GetPositionY()));
+			mBBoxTransformed.transformByTranslate(new Vector2D(GetPositionX(), GetPositionY()));
 		}
-
 
 
 		return mBBoxTransformed;
 	}
+
 
 	public float GetBBoxMinX(){
 		return mBBoxTransformed.GetMinPoint().x;
