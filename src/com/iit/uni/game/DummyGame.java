@@ -30,7 +30,7 @@ public class DummyGame implements IGameLogic {
 	private float gravity = 2f;
 	private int spacePushed = 0;
 	private int isOnGround = 1;
-	private int utkozik = 1;
+	private int isIdle = 1;
 
 	private final Renderer renderer;
 	private int direction = 1;
@@ -382,7 +382,7 @@ public class DummyGame implements IGameLogic {
 
 		if (left == 1) {
 			direction = -1;
-			if (spacePushed == 0) {
+			if (spacePushed == 0 && speedY <= 2f ) {
 				gameItem.SetCurrentFrame(2);
 			}
 			Vector2D pos = gameItem.GetPosition();
@@ -394,7 +394,7 @@ public class DummyGame implements IGameLogic {
 
 		if (right == 1) {
 			direction = 1;
-			if (spacePushed == 0) {
+			if (spacePushed == 0 && speedY <= 2f ) {
 				gameItem.SetCurrentFrame(1);
 			}
 			Vector2D pos = gameItem.GetPosition();
@@ -404,7 +404,7 @@ public class DummyGame implements IGameLogic {
 		}
 
 
-		if (right == 0 && left == 0 && down == 0 && speedY == 0) {
+		if (right == 0 && left == 0 && down == 0 && spacePushed == 0 && speedY <= 2f) {
 			if (direction == 1) {
 				gameItem.SetCurrentFrame(0);
 			} else {
@@ -421,9 +421,11 @@ public class DummyGame implements IGameLogic {
 		for(int k=0; k<Alltestfold.size(); k++) {
 			if (gameItem.GetCurrentBBox().CheckOverlapping(Alltestfold.get(k).GetCurrentBBox())) {
 				if (gameItem.GetBBoxMaxY() > Alltestfold.get(k).GetBBoxMinY()-30f && gameItem.GetBBoxMaxY() < Alltestfold.get(k).GetBBoxMinY() + 35f && (gameItem.GetBBoxMaxX() > Alltestfold.get(k).GetBBoxMinX() || gameItem.GetBBoxMinX() < Alltestfold.get(k).GetBBoxMaxX())) {
-					System.out.println("FENTROL");
+					//System.out.println("FENTROL");
 					if (speedY > 0f) {
-						isOnGround = 1;
+						speedY = 0;
+						up = 0;
+						spacePushed = 0;
 					}
 				}
 			}
@@ -432,9 +434,11 @@ public class DummyGame implements IGameLogic {
 		for(int k=0; k<AllLebegoFold.size(); k++) {
 			if (gameItem.GetCurrentBBox().CheckOverlapping(AllLebegoFold.get(k).GetCurrentBBox())) {
 				if (gameItem.GetBBoxMaxY() > AllLebegoFold.get(k).GetBBoxMinY()-30f && gameItem.GetBBoxMaxY() < AllLebegoFold.get(k).GetBBoxMinY() + 35f && (gameItem.GetBBoxMaxX() > AllLebegoFold.get(k).GetBBoxMinX() || gameItem.GetBBoxMinX() < AllLebegoFold.get(k).GetBBoxMaxX())) {
-					System.out.println("FENTROL");
+					//System.out.println("FENTROL");
 					if (speedY > 0f) {
-						isOnGround = 1;
+						speedY = 0;
+						up = 0;
+						spacePushed = 0;
 					}
 				}
 			}
@@ -470,25 +474,17 @@ public class DummyGame implements IGameLogic {
 			}
 		}*/
 
-		if (isOnGround == 1) {
-			speedY = 0;
-			up = 0;
-			spacePushed = 0;
-		}
 
 
+		Gravity();
 
-		if (up == 1 || isOnGround == 0) {
+
+		if (speedY > 2 || speedY < 0) {
 			if (direction == 1) {
 				gameItem.SetCurrentFrame(3);
 			} else {
 				gameItem.SetCurrentFrame(4);
 			}
-			Gravity();
-		}
-
-		if(speedY == 0 && isOnGround == 1 && up == 0 && spacePushed == 0){
-			isOnGround = 0;
 		}
 
 
