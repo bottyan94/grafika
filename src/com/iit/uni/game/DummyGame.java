@@ -29,15 +29,16 @@ public class DummyGame implements IGameLogic {
 	private float speedX = 0f;
 	private float gravity = 2f;
 	private int spacePushed = 0;
+	private int isOnGround = 1;
+	private int utkozik = 1;
 
 	private final Renderer renderer;
-	private int direction = 0;
+	private int direction = 1;
 
 	// 2D Texture items
 	private Texture2D[] backgrounds;
 	private CCamera2D camera;
-	private float recentcameraX;
-	private float newcameraX;
+
 
 	// 2D GameObject items
 	public GameObject2D gameItem;
@@ -78,21 +79,21 @@ public class DummyGame implements IGameLogic {
 		AllLebegoFold = new ArrayList<>();
 		CSprite lebegoBal = new CSprite("textures/platform/Plat1", 1, 128, 128);
 		platform.AddFrame(lebegoBal);
-		platform.SetPosition(500, 250);
+		platform.SetPosition(500, 350);
 		//platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
 		AllLebegoFold.add(platform);
 
 		platform = new GameObject2D();
 		CSprite lebegoKozep = new CSprite("textures/platform/Plat2", 1, 128, 128);
 		platform.AddFrame(lebegoKozep);
-		platform.SetPosition(628, 250);
+		platform.SetPosition(628, 350);
 		//platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
 		AllLebegoFold.add(platform);
 
 		platform = new GameObject2D();
 		CSprite lebegoJob = new CSprite("textures/platform/Plat3", 1, 128, 128);
 		platform.AddFrame(lebegoJob);
-		platform.SetPosition(756, 250);
+		platform.SetPosition(756, 350);
 		//platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
 		AllLebegoFold.add(platform);
 
@@ -110,6 +111,7 @@ public class DummyGame implements IGameLogic {
 				testfold.AddFrame(testBal);
 				testfold.SetPosition(0 + i * 128, 595);
 				testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
+				testfold.SetName("fold");
 
 				Alltestfold.add(testfold);
 
@@ -118,6 +120,7 @@ public class DummyGame implements IGameLogic {
 				testfold.AddFrame(testJob);
 				testfold.SetPosition(0 + i * 128, 595);
 				testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
+				testfold.SetName("fold");
 
 				Alltestfold.add(testfold);
 
@@ -126,6 +129,7 @@ public class DummyGame implements IGameLogic {
 			testfold.AddFrame(test);
 			testfold.SetPosition(0 + i * 128, 595);
 			testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
+			testfold.SetName("fold");
 
 			Alltestfold.add(testfold);
 		}
@@ -163,7 +167,7 @@ public class DummyGame implements IGameLogic {
 		gameItem.AddFrame(idleLeft);
 
 
-		gameItem.SetPosition(400, 235);
+		gameItem.SetPosition(400, 0);
 		gameItem.SetScale(0.5f);
 		gameItem.SetBoundingBox(gameItem.GetHeight(), gameItem.GetWidth());
 
@@ -366,9 +370,10 @@ public class DummyGame implements IGameLogic {
 		}
 
 		if (window.isKeyPressed(GLFW_KEY_SPACE) && spacePushed == 0) {
-			speedY = -25;
+			speedY = -30f;
 			up = 1;
 			spacePushed = 1;
+			isOnGround = 0;
 		}
 
 		/*if (down == 1 && right ==1) {
@@ -381,14 +386,9 @@ public class DummyGame implements IGameLogic {
 				gameItem.SetCurrentFrame(2);
 			}
 			Vector2D pos = gameItem.GetPosition();
-			if (gameItem.GetCurrentBBox().GetMinPoint().x >= 5) {
-				pos.x -= 5f;
-				recentcameraX = camera.GetX();
-				camera.MoveLeft(5f);
-				newcameraX = camera.GetX();
-			/*if(pos.x>=400 && pos.x<=2960){
-			camera.SetPosition(pos.x, pos.y);}*/
-			gameItem.SetPosition(pos); }
+			pos.x -= 5f;
+			camera.MoveLeft(5f);
+			gameItem.SetPosition(pos);
 		}
 
 
@@ -398,18 +398,13 @@ public class DummyGame implements IGameLogic {
 				gameItem.SetCurrentFrame(1);
 			}
 			Vector2D pos = gameItem.GetPosition();
-			if (gameItem.GetCurrentBBox().GetMaxPoint().x <= 1285) {
-				pos.x += 5f;
-				recentcameraX = camera.GetX();
-				camera.MoveRight(5f);
-				newcameraX = camera.GetX();
-			/*if(pos.x >= 400 && pos.x <=2960){
-			camera.SetPosition(pos.x, pos.y);}*/
-			gameItem.SetPosition(pos); }
+			pos.x += 5f;
+			camera.MoveRight(5f);
+			gameItem.SetPosition(pos);
 		}
 
 
-		if (right == 0 && left == 0 && down == 0 && speedY == 0 && gameItem.GetY() == 235) {
+		if (right == 0 && left == 0 && down == 0 && speedY == 0) {
 			if (direction == 1) {
 				gameItem.SetCurrentFrame(0);
 			} else {
@@ -423,18 +418,27 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void update(float interval) {
 
-		//System.out.println(gameItem.mBBoxTransformed.CheckOverlapping(AllItems.get(1).GetCurrentBBox()));
+		for(int k=0; k<Alltestfold.size(); k++) {
+			if (gameItem.GetCurrentBBox().CheckOverlapping(Alltestfold.get(k).GetCurrentBBox())) {
+				if (gameItem.GetBBoxMaxY() > Alltestfold.get(k).GetBBoxMinY()-30f && gameItem.GetBBoxMaxY() < Alltestfold.get(k).GetBBoxMinY() + 35f && (gameItem.GetBBoxMaxX() > Alltestfold.get(k).GetBBoxMinX() || gameItem.GetBBoxMinX() < Alltestfold.get(k).GetBBoxMaxX())) {
+					System.out.println("FENTROL");
+					if (speedY > 0f) {
+						isOnGround = 1;
+					}
+				}
+			}
+		}
 
-		//gameItem.SetBoundingBox();
-		//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
-		//gameItem.DrawBoundingBox();
-
-		SetAllBBox();
-		float cameranakx = gameItem.GetPositionX();
-		//camera.SetXAndGetKulonbseg(cameranakx);
-		//System.out.println("karakter: " + gameItem.GetX() + " camera: " + camera.GetX());
-
-
+		for(int k=0; k<AllLebegoFold.size(); k++) {
+			if (gameItem.GetCurrentBBox().CheckOverlapping(AllLebegoFold.get(k).GetCurrentBBox())) {
+				if (gameItem.GetBBoxMaxY() > AllLebegoFold.get(k).GetBBoxMinY()-30f && gameItem.GetBBoxMaxY() < AllLebegoFold.get(k).GetBBoxMinY() + 35f && (gameItem.GetBBoxMaxX() > AllLebegoFold.get(k).GetBBoxMinX() || gameItem.GetBBoxMinX() < AllLebegoFold.get(k).GetBBoxMaxX())) {
+					System.out.println("FENTROL");
+					if (speedY > 0f) {
+						isOnGround = 1;
+					}
+				}
+			}
+		}
 
 		for (int i = 0; i < AllItems.size(); i++) {
 
@@ -450,10 +454,11 @@ public class DummyGame implements IGameLogic {
 					System.out.println("poti");
 				}
 			}
-			;
 		}
 
-		if (gameItem.GetCurrentBBox().CheckOverlapping(platform.GetCurrentBBox())) {
+
+		//Példa vizsgálat, egy kimodnott itemre
+		/*if (gameItem.GetCurrentBBox().CheckOverlapping(platform.GetCurrentBBox())) {
 			if (gameItem.GetBBoxMaxX() > platform.GetBBoxMinX() && gameItem.GetBBoxMaxX() < platform.GetBBoxMinX() + 20f && (gameItem.GetBBoxMinY() < platform.GetBBoxMaxY() || gameItem.GetBBoxMaxY() > platform.GetBBoxMinY())) {
 				System.out.println("BALROL");
 			} else if (gameItem.GetBBoxMinX() < platform.GetBBoxMaxX() && gameItem.GetBBoxMinX() > platform.GetBBoxMaxX() - 20f && (gameItem.GetBBoxMinY() < platform.GetBBoxMaxY() || gameItem.GetBBoxMaxY() > platform.GetBBoxMinY())) {
@@ -463,26 +468,30 @@ public class DummyGame implements IGameLogic {
 			} else if (gameItem.GetBBoxMinY() < platform.GetBBoxMaxY() && gameItem.GetBBoxMinY() > platform.GetBBoxMaxY() - 20f && (gameItem.GetBBoxMaxX() > platform.GetBBoxMinX() || gameItem.GetBBoxMinX() < platform.GetBBoxMaxX())) {
 				System.out.println("LENTROL");
 			}
+		}*/
+
+		if (isOnGround == 1) {
+			speedY = 0;
+			up = 0;
+			spacePushed = 0;
 		}
 
-		if (up == 1) {
+
+
+		if (up == 1 || isOnGround == 0) {
 			if (direction == 1) {
 				gameItem.SetCurrentFrame(3);
 			} else {
 				gameItem.SetCurrentFrame(4);
 			}
-			Vector2D pos = gameItem.GetPosition();
-			pos.y += speedY;
-			speedY = speedY + 2.0f;
-			gameItem.SetPosition(pos);
-			if (gameItem.GetBBoxMaxY() >= 630) {
-				speedY = 0;
-				up = 0;
-				pos.y = 235;
-				gameItem.SetPosition(pos);
-				spacePushed = 0;
-			}
+			Gravity();
 		}
+
+		if(speedY == 0 && isOnGround == 1 && up == 0 && spacePushed == 0){
+			isOnGround = 0;
+		}
+
+
 	}
 
 	@Override
@@ -499,24 +508,13 @@ public class DummyGame implements IGameLogic {
 		gameItem.cleanUp();
 	}
 
-
-	public void SetAllBBox() {
-		gameItem.SetKulonbseg(GetCameraMove());
-		//gameItem.SetBoundingBox(gameItem.GetHeight(), gameItem.GetWidth());
-		gameItem.GetCurrentBBox();
-
-		for (int i = 1; i < 9; i++){
-			//Alltestfold.get(i).SetBoundingBox(Alltestfold.get(i).GetHeight(), Alltestfold.get(i).GetWidth());
-			Alltestfold.get(i).GetCurrentBBox();
-			Alltestfold.get(i).DrawBoundingBox();
-		}
-
-		//System.out.println("KarakterX: " + gameItem.GetX() + " KarakterY:" + gameItem.GetY());
-		//System.out.println("BBox    X: " + gameItem.GetBBoxMinX() + " BBox    Y: " + gameItem.GetBBoxMinY());
-		System.out.println(GetCameraMove());
+	public void Gravity() {
+		Vector2D pos = gameItem.GetPosition();
+		pos.y += speedY;
+		speedY = speedY + gravity;
+		gameItem.SetPosition(pos);
+		System.out.println(speedY);
 	}
 
-	public float GetCameraMove() {
-		return recentcameraX - newcameraX;
-	}
+
 }
