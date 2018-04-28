@@ -45,12 +45,27 @@ public class DummyGame implements IGameLogic {
 	private GameObject2D platform;
 	private GameObject2D testfold;
 	private GameObject2D testfold2;
+	
+	private GameObject2D menuButton;
 
 	private ArrayList<GameObject2D> AllItems;
 	private ArrayList<GameObject2D> Alltestfold;
 	private ArrayList<GameObject2D> AllLebegoFold;
 
+	private double mousePosX;
+	private double mousePosY;
+	
+	Window win;
+	
+	private enum GSTATE{
+		MENU,
+		GAME,
+	};
+	
+	private GSTATE state = GSTATE.MENU;
 
+	
+	
 	private int ID = 0;
 
 	// Global Scene manager
@@ -308,6 +323,23 @@ public class DummyGame implements IGameLogic {
 		itemLayer.AddGameObject(AllItems);
 		//ItemsOnGround--------------------------------------------------------------------------------------------END
 
+		//Menü-----------------------------------------------------------------------------------------------------
+		C2DGraphicsLayer menuLayer = new C2DGraphicsLayer();
+		
+		
+		//ArrayList<GameObject2D> MenuItems = new ArrayList<>();
+		CSprite play = new CSprite("textures/items/button", 1, 200, 200);
+		
+		menuButton = new GameObject2D();
+		menuButton.AddFrame(play);
+		menuButton.SetPosition(window.getWidth()/2-(menuButton.GetWidth()/2),window.getHeight()/2-(menuButton.GetHeight()/2));
+		menuButton.SetBoundingBox();
+		
+		
+		menuLayer.AddGameObject(menuButton);
+			
+		//Menü-END-------------------------------------------------------------------------------------------------END
+		
 		// register layer at the scene
 		scene.RegisterLayer(layer0);
 		scene.RegisterLayer(layer1);
@@ -316,6 +348,7 @@ public class DummyGame implements IGameLogic {
 		scene.RegisterLayer(layer4);
 		scene.RegisterLayer(playerLayer);
 		scene.RegisterLayer(itemLayer);
+		scene.RegisterLayer(menuLayer);
 
 
 		// Register scene at the manager
@@ -346,95 +379,160 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void input(Window window) {
 
-
-		if (window.isKeyPressed(GLFW_KEY_RIGHT)) {
-			right = 1;
-		} else {
-			right = 0;
+		if (window.isKeyPressed(GLFW_KEY_ENTER) && state == GSTATE.MENU){
+			state = GSTATE.GAME;
 		}
-
-		if (window.isKeyPressed(GLFW_KEY_LEFT)) {
-			left = 1;
-		} else {
-			left = 0;
+			
+		if (window.isKeyPressed(GLFW_KEY_L) && state == GSTATE.GAME){
+			state = GSTATE.MENU;
 		}
-
-		if (window.isKeyPressed(GLFW_KEY_DOWN)) {
-			down = 1;
-		} else {
-			down = 0;
-		}
-
-		if (window.isKeyPressed(GLFW_KEY_SPACE) && spacePushed == 0) {
-			speedY = -25;
-			up = 1;
-			spacePushed = 1;
-		}
-
-		/*if (down == 1 && right ==1) {
-
-		}*/
-
-		if (left == 1) {
-			direction = -1;
-			if (spacePushed == 0) {
-				gameItem.SetCurrentFrame(2);
-			}
-			Vector2D pos = gameItem.GetPosition();
-			if (gameItem.GetCurrentBBox().GetMinPoint().x >= 5) {
-				pos.x -= 5f;
-				recentcameraX = camera.GetX();
-				camera.MoveLeft(5f);
-				newcameraX = camera.GetX();
-			/*if(pos.x>=400 && pos.x<=2960){
-			camera.SetPosition(pos.x, pos.y);}*/
-			gameItem.SetPosition(pos); }
-		}
-
-
-		if (right == 1) {
-			direction = 1;
-			if (spacePushed == 0) {
-				gameItem.SetCurrentFrame(1);
-			}
-			Vector2D pos = gameItem.GetPosition();
-			if (gameItem.GetCurrentBBox().GetMaxPoint().x <= 1285) {
-				pos.x += 5f;
-				recentcameraX = camera.GetX();
-				camera.MoveRight(5f);
-				newcameraX = camera.GetX();
-			/*if(pos.x >= 400 && pos.x <=2960){
-			camera.SetPosition(pos.x, pos.y);}*/
-			gameItem.SetPosition(pos); }
-		}
-
-
-		if (right == 0 && left == 0 && down == 0 && speedY == 0 && gameItem.GetY() == 235) {
-			if (direction == 1) {
-				gameItem.SetCurrentFrame(0);
+		
+		/*DoubleBuffer b1 = BufferUtils.createDoubleBuffer(1);
+		DoubleBuffer b2 = BufferUtils.createDoubleBuffer(1);
+		glfwGetCursorPos(window, b1, b2);
+		System.out.println("x : " + b1.get(0) + ", y = " + b2.get(0));*/
+		
+		
+	
+		mousePosX = window.getMouseX();
+		mousePosY = window.getMouseY();
+		
+		//System.out.println("x:"+window.getMouseX()+ " y:"+window.getMouseY());
+			
+		if(state == GSTATE.GAME){
+			if (window.isKeyPressed(GLFW_KEY_RIGHT)) {
+				right = 1;
 			} else {
-				gameItem.SetCurrentFrame(7);
+				right = 0;
+			}
+	
+			if (window.isKeyPressed(GLFW_KEY_LEFT)) {
+				left = 1;
+			} else {
+				left = 0;
+			}
+	
+			if (window.isKeyPressed(GLFW_KEY_DOWN)) {
+				down = 1;
+			} else {
+				down = 0;
+			}
+	
+			if (window.isKeyPressed(GLFW_KEY_SPACE) && spacePushed == 0) {
+				speedY = -25;
+				up = 1;
+				spacePushed = 1;
+			}
+	
+			/*if (down == 1 && right ==1) {
+	
+			}*/
+	
+			if (left == 1) {
+				direction = -1;
+				if (spacePushed == 0) {
+					gameItem.SetCurrentFrame(2);
+				}
+				Vector2D pos = gameItem.GetPosition();
+				if (gameItem.GetCurrentBBox().GetMinPoint().x >= 5) {
+					pos.x -= 5f;
+					recentcameraX = camera.GetX();
+					camera.MoveLeft(5f);
+					newcameraX = camera.GetX();
+				/*if(pos.x>=400 && pos.x<=2960){
+				camera.SetPosition(pos.x, pos.y);}*/
+				gameItem.SetPosition(pos); }
+			}
+	
+	
+			if (right == 1) {
+				direction = 1;
+				if (spacePushed == 0) {
+					gameItem.SetCurrentFrame(1);
+				}
+				Vector2D pos = gameItem.GetPosition();
+				if (gameItem.GetCurrentBBox().GetMaxPoint().x <= 1285) {
+					pos.x += 5f;
+					recentcameraX = camera.GetX();
+					camera.MoveRight(5f);
+					newcameraX = camera.GetX();
+				/*if(pos.x >= 400 && pos.x <=2960){
+				camera.SetPosition(pos.x, pos.y);}*/
+				gameItem.SetPosition(pos); }
+			}
+	
+	
+			if (right == 0 && left == 0 && down == 0 && speedY == 0 && gameItem.GetY() == 235) {
+				if (direction == 1) {
+					gameItem.SetCurrentFrame(0);
+				} else {
+					gameItem.SetCurrentFrame(7);
+				}
 			}
 		}
-
 
 	}
 
+	private boolean visible = true;
+
+	
 	@Override
 	public void update(float interval) {
-
+		
+		
+		
+		if (state == GSTATE.MENU && visible == true){
+			gameItem.SetVisible(false);
+			for (int i=0;i< AllItems.size();i++){
+				AllItems.get(i).SetVisible(false);
+			}
+			for (int i=0;i< Alltestfold.size();i++){
+				Alltestfold.get(i).SetVisible(false);
+			}
+			for (int i=0;i< AllLebegoFold.size();i++){
+				AllLebegoFold.get(i).SetVisible(false);
+			}
+			
+			menuButton.SetVisible(true);
+			visible = false;
+		}
+			if (state == GSTATE.GAME && visible == false){
+			gameItem.SetVisible(true);
+			for (int i=0;i< AllItems.size();i++){
+				AllItems.get(i).SetVisible(true);
+			}
+			for (int i=0;i< Alltestfold.size();i++){
+				Alltestfold.get(i).SetVisible(true);
+			}
+			for (int i=0;i< AllLebegoFold.size();i++){
+				AllLebegoFold.get(i).SetVisible(true);
+			}
+			
+			menuButton.SetVisible(false);
+			visible = true;
+		}
+		
+			//SetAllBBox();
+			
+			if (menuButton.GetBBox().CheckOverlapping(new BoundingBox2D(new Vector2D((float) mousePosX,(float)mousePosY),new Vector2D((float) mousePosX+1,(float)mousePosY+1)))){
+				System.out.println("jó");
+			}else{
+				System.out.println("nem");
+			}
+		
 		//System.out.println(gameItem.mBBoxTransformed.CheckOverlapping(AllItems.get(1).GetCurrentBBox()));
 
 		//gameItem.SetBoundingBox();
 		//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
 		//gameItem.DrawBoundingBox();
-
+		if(state == GSTATE.GAME){
 		SetAllBBox();
 		float cameranakx = gameItem.GetPositionX();
 		//camera.SetXAndGetKulonbseg(cameranakx);
 		//System.out.println("karakter: " + gameItem.GetX() + " camera: " + camera.GetX());
 
-
+		
+		
 
 		for (int i = 0; i < AllItems.size(); i++) {
 
@@ -483,11 +581,17 @@ public class DummyGame implements IGameLogic {
 				spacePushed = 0;
 			}
 		}
+		}
 	}
 
 	@Override
 	public void render(Window window) {
 		renderer.render(window, camera, gameItem, Alltestfold);
+		/*if (state == GSTATE.GAME){
+			renderer.render(window, camera, gameItem, Alltestfold);
+		}else{
+			renderer.render(window, camera, menuButton);
+		}*/
 
 	}
 
@@ -513,7 +617,7 @@ public class DummyGame implements IGameLogic {
 
 		//System.out.println("KarakterX: " + gameItem.GetX() + " KarakterY:" + gameItem.GetY());
 		//System.out.println("BBox    X: " + gameItem.GetBBoxMinX() + " BBox    Y: " + gameItem.GetBBoxMinY());
-		System.out.println(GetCameraMove());
+		//System.out.println(GetCameraMove());
 	}
 
 	public float GetCameraMove() {

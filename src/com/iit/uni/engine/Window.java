@@ -13,6 +13,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
 import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
 import static org.lwjgl.glfw.GLFW.glfwDefaultWindowHints;
 import static org.lwjgl.glfw.GLFW.glfwGetKey;
+import static org.lwjgl.glfw.GLFW.glfwGetMouseButton;
 import static org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor;
 import static org.lwjgl.glfw.GLFW.glfwGetVideoMode;
 import static org.lwjgl.glfw.GLFW.glfwInit;
@@ -20,6 +21,8 @@ import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowShouldClose;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
@@ -40,11 +43,15 @@ import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
+import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
+
+import com.iit.uni.game.DummyGame;
 
 public class Window {
 
@@ -61,10 +68,18 @@ public class Window {
 	private GLFWKeyCallback keyCallback;
 
 	private GLFWWindowSizeCallback windowSizeCallback;
+	
+	private GLFWMouseButtonCallback mouseCallback;
+	
+	private GLFWCursorPosCallback posCallback;
 
 	private boolean resized;
 
 	private boolean vSync;
+	
+	private double xposr;
+	
+	private double yposr;
 
 	public Window(String title, int width, int height, boolean vSync) {
 		this.title = title;
@@ -119,6 +134,23 @@ public class Window {
 				}
 			}
 		});
+		
+		
+		glfwSetMouseButtonCallback(windowHandle, mouseCallback = new GLFWMouseButtonCallback() {
+			@Override
+			public void invoke(long window, int button, int action, int mods) {
+
+			}
+		});
+		
+		glfwSetCursorPosCallback(windowHandle, posCallback = new GLFWCursorPosCallback() {
+			@Override
+			public void invoke(long window, double xpos, double ypos) {
+				xposr = xpos;
+				yposr = ypos;
+			}
+		});
+
 
 		// Get the resolution of the primary monitor
 		GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
@@ -153,15 +185,31 @@ public class Window {
 	public boolean isKeyPressed(int keyCode) {
 		return glfwGetKey(windowHandle, keyCode) == GLFW_PRESS;
 	}
+	
+	public boolean isMouseButtonPressed(int button){
+			return glfwGetMouseButton(windowHandle, button) == GLFW_PRESS;
+	}
 
 	public boolean isKeyReleased(int keyCode) {
 		return glfwGetKey(windowHandle, keyCode) == GLFW_RELEASE;
 	}
 	
+	public boolean isMouseButtonReleased(int button){
+		return glfwGetMouseButton(windowHandle, button) == GLFW_RELEASE;
+}
+	
 	public boolean windowShouldClose() {
 		return glfwWindowShouldClose(windowHandle);
 	}
 
+	public double getMouseX(){
+		return xposr;
+	}
+	
+	public double getMouseY(){
+		return yposr;
+	}
+	
 	public String getTitle() {
 		return title;
 	}
