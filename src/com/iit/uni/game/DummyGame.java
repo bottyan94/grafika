@@ -55,7 +55,7 @@ public class DummyGame implements IGameLogic {
 	private double mousePosX;
 	private double mousePosY;
 	
-	Window win;
+	private boolean inside = false;
 	
 	private enum GSTATE{
 		MENU,
@@ -328,12 +328,12 @@ public class DummyGame implements IGameLogic {
 		
 		
 		//ArrayList<GameObject2D> MenuItems = new ArrayList<>();
-		CSprite play = new CSprite("textures/items/button", 1, 200, 200);
+		CSprite play = new CSprite("textures/items/Start", 1, 200, 200);
 		
 		menuButton = new GameObject2D();
 		menuButton.AddFrame(play);
 		menuButton.SetPosition(window.getWidth()/2-(menuButton.GetWidth()/2),window.getHeight()/2-(menuButton.GetHeight()/2));
-		menuButton.SetBoundingBox();
+		menuButton.SetBoundingBox(menuButton.GetHeight(),menuButton.GetWidth());
 		
 		
 		menuLayer.AddGameObject(menuButton);
@@ -382,18 +382,11 @@ public class DummyGame implements IGameLogic {
 		if (window.isKeyPressed(GLFW_KEY_ENTER) && state == GSTATE.MENU){
 			state = GSTATE.GAME;
 		}
-			
-		if (window.isKeyPressed(GLFW_KEY_L) && state == GSTATE.GAME){
-			state = GSTATE.MENU;
+		
+		if (window.isMouseButtonPressed(GLFW_MOUSE_BUTTON_1) && inside == true && state == GSTATE.MENU){
+			state = GSTATE.GAME;
 		}
 		
-		/*DoubleBuffer b1 = BufferUtils.createDoubleBuffer(1);
-		DoubleBuffer b2 = BufferUtils.createDoubleBuffer(1);
-		glfwGetCursorPos(window, b1, b2);
-		System.out.println("x : " + b1.get(0) + ", y = " + b2.get(0));*/
-		
-		
-	
 		mousePosX = window.getMouseX();
 		mousePosY = window.getMouseY();
 		
@@ -514,11 +507,12 @@ public class DummyGame implements IGameLogic {
 		
 			//SetAllBBox();
 			
-			if (menuButton.GetBBox().CheckOverlapping(new BoundingBox2D(new Vector2D((float) mousePosX,(float)mousePosY),new Vector2D((float) mousePosX+1,(float)mousePosY+1)))){
-				System.out.println("jó");
+			if (menuButton.GetCurrentBBox().CheckOverlapping(new BoundingBox2D(new Vector2D((float) mousePosX,(float)mousePosY),new Vector2D((float) mousePosX+1,(float)mousePosY+1)))){
+				inside = true;
 			}else{
-				System.out.println("nem");
+				inside = false;
 			}
+			
 		
 		//System.out.println(gameItem.mBBoxTransformed.CheckOverlapping(AllItems.get(1).GetCurrentBBox()));
 
