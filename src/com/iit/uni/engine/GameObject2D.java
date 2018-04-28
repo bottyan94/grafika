@@ -40,6 +40,7 @@ public class GameObject2D {
 
 	private BoundingBox2D mBBoxOriginal = new BoundingBox2D();
 	private BoundingBox2D mBBoxTransformed = new BoundingBox2D();
+	private float kulonbseg;
 
 	///
 	/// Default Constructor
@@ -331,9 +332,9 @@ public class GameObject2D {
 			mBBoxTransformed.transformByScale(new Vector2D(GetScale(), GetScale()));
 			float segedx = (mBBoxTransformed.GetMaxPoint().x - mBBoxTransformed.GetMinPoint().x)*(GetScale());
 			float segedy = (mBBoxTransformed.GetMaxPoint().y - mBBoxTransformed.GetMinPoint().y)*(GetScale());
-			mBBoxTransformed.transformByTranslate(new Vector2D(GetPositionX()+segedx, GetPositionY()+segedy));
+			mBBoxTransformed.transformByTranslate(new Vector2D(GetPositionX()+segedx-kulonbseg, GetPositionY()+segedy));
 		} else {
-			mBBoxTransformed.transformByTranslate(new Vector2D(GetPositionX(), GetPositionY()));
+			mBBoxTransformed.transformByTranslate(new Vector2D(GetPositionX()-kulonbseg, GetPositionY()));
 		}
 
 
@@ -444,6 +445,10 @@ public class GameObject2D {
 
 	public BoundingBox2D GetBBox () {
 		return mBBoxTransformed;
+	}
+
+	public void SetKulonbseg(float ez) {
+		kulonbseg = ez;
 	}
 
 }

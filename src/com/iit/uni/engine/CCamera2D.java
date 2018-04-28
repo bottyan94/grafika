@@ -14,6 +14,8 @@ public class CCamera2D {
 
 	// Camera position
 	private Vector2D mPosition;
+	private float recent;
+	private float kulonbseg;
 
 	// Camera ID
 	private int mID;
@@ -78,6 +80,7 @@ public class CCamera2D {
 
 		transformMatrix.identity();
 
+
 		// Translate to position
 		transformMatrix.translate(new Vector3D(mPosition.x, mPosition.y, 0));
 		return transformMatrix;
@@ -116,5 +119,20 @@ public class CCamera2D {
 	///
 	public int GetID() {
 		return mID;
+	}
+
+	public float GetX() { return mPosition.x; }
+
+	public float GetY() { return mPosition.y; }
+
+	public void SetXAndGetKulonbseg(float uj) {
+		recent = mPosition.x;
+		kulonbseg = recent-uj;
+		if(kulonbseg > 0) {
+			MoveRight(kulonbseg);
+		}
+		if(kulonbseg < 0) {
+			MoveLeft(kulonbseg);
+		}
 	}
 }
