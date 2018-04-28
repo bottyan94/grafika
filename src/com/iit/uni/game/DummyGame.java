@@ -57,21 +57,23 @@ public class DummyGame implements IGameLogic {
 	
 	private boolean inside = false;
 	
-	private enum GSTATE{
+	public static enum GSTATE{
 		MENU,
 		GAME,
 	};
 	
-	private GSTATE state = GSTATE.MENU;
+	public static GSTATE state = GSTATE.MENU;
 
-	
+
 	
 	private int ID = 0;
 
 	// Global Scene manager
 	public static C2DSceneManager sceneManager;
+	public static C2DSceneManager sceneManagerMenu;
 
 	private C2DScene scene;
+	private C2DScene sceneMenu;
 
 	public DummyGame() {
 		renderer = new Renderer();
@@ -184,6 +186,9 @@ public class DummyGame implements IGameLogic {
 
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
+		
+		sceneManagerMenu = new C2DSceneManager();
+		sceneMenu = new C2DScene();
 
 		// Create a background texture
 		Texture2D background = new Texture2D();
@@ -348,11 +353,14 @@ public class DummyGame implements IGameLogic {
 		scene.RegisterLayer(layer4);
 		scene.RegisterLayer(playerLayer);
 		scene.RegisterLayer(itemLayer);
-		scene.RegisterLayer(menuLayer);
+		
+		
+		sceneMenu.RegisterLayer(menuLayer);
 
 
 		// Register scene at the manager
 		sceneManager.RegisterScene(scene);
+		sceneManagerMenu.RegisterScene(sceneMenu);
 
 		backgrounds = new Texture2D[0];
 		/*backgrounds[0] = background;
@@ -581,12 +589,6 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void render(Window window) {
 		renderer.render(window, camera, gameItem, Alltestfold);
-		/*if (state == GSTATE.GAME){
-			renderer.render(window, camera, gameItem, Alltestfold);
-		}else{
-			renderer.render(window, camera, menuButton);
-		}*/
-
 	}
 
 	@Override

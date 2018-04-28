@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 import com.iit.uni.engine.*;
 import com.iit.uni.engine.math.MATRIX4X4;
+import com.iit.uni.game.DummyGame.GSTATE;
+
 import org.joml.Matrix4f;
 
 import com.iit.uni.engine.graph.ShaderProgram;
@@ -210,8 +212,13 @@ mRenderer=this;
 
         shaderProgram.setUniform("viewMatrix", viewMatrix);
 
-
-        DummyGame.sceneManager.Render();
+        //DummyGame.sceneManager.Render();
+        
+        if (DummyGame.state == GSTATE.MENU){
+        	DummyGame.sceneManagerMenu.Render();
+        } else if (DummyGame.state == GSTATE.GAME){
+        	DummyGame.sceneManager.Render();
+        }
 
         gameItem.Draw();
         shaderProgram.unbind();
