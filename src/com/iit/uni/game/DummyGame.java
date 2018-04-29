@@ -45,11 +45,12 @@ public class DummyGame implements IGameLogic {
 	private GameObject2D itemsOnGround;
 	private GameObject2D platform;
 	private GameObject2D testfold;
-	private GameObject2D testfold2;
+	private GameObject2D doboz;
 
 	private ArrayList<GameObject2D> AllItems;
 	private ArrayList<GameObject2D> Alltestfold;
 	private ArrayList<GameObject2D> AllLebegoFold;
+	private ArrayList<GameObject2D> AllDoboz;
 
 
 	private int ID = 0;
@@ -75,6 +76,87 @@ public class DummyGame implements IGameLogic {
 		 */
 
 
+
+		AllDoboz = new ArrayList<>();
+		int k=1;
+		CSprite Doboz = new CSprite("textures/items/Crate", 1, 128, 128);
+		for(int i=3;i>=0;i--){
+			for(int j=3; j>=k;j--){
+				doboz = new GameObject2D();
+				doboz.AddFrame(Doboz);
+				doboz.SetPosition(1600+i*110,170+j*110);
+				AllDoboz.add(doboz);
+				k+=1;
+			}
+		}
+
+
+
+		platform = new GameObject2D();
+		AllLebegoFold = new ArrayList<>();
+		CSprite lebegoBal = new CSprite("textures/platform/Plat1", 1, 128, 128);
+		CSprite lebegoJob = new CSprite("textures/platform/Plat3", 1, 128, 128);
+		CSprite lebegoKozep = new CSprite("textures/platform/Plat2", 1, 128, 128);
+		for (int i = 1; i <= 6; i++) {
+			if(i==1){
+				platform.AddFrame(lebegoBal);
+				platform.SetPosition(2000, 250);
+				//platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
+				//	platform.SetID(12);
+				AllLebegoFold.add(platform);
+			}else if(i==6){
+				platform = new GameObject2D();
+				platform.AddFrame(lebegoJob);
+				platform.SetPosition(2000+128*i, 250);
+				//platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth())
+				//	platform.SetID(12);
+				AllLebegoFold.add(platform);
+			}else
+				platform = new GameObject2D();
+			platform.AddFrame(lebegoKozep);
+			platform.SetPosition(2000+128*i, 250);
+			//platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
+			//platform.SetID(12);
+			AllLebegoFold.add(platform);}
+
+
+
+		Alltestfold = new ArrayList<>();
+		//asd
+
+
+		CSprite test = new CSprite("textures/platform/Tile (2)", 1, 128, 128);
+		CSprite testBal = new CSprite("textures/platform/Tile (1)", 1, 128, 128);
+		CSprite testJob = new CSprite("textures/platform/Tile (3)", 1, 128, 128);
+
+		for (int i = 1; i <= 40; i++) {
+			if (i == 1 || i==9 || i==23){
+				testfold = new GameObject2D();
+				testfold.AddFrame(testBal);
+				testfold.SetPosition(0 + i * 128, 595);
+				testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
+				//testfold.SetID(11);
+				Alltestfold.add(testfold);
+
+			} else if (i == 7 || i==15) {
+				testfold = new GameObject2D();
+				testfold.AddFrame(testJob);
+				testfold.SetPosition(0 + i * 128, 595);
+				testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
+				//testfold.SetID(11);
+				Alltestfold.add(testfold);
+
+			}else if(i==8||i==16||i==17||i==18||i==19||i==20||i==21||i==22){
+				continue;
+			}else
+				testfold = new GameObject2D();
+			testfold.AddFrame(test);
+			testfold.SetPosition(0 + i * 128, 595);
+			testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
+			//	testfold.SetID(11);
+			Alltestfold.add(testfold);
+		}
+/*
 		platform = new GameObject2D();
 		AllLebegoFold = new ArrayList<>();
 		CSprite lebegoBal = new CSprite("textures/platform/Plat1", 1, 128, 128);
@@ -134,7 +216,7 @@ public class DummyGame implements IGameLogic {
 			Alltestfold.add(testfold);
 		}
 
-
+*/
 		gameItem = new GameObject2D();
 
 
@@ -248,6 +330,7 @@ public class DummyGame implements IGameLogic {
 		playerLayer.AddGameObject(platform);
 		playerLayer.AddGameObject(Alltestfold);
 		playerLayer.AddGameObject(AllLebegoFold);
+		playerLayer.AddGameObject(AllDoboz);
 
 		//ItemsOnGround--------------------------------------------------------------------------------------------
 
@@ -470,6 +553,18 @@ public class DummyGame implements IGameLogic {
 		for(int k=0; k<AllLebegoFold.size(); k++) {
 			if (gameItem.GetCurrentBBox().CheckOverlapping(AllLebegoFold.get(k).GetCurrentBBox())) {
 				if (gameItem.GetBBoxMaxY() > AllLebegoFold.get(k).GetBBoxMinY()-30f && gameItem.GetBBoxMaxY() < AllLebegoFold.get(k).GetBBoxMinY() + 35f && (gameItem.GetBBoxMaxX() > AllLebegoFold.get(k).GetBBoxMinX() || gameItem.GetBBoxMinX() < AllLebegoFold.get(k).GetBBoxMaxX())) {
+					//System.out.println("FENTROL");
+					if (speedY > 0f) {
+						speedY = 0;
+						up = 0;
+						spacePushed = 0;
+					}
+				}
+			}
+		}
+		for(int k=0; k<AllDoboz.size(); k++) {
+			if (gameItem.GetCurrentBBox().CheckOverlapping(AllDoboz.get(k).GetCurrentBBox())) {
+				if (gameItem.GetBBoxMaxY() > AllDoboz.get(k).GetBBoxMinY()-30f && gameItem.GetBBoxMaxY() < AllDoboz.get(k).GetBBoxMinY() + 35f && (gameItem.GetBBoxMaxX() > AllDoboz.get(k).GetBBoxMinX() || gameItem.GetBBoxMinX() < AllDoboz.get(k).GetBBoxMaxX())) {
 					//System.out.println("FENTROL");
 					if (speedY > 0f) {
 						speedY = 0;
