@@ -138,7 +138,7 @@ public class DummyGame implements IGameLogic {
 				//testfold.SetID(11);
 				Alltestfold.add(testfold);
 
-			} else if (i == 7 || i==15) {
+			} else if (i == 6 || i==15) {
 				testfold = new GameObject2D();
 				testfold.AddFrame(testJob);
 				testfold.SetPosition(0 + i * 128, 595);
@@ -146,7 +146,7 @@ public class DummyGame implements IGameLogic {
 				//testfold.SetID(11);
 				Alltestfold.add(testfold);
 
-			}else if(i==8||i==16||i==17||i==18||i==19||i==20||i==21||i==22){
+			}else if(i==7 || i==8||i==16||i==17||i==18||i==19||i==20||i==21||i==22){
 				continue;
 			}else
 				testfold = new GameObject2D();
@@ -156,67 +156,6 @@ public class DummyGame implements IGameLogic {
 			//	testfold.SetID(11);
 			Alltestfold.add(testfold);
 		}
-/*
-		platform = new GameObject2D();
-		AllLebegoFold = new ArrayList<>();
-		CSprite lebegoBal = new CSprite("textures/platform/Plat1", 1, 128, 128);
-		platform.AddFrame(lebegoBal);
-		platform.SetPosition(500, 350);
-		//platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
-		AllLebegoFold.add(platform);
-
-		platform = new GameObject2D();
-		CSprite lebegoKozep = new CSprite("textures/platform/Plat2", 1, 128, 128);
-		platform.AddFrame(lebegoKozep);
-		platform.SetPosition(628, 350);
-		//platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
-		AllLebegoFold.add(platform);
-
-		platform = new GameObject2D();
-		CSprite lebegoJob = new CSprite("textures/platform/Plat3", 1, 128, 128);
-		platform.AddFrame(lebegoJob);
-		platform.SetPosition(756, 350);
-		//platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
-		AllLebegoFold.add(platform);
-
-
-		Alltestfold = new ArrayList<>();
-		//asd
-
-
-		CSprite test = new CSprite("textures/platform/Tile (2)", 1, 128, 128);
-		CSprite testBal = new CSprite("textures/platform/Tile (1)", 1, 128, 128);
-		CSprite testJob = new CSprite("textures/platform/Tile (3)", 1, 128, 128);
-		for (int i = 1; i < 9; i++) {
-			if (i == 1) {
-				testfold = new GameObject2D();
-				testfold.AddFrame(testBal);
-				testfold.SetPosition(0 + i * 128, 595);
-				testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
-				testfold.SetName("fold");
-
-				Alltestfold.add(testfold);
-
-			} else if (i == 8) {
-				testfold = new GameObject2D();
-				testfold.AddFrame(testJob);
-				testfold.SetPosition(0 + i * 128, 595);
-				testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
-				testfold.SetName("fold");
-
-				Alltestfold.add(testfold);
-
-			} else
-				testfold = new GameObject2D();
-			testfold.AddFrame(test);
-			testfold.SetPosition(0 + i * 128, 595);
-			testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
-			testfold.SetName("fold");
-
-			Alltestfold.add(testfold);
-		}
-
-*/
 		gameItem = new GameObject2D();
 
 
@@ -257,6 +196,9 @@ public class DummyGame implements IGameLogic {
 		scene = new C2DScene();
 
 		// Create a background texture
+		Texture2D BG = new Texture2D();
+		BG.CreateTexture("textures/background/BG.png");
+		/*
 		Texture2D background = new Texture2D();
 		background.CreateTexture("textures/background/layer_sd_01.png");
 		background.setPosition(0, 0, -1);
@@ -268,7 +210,7 @@ public class DummyGame implements IGameLogic {
 		background2.setPosition(2560, 0, -1);
 
 		// Create a cloud layer
-		/*Texture2D clouds = new Texture2D();
+		Texture2D clouds = new Texture2D();
 		clouds.CreateTexture("textures/background/layer_sd_02.png");
 		Texture2D clouds1 = new Texture2D();
 		clouds1.CreateTexture("textures/background/layer_sd_02.png");
@@ -284,7 +226,7 @@ public class DummyGame implements IGameLogic {
 		mountains1.CreateTexture("textures/background/layer_sd_03.png");
 		Texture2D mountains2 = new Texture2D();
 		mountains2.CreateTexture("textures/background/layer_sd_03.png");
-		mountains2.setPosition(2560, 0, 0);*/
+		mountains2.setPosition(2560, 0, 0);
 
 		// Create a tree layer
 		Texture2D trees = new Texture2D();
@@ -305,11 +247,11 @@ public class DummyGame implements IGameLogic {
 		ground1.setPosition(1280, 0, -1);
 		Texture2D ground2 = new Texture2D();
 		ground2.CreateTexture("textures/background/layer_sd_05.png");
-		ground2.setPosition(2560, 0, -1);
+		ground2.setPosition(2560, 0, -1);*/
 
 		// Create graphics layer
-		C2DGraphicsLayer layer0 = new C2DGraphicsLayer();
-		layer0.AddTexture(background);
+		C2DGraphicsLayer layerBG = new C2DGraphicsLayer();
+		layerBG.AddTexture(BG);
 
 		// Create graphics layer
 		C2DGraphicsLayer layer1 = new C2DGraphicsLayer();
@@ -323,7 +265,7 @@ public class DummyGame implements IGameLogic {
 		//layer3.AddTexture(trees);
 
 		C2DGraphicsLayer layer4 = new C2DGraphicsLayer();
-		layer4.AddTexture(ground);
+		//layer4.AddTexture(ground);
 
 		C2DGraphicsLayer playerLayer = new C2DGraphicsLayer();
 		playerLayer.AddGameObject(gameItem);
@@ -396,7 +338,7 @@ public class DummyGame implements IGameLogic {
 		//ItemsOnGround--------------------------------------------------------------------------------------------END
 
 		// register layer at the scene
-		scene.RegisterLayer(layer0);
+		scene.RegisterLayer(layerBG);
 		scene.RegisterLayer(layer1);
 		scene.RegisterLayer(layer2);
 		scene.RegisterLayer(layer3);
