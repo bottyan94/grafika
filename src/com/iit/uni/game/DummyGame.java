@@ -196,78 +196,126 @@ public class DummyGame implements IGameLogic {
 		scene = new C2DScene();
 
 		// Create a background texture
-		Texture2D BG = new Texture2D();
-		BG.CreateTexture("textures/background/BG.png");
-		/*
 		Texture2D background = new Texture2D();
-		background.CreateTexture("textures/background/layer_sd_01.png");
-		background.setPosition(0, 0, -1);
+		background.CreateTexture("textures/background/sky.png");
+		background.setPosition(0, -100, -1);
+		float bw = background.GetWidth();
 		Texture2D background1 = new Texture2D();
-		background1.CreateTexture("textures/background/layer_sd_01.png");
-		background1.setPosition(1280, 0, -1);
+		background1.CreateTexture("textures/background/sky.png");
+		background1.setPosition(bw, 0, -1);
 		Texture2D background2 = new Texture2D();
-		background2.CreateTexture("textures/background/layer_sd_01.png");
-		background2.setPosition(2560, 0, -1);
+		background2.CreateTexture("textures/background/sky.png");
+		background2.setPosition(bw*2, 0, -1);
 
 		// Create a cloud layer
 		Texture2D clouds = new Texture2D();
-		clouds.CreateTexture("textures/background/layer_sd_02.png");
+		clouds.CreateTexture("textures/background/clouds_1.png");
+		clouds.setScale(0.6f);
+		clouds.setPosition(-100,-300,0);
 		Texture2D clouds1 = new Texture2D();
-		clouds1.CreateTexture("textures/background/layer_sd_02.png");
-		clouds1.setPosition(1280, 0, 0);
+		float cw = clouds.GetWidth();
+		clouds1.CreateTexture("textures/background/clouds_1.png");
+		clouds1.setPosition(cw, 0, 0);
 		Texture2D clouds2 = new Texture2D();
-		clouds2.CreateTexture("textures/background/layer_sd_02.png");
-		clouds2.setPosition(2560, 0, 0);
+		clouds2.CreateTexture("textures/background/clouds_1.png");
+		clouds2.setPosition(cw*2, 0, 0);
+
+		Texture2D felho = new Texture2D();
+		felho.CreateTexture("textures/background/clouds_2");
+
 		// Create a mountain layer
 		Texture2D mountains = new Texture2D();
-		mountains.CreateTexture("textures/background/layer_sd_03.png");
-		Texture2D mountains1 = new Texture2D();
-		mountains1.setPosition(1280, 0, 0);
-		mountains1.CreateTexture("textures/background/layer_sd_03.png");
-		Texture2D mountains2 = new Texture2D();
-		mountains2.CreateTexture("textures/background/layer_sd_03.png");
-		mountains2.setPosition(2560, 0, 0);
+		mountains.CreateTexture("textures/background/grounds.png");
+		mountains.setScale(0.7f);
+        mountains.setPosition(-300, -300, 0);
+        float mw = mountains.GetWidth()*0.7f;
+        Texture2D mountains1 = new Texture2D();
+        mountains1.CreateTexture("textures/background/grounds.png");
+        mountains1.setScale(0.7f);
+        mountains1.setPosition(mw-300, -300, 0);
+        Texture2D mountains2 = new Texture2D();
+        mountains2.CreateTexture("textures/background/grounds.png");
+        mountains2.setScale(0.7f);
+        mountains2.setPosition((mw*2)-300, -300, 0);
 
-		// Create a tree layer
-		Texture2D trees = new Texture2D();
-		trees.CreateTexture("textures/background/layer_sd_04.png");
-		Texture2D trees1 = new Texture2D();
-		trees1.CreateTexture("textures/background/layer_sd_04.png");
-		trees1.setPosition(1280, 0, 0);
-		Texture2D trees2 = new Texture2D();
-		trees2.CreateTexture("textures/background/layer_sd_04.png");
-		trees2.setPosition(2506, 0, 0);
 
-		// Create a ground layer
-		Texture2D ground = new Texture2D();
-		ground.CreateTexture("textures/background/layer_sd_05.png");
-		ground.setPosition(0, 0, -1);
-		Texture2D ground1 = new Texture2D();
-		ground1.CreateTexture("textures/background/layer_sd_05.png");
-		ground1.setPosition(1280, 0, -1);
-		Texture2D ground2 = new Texture2D();
-		ground2.CreateTexture("textures/background/layer_sd_05.png");
-		ground2.setPosition(2560, 0, -1);*/
+
+        /*
+        Texture2D mountains00 = new Texture2D();
+        mountains00.CreateTexture("textures/background/ground_2.png");
+        mountains00.setScale(0.9f);
+        mountains00.setPosition(0, -300, 0);
+        Texture2D mountains10 = new Texture2D();
+        mountains10.CreateTexture("textures/background/ground_3.png");
+        mountains10.setScale(0.9f);
+        mountains10.setPosition(0, -300, 0);
+        Texture2D mountains1 = new Texture2D();
+        mountains1.setScale(0.9f);
+		mountains1.setPosition(mw, -300, 0);
+		mountains1.CreateTexture("textures/background/ground_1.png");
+        Texture2D mountains01 = new Texture2D();
+        mountains01.CreateTexture("textures/background/ground_2.png");
+        mountains01.setScale(0.9f);
+        mountains01.setPosition(mw, -300, 0);
+        Texture2D mountains11 = new Texture2D();
+        mountains11.CreateTexture("textures/background/ground_3.png");
+        mountains11.setScale(0.9f);
+        mountains11.setPosition(mw, -300, 0);
+        Texture2D mountains2 = new Texture2D();
+		mountains2.CreateTexture("textures/background/ground_1.png");
+		mountains2.setScale(0.9f);
+		mountains2.setPosition(mw*2, -300, 0);
+        Texture2D mountains02 = new Texture2D();
+        mountains02.CreateTexture("textures/background/ground_2.png");
+        mountains02.setScale(0.9f);
+        mountains02.setPosition(mw*2, -300, 0);
+        Texture2D mountains12 = new Texture2D();
+        mountains12.CreateTexture("textures/background/ground_3.png");
+        mountains12.setScale(0.9f);
+        mountains12.setPosition(mw*2, -300, 0);*/
+
+        // Create a tree layer
+		Texture2D rocks = new Texture2D();
+		rocks.CreateTexture("textures/background/rocks.png");
+		rocks.setPosition(0, -300, -1);
+        float gw1 = rocks.GetWidth();
+		Texture2D rocks1 = new Texture2D();
+		rocks1.CreateTexture("textures/background/rocks.png");
+		rocks1.setPosition(gw1, -300, 0);
+		Texture2D rocks2 = new Texture2D();
+		rocks2.CreateTexture("textures/background/rocks.png");
+		rocks2.setPosition(gw1*2, -300, 0);
+
 
 		// Create graphics layer
 		C2DGraphicsLayer layerBG = new C2DGraphicsLayer();
-		layerBG.AddTexture(BG);
+		layerBG.AddTexture(background);
+        layerBG.AddTexture(background1);
+        layerBG.AddTexture(background2);
 
 		// Create graphics layer
 		C2DGraphicsLayer layer1 = new C2DGraphicsLayer();
-		//layer1.AddTexture(clouds);
-
+		layer1.AddTexture(clouds);
+        layer1.AddTexture(clouds1);
+        layer1.AddTexture(clouds2);
 		// Create graphics layer
 		C2DGraphicsLayer layer2 = new C2DGraphicsLayer();
-		//layer2.AddTexture(mountains);
+		layer2.AddTexture(rocks);
+        layer2.AddTexture(rocks1);
+        layer2.AddTexture(rocks2);
 
 		C2DGraphicsLayer layer3 = new C2DGraphicsLayer();
-		//layer3.AddTexture(trees);
+		layer3.AddTexture(mountains);
+        layer3.AddTexture(mountains1);
+        layer3.AddTexture(mountains2);
 
-		C2DGraphicsLayer layer4 = new C2DGraphicsLayer();
-		//layer4.AddTexture(ground);
-
-		C2DGraphicsLayer playerLayer = new C2DGraphicsLayer();
+        C2DGraphicsLayer layer4 = new C2DGraphicsLayer();
+		layer4.AddTexture(felho);
+        /*layer4.AddTexture(ground);
+        layer4.AddTexture(ground1);
+        layer4.AddTexture(ground2);
+*/
+        C2DGraphicsLayer playerLayer = new C2DGraphicsLayer();
 		playerLayer.AddGameObject(gameItem);
 		playerLayer.AddGameObject(platform);
 		playerLayer.AddGameObject(Alltestfold);
@@ -339,19 +387,19 @@ public class DummyGame implements IGameLogic {
 
 		// register layer at the scene
 		scene.RegisterLayer(layerBG);
-		scene.RegisterLayer(layer1);
 		scene.RegisterLayer(layer2);
-		scene.RegisterLayer(layer3);
-		scene.RegisterLayer(layer4);
-		scene.RegisterLayer(playerLayer);
+        //scene.RegisterLayer(layer4);
+        scene.RegisterLayer(layer3);
+        scene.RegisterLayer(layer1);
+        scene.RegisterLayer(playerLayer);
 		scene.RegisterLayer(itemLayer);
 
 
 		// Register scene at the manager
 		sceneManager.RegisterScene(scene);
 
-		backgrounds = new Texture2D[0];
-		/*backgrounds[0] = background;
+/*		backgrounds = new Texture2D[15];
+		backgrounds[0] = background;
 		backgrounds[1] = background1;
 		backgrounds[2] = background2;
 		backgrounds[3] = clouds;
@@ -365,9 +413,8 @@ public class DummyGame implements IGameLogic {
 		backgrounds[11] = trees2;
 		backgrounds[12] = ground;
 		backgrounds[13] = ground1;
-		backgrounds[14] = ground2;*/
-
-
+		backgrounds[14] = ground2;
+*/
 		camera = new CCamera2D();
 
 	}
@@ -465,9 +512,9 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void cleanup() {
 		renderer.cleanup();
-		for (int i = 0; i < backgrounds.length; i++)
+/*		for (int i = 0; i < backgrounds.length; i++)
 			backgrounds[i].cleanup();
-		gameItem.cleanUp();
+*/		gameItem.cleanUp();
 	}
 
 	public void Gravity() {
