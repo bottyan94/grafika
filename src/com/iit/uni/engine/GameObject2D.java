@@ -344,9 +344,15 @@ public class GameObject2D {
 	}
 
 
-	public float GetBBoxMinX(){
-		return mBBoxTransformed.GetMinPoint().x;
-	}
+	public float SetBBoxMinX(float x) { return mBBoxTransformed.GetMinPoint().x; }
+
+	public float SetBBoxMinY(float x) { return mBBoxTransformed.GetMinPoint().y; }
+
+	public float SetBBoxMaxX(float x) {	return mBBoxTransformed.GetMaxPoint().x; }
+
+	public float SetBBoxMaxY(float x) {	return mBBoxTransformed.GetMaxPoint().y; }
+
+	public float GetBBoxMinX() { return mBBoxTransformed.GetMinPoint().x; }
 
 	public float GetBBoxMinY() {
 		return mBBoxTransformed.GetMinPoint().y;
@@ -455,6 +461,14 @@ public class GameObject2D {
 
 	public int GetCurrentFrameCurrentSprite () {
 		return m_Animations.get(m_uiCurrentAnim).GetCurrentFrame();
+	}
+
+	public void ResetCurrentAnim () {
+		m_Animations.get(m_uiCurrentAnim).Reset();
+	}
+
+	public void ResetAmitAkarsz (int a) {
+		m_Animations.get(a).Reset();
 	}
 
 }
