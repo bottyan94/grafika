@@ -555,7 +555,9 @@ public class DummyGame implements IGameLogic {
 	public void Gravity() {
 		Vector2D pos = gameItem.GetPosition();
 		pos.y += speedY;
-		speedY = speedY + gravity;
+		if ( speedY < 30) {
+			speedY = speedY + gravity;
+		}
 		gameItem.SetPosition(pos);
 	}
 
@@ -626,15 +628,19 @@ public class DummyGame implements IGameLogic {
 							}
 							if (zombdirection == 1) {
 								zomB.SetCurrentFrame(6);
-								Vector2D pos = zomB.GetPosition();
-								pos.x += 1.5f;
-								zomB.SetPosition(pos);
+								if(zomB.GetPosition().x > 1000 && zomB.GetPosition().x < 1500) {
+									Vector2D pos = zomB.GetPosition();
+									pos.x += 1.5f;
+									zomB.SetPosition(pos);
+								}
 							}
 							if (zombdirection == 0) {
 								zomB.SetCurrentFrame(7);
-								Vector2D pos = zomB.GetPosition();
-								pos.x -= 1.5f;
-								zomB.SetPosition(pos);
+								if(zomB.GetPosition().x > 1000 && zomB.GetPosition().x < 1500) {
+									Vector2D pos = zomB.GetPosition();
+									pos.x -= 1.5f;
+									zomB.SetPosition(pos);
+								}
 							}
 							if (gameItem.GetCurrentBBox().CheckOverlapping(zomB.GetCurrentBBox())) {
 								NinjaDie();
@@ -711,17 +717,17 @@ public class DummyGame implements IGameLogic {
 				pos.x += 0.5f;
 				zomB.SetPosition(pos);
 			}
-			if (zombdirection == 0 && zombIsAlive == 1 && gameItem.GetCurrentBBox().CheckOverlapping(zombAttackBBox) == false) {
+			if (zombdirection == 0 && zombIsAlive == 1 && (zomB.GetPosition().x - gameItem.GetPosition().x) > 300f ) {
 				zomB.SetCurrentFrame(1);
 				Vector2D pos = zomB.GetPosition();
 				pos.x -= 0.5f;
 				zomB.SetPosition(pos);
 			}
 
-			if (zomB.GetPosition().x == 1500 && zombIsAlive == 1) {
+			if (zomB.GetPosition().x > 1500 && zombIsAlive == 1) {
 				zombdirection = 0;
 			}
-			if (zomB.GetPosition().x == 100 && zombIsAlive == 1) {
+			if (zomB.GetPosition().x < 1000 && zombIsAlive == 1) {
 				zombdirection = 1;
 			}
 
