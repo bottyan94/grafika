@@ -216,6 +216,8 @@ public class DummyGame implements IGameLogic {
 		CSprite ZombDeadLeft = new CSprite("textures/zomb/Dead_left", 12, 200, 200);
 		CSprite ZomBIsDead = new CSprite("textures/zomb/Dead12", 1, 200, 200);
 		CSprite ZomBIsDeadleft = new CSprite("textures/zomb/Dead_left12", 1, 200, 200);
+		CSprite zombAttack = new CSprite("textures/zomb/Attack", 8, 200, 200);
+		CSprite zombAttackLeft = new CSprite("textures/zomb/Attack_left", 8, 200, 200);
 
 
 
@@ -225,6 +227,8 @@ public class DummyGame implements IGameLogic {
 		zomB.AddFrame(ZombDeadLeft);
 		zomB.AddFrame(ZomBIsDead);
 		zomB.AddFrame(ZomBIsDeadleft);
+		zomB.AddFrame(zombAttack);
+		zomB.AddFrame(zombAttackLeft);
 
 
 		zomB.SetPosition(1400, 220);
@@ -532,9 +536,6 @@ public class DummyGame implements IGameLogic {
 			}
 		}
 
-
-	System.out.println(" x: " + gameItem.GetPosition().x + " y: " + gameItem.GetPosition().y);
-
 	}
 
 	@Override
@@ -556,7 +557,6 @@ public class DummyGame implements IGameLogic {
 		pos.y += speedY;
 		speedY = speedY + gravity;
 		gameItem.SetPosition(pos);
-		//System.out.println(speedY);
 	}
 
 	public void UtkozesekVizsgalata() {
@@ -614,21 +614,37 @@ public class DummyGame implements IGameLogic {
 			}
 		}
 
-			if (gameItem.GetCurrentBBox().CheckOverlapping(zomB.GetCurrentBBox()) == true) {
-			/*if (isAttacking == 1){
-				if(zombdirection == 1){
-					ZomBDie();
-				}
-				if(zombdirection == 0){
-					ZomBDie();
-				}
-			}*/
-				if (isAttacking == 0) {
-					NinjaDie();
-				}
-		}
 
-			if (gameItem.GetCurrentBBox().CheckOverlapping(zomB.GetCurrentBBox()) == true)  {
+
+				//if (isAttacking == 0) {
+					if((zomB.GetPosition().x - gameItem.GetPosition().x) < 300f ){
+						if(zombIsAlive == 1) {
+							if(gameItem.GetPosition().x < zomB.GetPosition().x) {
+								zombdirection = 0;
+							} else {
+								zombdirection = 1;
+							}
+							if (zombdirection == 1) {
+								zomB.SetCurrentFrame(6);
+								Vector2D pos = zomB.GetPosition();
+								pos.x += 1.5f;
+								zomB.SetPosition(pos);
+							}
+							if (zombdirection == 0) {
+								zomB.SetCurrentFrame(7);
+								Vector2D pos = zomB.GetPosition();
+								pos.x -= 1.5f;
+								zomB.SetPosition(pos);
+							}
+							if (gameItem.GetCurrentBBox().CheckOverlapping(zomB.GetCurrentBBox())) {
+								NinjaDie();
+							}
+						}
+					}
+				//}
+
+
+			if (gameItem.GetCurrentBBox().CheckOverlapping(zombAttackBBox) == true)  {
 				if (isAttacking == 1) {
 					if (zombdirection == 1) {
 						ZomBDie();
@@ -689,13 +705,13 @@ public class DummyGame implements IGameLogic {
 	}
 
 	public void ZomBMove () {
-			if (zombdirection == 1 && zombIsAlive == 1) {
+			if (zombdirection == 1 && zombIsAlive == 1 && (zomB.GetPosition().x - gameItem.GetPosition().x) > 300f ) {
 				zomB.SetCurrentFrame(0);
 				Vector2D pos = zomB.GetPosition();
 				pos.x += 0.5f;
 				zomB.SetPosition(pos);
 			}
-			if (zombdirection == 0 && zombIsAlive == 1) {
+			if (zombdirection == 0 && zombIsAlive == 1 && gameItem.GetCurrentBBox().CheckOverlapping(zombAttackBBox) == false) {
 				zomB.SetCurrentFrame(1);
 				Vector2D pos = zomB.GetPosition();
 				pos.x -= 0.5f;
