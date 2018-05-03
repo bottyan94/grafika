@@ -194,6 +194,8 @@ public class DummyGame implements IGameLogic {
 
 		zomB = new GameObject2D();
 
+
+
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
 
