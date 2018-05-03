@@ -31,6 +31,8 @@ public class DummyGame implements IGameLogic {
 	private int spacePushed = 0;
 	private int isAttacking = 0;
 	private int isIdle = 1;
+	private int zombdirection = 1;
+	private int zombIsAlive = 1;
 
 	private final Renderer renderer;
 	private int direction = 1;
@@ -194,6 +196,27 @@ public class DummyGame implements IGameLogic {
 
 		zomB = new GameObject2D();
 
+		CSprite zomBMove = new CSprite("textures/zomb/Walk", 10, 200, 200);
+		CSprite zomBMoveLeft = new CSprite("textures/zomb/Walk_left", 10, 200, 200);
+		CSprite ZomBDead = new CSprite("textures/zomb/Dead", 12, 200, 200);
+		CSprite ZombDeadLeft = new CSprite("textures/zomb/Dead_left", 12, 200, 200);
+		CSprite ZomBIsDead = new CSprite("textures/zomb/Dead12", 1, 200, 200);
+		CSprite ZomBIsDeadleft = new CSprite("textures/zomb/Dead_left12", 1, 200, 200);
+
+
+		zomB.AddFrame(zomBMove);
+		zomB.AddFrame(zomBMoveLeft);
+		zomB.AddFrame(ZomBDead);
+		zomB.AddFrame(ZombDeadLeft);
+		zomB.AddFrame(ZomBIsDead);
+		zomB.AddFrame(ZomBIsDeadleft);
+
+
+		zomB.SetPosition(600, 220);
+		zomB.SetScale(0.5f);
+		zomB.SetAnimationSpeed(6, 0);
+		zomB.SetAnimationSpeed(6, 1);
+		zomB.SetBoundingBox(zomB.GetHeight(), zomB.GetWidth());
 
 
 		sceneManager = new C2DSceneManager();
@@ -291,6 +314,7 @@ public class DummyGame implements IGameLogic {
 		playerLayer.AddGameObject(Alltestfold);
 		playerLayer.AddGameObject(AllLebegoFold);
 		playerLayer.AddGameObject(AllDoboz);
+		playerLayer.AddGameObject(zomB);
 
 		//ItemsOnGround--------------------------------------------------------------------------------------------
 
@@ -467,6 +491,7 @@ public class DummyGame implements IGameLogic {
 		UtkozesekVizsgalata();
 		Gravity();
 		Reset();
+		ZomBMove();
 
 	}
 
@@ -547,6 +572,19 @@ public class DummyGame implements IGameLogic {
 			}
 		}
 
+		if (gameItem.GetCurrentBBox().CheckOverlapping(zomB.GetCurrentBBox()) == true){
+			if (isAttacking == 1){
+				if(zombdirection == 1){
+					ZomBDie();
+					//zomB.SetCurrentFrame(4);
+				}
+				if(zombdirection == 0){
+					ZomBDie();
+					//zomB.SetCurrentFrame(5);
+				}
+			}
+		}
+
 
 		//Példa vizsgálat, egy kimodnott itemre
 		/*if (gameItem.GetCurrentBBox().CheckOverlapping(platform.GetCurrentBBox())) {
@@ -572,6 +610,42 @@ public class DummyGame implements IGameLogic {
 				AllItems.get(i).SetVisible(true);
 			}
 		}
+	}
+
+	public void ZomBMove () {
+		if(zombdirection == 1 && zombIsAlive == 1) {
+			zomB.SetCurrentFrame(0);
+			Vector2D pos = zomB.GetPosition();
+			pos.x += 0.5f;
+			zomB.SetPosition(pos);
+		}
+		if(zombdirection == 0 && zombIsAlive == 1){
+			zomB.SetCurrentFrame(1);
+			Vector2D pos = zomB.GetPosition();
+			pos.x -= 0.5f;
+			zomB.SetPosition(pos);
+		}
+
+		if(zomB.GetPosition().x == 650 && zombIsAlive == 1){
+			zombdirection = 0;
+		}
+		if (zomB.GetPosition().x == 550 && zombIsAlive == 1){
+			zombdirection = 1;
+		}
+	}
+
+	public void ZomBDie() {
+		if(zombdirection == 1 && zombIsAlive == 1){
+			zomB.SetCurrentFrame(2);
+			zomB.GetCurrentFrame().DrawOne();
+			zombIsAlive = 0;
+		}
+		if(zombdirection == 0 && zombIsAlive == 1){
+			zomB.SetCurrentFrame(3);
+			zomB.GetCurrentFrame().DrawOne();
+			zombIsAlive = 0;
+		}
+
 	}
 
 }
