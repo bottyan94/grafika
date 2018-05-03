@@ -394,12 +394,12 @@ public class DummyGame implements IGameLogic {
 		if (window.isKeyPressed(GLFW_KEY_SPACE)) {
 			isAttacking = 1;
 			if(direction == 1) {
-				if(speedY <= 2f && speedY > 0f) {
+				if(speedY <= 2f && spacePushed == 0) {
 					gameItem.SetCurrentFrame(8);
 				} else gameItem.SetCurrentFrame(10);
 			}
 			else {
-				if(speedY <= 2f && speedY > 0f) {
+				if(speedY <= 2f && spacePushed == 0) {
 					gameItem.SetCurrentFrame(9);
 				} else gameItem.SetCurrentFrame(11);
 			}
