@@ -216,6 +216,10 @@ public class DummyGame implements IGameLogic {
 		zomB.SetScale(0.5f);
 		zomB.SetAnimationSpeed(6, 0);
 		zomB.SetAnimationSpeed(6, 1);
+		zomB.SetAnimationSpeed(7, 2);
+		zomB.SetAnimationSpeed(7, 3);
+		zomB.SetAnimationSpeed(7, 4);
+		zomB.SetAnimationSpeed(7, 5);
 		zomB.SetBoundingBox(zomB.GetHeight(), zomB.GetWidth());
 
 
@@ -493,6 +497,7 @@ public class DummyGame implements IGameLogic {
 		Reset();
 		ZomBMove();
 
+
 	}
 
 	@Override
@@ -514,7 +519,7 @@ public class DummyGame implements IGameLogic {
 		pos.y += speedY;
 		speedY = speedY + gravity;
 		gameItem.SetPosition(pos);
-		System.out.println(speedY);
+		//System.out.println(speedY);
 	}
 
 	public void UtkozesekVizsgalata() {
@@ -632,17 +637,36 @@ public class DummyGame implements IGameLogic {
 		if (zomB.GetPosition().x == 550 && zombIsAlive == 1){
 			zombdirection = 1;
 		}
+
+		if (zombIsAlive == 0) {
+			if(zombdirection == 1){
+				if(zomB.GetCurrentFrameCurrentSprite() > 10){
+					zomB.SetCurrentFrame(4);
+				}
+			}
+			if(zombdirection == 0){
+				if(zomB.GetCurrentFrameCurrentSprite() > 10){
+					zomB.SetCurrentFrame(5);
+				}
+			}
+		}
+
+		System.out.println(zomB.GetCurrentFrameCurrentSprite());
 	}
 
 	public void ZomBDie() {
 		if(zombdirection == 1 && zombIsAlive == 1){
 			zomB.SetCurrentFrame(2);
-			zomB.GetCurrentFrame().DrawOne();
+			if(zomB.GetCurrentFrameCurrentSprite() > 10){
+				zomB.SetCurrentFrame(4);
+			}
 			zombIsAlive = 0;
 		}
 		if(zombdirection == 0 && zombIsAlive == 1){
 			zomB.SetCurrentFrame(3);
-			zomB.GetCurrentFrame().DrawOne();
+			if(zomB.GetCurrentFrameCurrentSprite() > 10){
+				zomB.SetCurrentFrame(5);
+			}
 			zombIsAlive = 0;
 		}
 

@@ -453,4 +453,8 @@ public class GameObject2D {
 		kulonbseg = ez;
 	}
 
+	public int GetCurrentFrameCurrentSprite () {
+		return m_Animations.get(m_uiCurrentAnim).GetCurrentFrame();
+	}
+
 }
