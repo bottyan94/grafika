@@ -29,7 +29,7 @@ public class DummyGame implements IGameLogic {
 	private float speedX = 0f;
 	private float gravity = 2f;
 	private int spacePushed = 0;
-	private int isOnGround = 1;
+	private int isAttacking = 0;
 	private int isIdle = 1;
 
 	private final Renderer renderer;
@@ -167,16 +167,11 @@ public class DummyGame implements IGameLogic {
 		CSprite slide = new CSprite("textures/ninja/Slide", 10, 200, 200);
 		CSprite slideLeft = new CSprite("textures/ninja/Slide_left", 10, 200, 200);
 		CSprite idleLeft = new CSprite("textures/ninja/Idle_left", 10, 200, 200);
+		CSprite attackRight = new CSprite("textures/ninja/Attack", 10, 200, 200);
+		CSprite attackLeft = new CSprite("textures/ninja/Attack_left", 10, 200, 200);
+		CSprite jumpattackRight = new CSprite("textures/ninja/Jump_Attack", 10, 200, 200);
+		CSprite jumpattackLeft = new CSprite("textures/ninja/Jump_Attack_left", 10, 200, 200);
 
-
-		/*idle.SetScale(0.5f);
-		frameRunLeft.SetScale(0.5f);
-		frameRunRight.SetScale(0.5f);
-		jumpLeft.SetScale(0.5f);
-		jumpRight.SetScale(0.5f);
-		slide.SetScale(0.5f);
-		slideLeft.SetScale(0.5f);
-		idleLeft.SetScale(0.5f);*/
 
 		gameItem.AddFrame(idle);
 		gameItem.AddFrame(frameRunRight);
@@ -186,6 +181,10 @@ public class DummyGame implements IGameLogic {
 		gameItem.AddFrame(slide);
 		gameItem.AddFrame(slideLeft);
 		gameItem.AddFrame(idleLeft);
+		gameItem.AddFrame(attackRight);
+		gameItem.AddFrame(attackLeft);
+		gameItem.AddFrame(jumpattackRight);
+		gameItem.AddFrame(jumpattackLeft);
 
 
 		gameItem.SetPosition(400, 0);
@@ -239,40 +238,6 @@ public class DummyGame implements IGameLogic {
         mountains2.setPosition((mw*2)-300, -300, 0);
 
 
-
-        /*
-        Texture2D mountains00 = new Texture2D();
-        mountains00.CreateTexture("textures/background/ground_2.png");
-        mountains00.setScale(0.9f);
-        mountains00.setPosition(0, -300, 0);
-        Texture2D mountains10 = new Texture2D();
-        mountains10.CreateTexture("textures/background/ground_3.png");
-        mountains10.setScale(0.9f);
-        mountains10.setPosition(0, -300, 0);
-        Texture2D mountains1 = new Texture2D();
-        mountains1.setScale(0.9f);
-		mountains1.setPosition(mw, -300, 0);
-		mountains1.CreateTexture("textures/background/ground_1.png");
-        Texture2D mountains01 = new Texture2D();
-        mountains01.CreateTexture("textures/background/ground_2.png");
-        mountains01.setScale(0.9f);
-        mountains01.setPosition(mw, -300, 0);
-        Texture2D mountains11 = new Texture2D();
-        mountains11.CreateTexture("textures/background/ground_3.png");
-        mountains11.setScale(0.9f);
-        mountains11.setPosition(mw, -300, 0);
-        Texture2D mountains2 = new Texture2D();
-		mountains2.CreateTexture("textures/background/ground_1.png");
-		mountains2.setScale(0.9f);
-		mountains2.setPosition(mw*2, -300, 0);
-        Texture2D mountains02 = new Texture2D();
-        mountains02.CreateTexture("textures/background/ground_2.png");
-        mountains02.setScale(0.9f);
-        mountains02.setPosition(mw*2, -300, 0);
-        Texture2D mountains12 = new Texture2D();
-        mountains12.CreateTexture("textures/background/ground_3.png");
-        mountains12.setScale(0.9f);
-        mountains12.setPosition(mw*2, -300, 0);*/
 
         // Create a tree layer
 		Texture2D rocks = new Texture2D();
@@ -351,11 +316,6 @@ public class DummyGame implements IGameLogic {
 		}
 
 
-		/*gyemant = new GameObject2D();
-		gyemant.AddFrame(gem);
-		gyemant.SetPosition(500, 200);
-		gyemant.SetBoundingBox(gem.GetHeight(), gem.GetWidth());*/
-
 
 		ArrayList<GameObject2D> potion = new ArrayList<>();
 		CSprite Potion = new CSprite("textures/items/glass02blue", 1, 200, 200);
@@ -398,23 +358,7 @@ public class DummyGame implements IGameLogic {
 		// Register scene at the manager
 		sceneManager.RegisterScene(scene);
 
-/*		backgrounds = new Texture2D[15];
-		backgrounds[0] = background;
-		backgrounds[1] = background1;
-		backgrounds[2] = background2;
-		backgrounds[3] = clouds;
-		backgrounds[4] = clouds1;
-		backgrounds[5] = clouds2;
-		backgrounds[6] = mountains;
-		backgrounds[7] = mountains1;
-		backgrounds[8] = mountains2;
-		backgrounds[9] = trees;
-		backgrounds[10] = trees1;
-		backgrounds[11] = trees2;
-		backgrounds[12] = ground;
-		backgrounds[13] = ground1;
-		backgrounds[14] = ground2;
-*/
+
 		camera = new CCamera2D();
 
 	}
@@ -441,11 +385,28 @@ public class DummyGame implements IGameLogic {
 			down = 0;
 		}
 
-		if (window.isKeyPressed(GLFW_KEY_SPACE) && spacePushed == 0) {
+		if (window.isKeyPressed(GLFW_KEY_UP) && spacePushed == 0) {
 			speedY = -30f;
 			up = 1;
 			spacePushed = 1;
-			isOnGround = 0;
+		}
+
+		if (window.isKeyPressed(GLFW_KEY_SPACE)) {
+			isAttacking = 1;
+			if(direction == 1) {
+				if(speedY <= 2f && speedY > 0f) {
+					gameItem.SetCurrentFrame(8);
+				} else gameItem.SetCurrentFrame(10);
+			}
+			else {
+				if(speedY <= 2f && speedY > 0f) {
+					gameItem.SetCurrentFrame(9);
+				} else gameItem.SetCurrentFrame(11);
+			}
+		}
+
+		if(window.isKeyReleased(GLFW_KEY_SPACE)) {
+			isAttacking = 0;
 		}
 
 		/*if (down == 1 && right ==1) {
@@ -454,7 +415,7 @@ public class DummyGame implements IGameLogic {
 
 		if (left == 1) {
 			direction = -1;
-			if (spacePushed == 0 && speedY <= 2f ) {
+			if (spacePushed == 0 && speedY <= 2f  && isAttacking == 0) {
 				gameItem.SetCurrentFrame(2);
 			}
 			Vector2D pos = gameItem.GetPosition();
@@ -464,9 +425,9 @@ public class DummyGame implements IGameLogic {
 		}
 
 
-		if (right == 1) {
+		if (right == 1 ) {
 			direction = 1;
-			if (spacePushed == 0 && speedY <= 2f ) {
+			if (spacePushed == 0 && speedY <= 2f && isAttacking == 0) {
 				gameItem.SetCurrentFrame(1);
 			}
 			Vector2D pos = gameItem.GetPosition();
@@ -476,7 +437,7 @@ public class DummyGame implements IGameLogic {
 		}
 
 
-		if (right == 0 && left == 0 && down == 0 && spacePushed == 0 && speedY <= 2f) {
+		if (right == 0 && left == 0 && down == 0 && spacePushed == 0 && speedY <= 2f && isAttacking == 0) {
 			if (direction == 1) {
 				gameItem.SetCurrentFrame(0);
 			} else {
@@ -484,7 +445,7 @@ public class DummyGame implements IGameLogic {
 			}
 		}
 
-		if (speedY > 2 || speedY < 0) {
+		if (speedY > 2 || speedY < 0 && isAttacking == 0) {
 			if (direction == 1) {
 				gameItem.SetCurrentFrame(3);
 			} else {
@@ -500,6 +461,7 @@ public class DummyGame implements IGameLogic {
 
 		UtkozesekVizsgalata();
 		Gravity();
+		Reset();
 
 	}
 
@@ -596,5 +558,15 @@ public class DummyGame implements IGameLogic {
 
 	}
 
+	public void Reset() {
+		if( gameItem.GetBBoxMinY() > 1300){
+			gameItem.SetPosition(400, 200);
+			camera.SetPosition(0, 0);
+			speedY = 2;
+			for(int i = 0; i < AllItems.size(); i++){
+				AllItems.get(i).SetVisible(true);
+			}
+		}
+	}
 
 }
