@@ -46,6 +46,7 @@ public class DummyGame implements IGameLogic {
 	private GameObject2D platform;
 	private GameObject2D testfold;
 	private GameObject2D doboz;
+	private GameObject2D zomB;
 
 	private ArrayList<GameObject2D> AllItems;
 	private ArrayList<GameObject2D> Alltestfold;
@@ -190,6 +191,8 @@ public class DummyGame implements IGameLogic {
 		gameItem.SetPosition(400, 0);
 		gameItem.SetScale(0.5f);
 		gameItem.SetBoundingBox(gameItem.GetHeight(), gameItem.GetWidth());
+
+		zomB = new GameObject2D();
 
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
