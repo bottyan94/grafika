@@ -790,6 +790,11 @@ public class DummyGame implements IGameLogic {
 
 	}
 
+	@Override
+	public void render(Window window){
+		renderer.render(window, camera, gameItem, Alltestfold);
+	}
+
 	public void Fall() {
 		if( gameItem.GetBBoxMinY() > 1300){
 			gameItem.SetPosition(400, 200);
@@ -800,6 +805,7 @@ public class DummyGame implements IGameLogic {
 			zomB.ResetAmitAkarsz(3);
 			gameItem.ResetAmitAkarsz(12);
 			gameItem.ResetAmitAkarsz(13);
+			state = GSTATE.MENU;
 			speedY = 2;
 			for(int i = 0; i < AllItems.size(); i++){
 				AllItems.get(i).SetVisible(true);
@@ -807,10 +813,7 @@ public class DummyGame implements IGameLogic {
 		}
 			}
 
-	@Override
-	public void render(Window window){
-				renderer.render(window, camera, gameItem, Alltestfold);
-			}
+
 
 	public void Reset() {
 		gameItem.SetPosition(400, 200);
@@ -819,6 +822,7 @@ public class DummyGame implements IGameLogic {
 		zombIsAlive = 1;
 		zomB.ResetAmitAkarsz(2);
 		zomB.ResetAmitAkarsz(3);
+		state = GSTATE.MENU;
 		speedY = 2;
 		gameItem.ResetAmitAkarsz(12);
 		gameItem.ResetAmitAkarsz(13);
