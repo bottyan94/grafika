@@ -807,6 +807,7 @@ public class DummyGame implements IGameLogic {
 			zomB.ResetAmitAkarsz(3);
 			gameItem.ResetAmitAkarsz(12);
 			gameItem.ResetAmitAkarsz(13);
+			megszerzettPont = 0;
 			state = GSTATE.MENU;
 			speedY = 2;
 			for(int i = 0; i < AllItems.size(); i++){
@@ -824,6 +825,7 @@ public class DummyGame implements IGameLogic {
 		zombIsAlive = 1;
 		zomB.ResetAmitAkarsz(2);
 		zomB.ResetAmitAkarsz(3);
+		megszerzettPont = 0;
 		state = GSTATE.MENU;
 		speedY = 2;
 		gameItem.ResetAmitAkarsz(12);
