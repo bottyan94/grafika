@@ -321,7 +321,7 @@ public class GameObject2D {
 
 	public void DrawBoundingBox() {
 		GetCurrentBBox();
-		System.out.println(mBBoxTransformed.WriteBB());
+		//System.out.println(mBBoxTransformed.WriteBB());
 	}
 
 	public BoundingBox2D GetCurrentBBox() {

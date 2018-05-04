@@ -48,21 +48,42 @@ public class DummyGame implements IGameLogic {
 	private GameObject2D itemsOnGround;
 	private GameObject2D platform;
 	private GameObject2D testfold;
+
+	private GameObject2D testfold2;
+	
+	private GameObject2D menuButton;
+
 	private GameObject2D doboz;
 	private GameObject2D zomB;
+
 
 	private ArrayList<GameObject2D> AllItems;
 	private ArrayList<GameObject2D> Alltestfold;
 	private ArrayList<GameObject2D> AllLebegoFold;
 	private ArrayList<GameObject2D> AllDoboz;
 
+	private double mousePosX;
+	private double mousePosY;
+	
+	private boolean inside = false;
+	
+	public static enum GSTATE{
+		MENU,
+		GAME,
+	};
+	
+	public static GSTATE state = GSTATE.MENU;
 
+
+	
 	private int ID = 0;
 
 	// Global Scene manager
 	public static C2DSceneManager sceneManager;
+	public static C2DSceneManager sceneManagerMenu;
 
 	private C2DScene scene;
+	private C2DScene sceneMenu;
 
 	public DummyGame() {
 		renderer = new Renderer();
@@ -246,6 +267,9 @@ public class DummyGame implements IGameLogic {
 
 		sceneManager = new C2DSceneManager();
 		scene = new C2DScene();
+		
+		sceneManagerMenu = new C2DSceneManager();
+		sceneMenu = new C2DScene();
 
 		// Create a background texture
 		Texture2D background = new Texture2D();
@@ -399,6 +423,23 @@ public class DummyGame implements IGameLogic {
 		itemLayer.AddGameObject(AllItems);
 		//ItemsOnGround--------------------------------------------------------------------------------------------END
 
+		//Men�-----------------------------------------------------------------------------------------------------
+		C2DGraphicsLayer menuLayer = new C2DGraphicsLayer();
+		
+		
+		//ArrayList<GameObject2D> MenuItems = new ArrayList<>();
+		CSprite play = new CSprite("textures/items/Start", 1, 200, 200);
+		
+		menuButton = new GameObject2D();
+		menuButton.AddFrame(play);
+		menuButton.SetPosition(window.getWidth()/2-(menuButton.GetWidth()/2),window.getHeight()/2-(menuButton.GetHeight()/2));
+		menuButton.SetBoundingBox(menuButton.GetHeight(),menuButton.GetWidth());
+		
+		
+		menuLayer.AddGameObject(menuButton);
+			
+		//Men�-END-------------------------------------------------------------------------------------------------END
+		
 		// register layer at the scene
 		scene.RegisterLayer(layerBG);
 		scene.RegisterLayer(layer2);
@@ -407,10 +448,14 @@ public class DummyGame implements IGameLogic {
         scene.RegisterLayer(layer1);
         scene.RegisterLayer(playerLayer);
 		scene.RegisterLayer(itemLayer);
+		
+		
+		sceneMenu.RegisterLayer(menuLayer);
 
 
 		// Register scene at the manager
 		sceneManager.RegisterScene(scene);
+		sceneManagerMenu.RegisterScene(sceneMenu);
 
 
 		camera = new CCamera2D();
@@ -421,24 +466,36 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void input(Window window) {
 
-
-		if (window.isKeyPressed(GLFW_KEY_RIGHT)) {
-			right = 1;
-		} else {
-			right = 0;
+		if (window.isKeyPressed(GLFW_KEY_ENTER) && state == GSTATE.MENU){
+			state = GSTATE.GAME;
 		}
 
-		if (window.isKeyPressed(GLFW_KEY_LEFT)) {
-			left = 1;
-		} else {
-			left = 0;
+		
+		if (window.isMouseButtonPressed(GLFW_MOUSE_BUTTON_1) && inside == true && state == GSTATE.MENU){
+			state = GSTATE.GAME;
 		}
+		
+		mousePosX = window.getMouseX();
+		mousePosY = window.getMouseY();
+		
+		//System.out.println("x:"+window.getMouseX()+ " y:"+window.getMouseY());
+			
+		if(state == GSTATE.GAME){
+			if (window.isKeyPressed(GLFW_KEY_RIGHT)) {
+				right = 1;
+			} else {
+				right = 0;
+			}
+	
+			if (window.isKeyPressed(GLFW_KEY_LEFT)) {
+				left = 1;
+			} else {
+				left = 0;
+			}
+	
+			if (window.isKeyPressed(GLFW_KEY_DOWN)) {
+				down = 1;
 
-		if (window.isKeyPressed(GLFW_KEY_DOWN)) {
-			down = 1;
-		} else {
-			down = 0;
-		}
 
 		if (window.isKeyPressed(GLFW_KEY_UP) && spacePushed == 0 && CharacterIsAlive == 1) {
 			speedY = -30f;
@@ -496,9 +553,63 @@ public class DummyGame implements IGameLogic {
 			if (direction == 1) {
 				gameItem.SetCurrentFrame(0);
 			} else {
-				gameItem.SetCurrentFrame(7);
+				down = 0;
+			}
+	
+			if (window.isKeyPressed(GLFW_KEY_SPACE) && spacePushed == 0) {
+				speedY = -25;
+				up = 1;
+				spacePushed = 1;
+			}
+	
+			/*if (down == 1 && right ==1) {
+	
+			}*/
+	
+			if (left == 1) {
+				direction = -1;
+				if (spacePushed == 0) {
+					gameItem.SetCurrentFrame(2);
+				}
+				Vector2D pos = gameItem.GetPosition();
+				if (gameItem.GetCurrentBBox().GetMinPoint().x >= 5) {
+					pos.x -= 5f;
+					recentcameraX = camera.GetX();
+					camera.MoveLeft(5f);
+					newcameraX = camera.GetX();
+				/*if(pos.x>=400 && pos.x<=2960){
+				camera.SetPosition(pos.x, pos.y);}*/
+				gameItem.SetPosition(pos); }
+			}
+	
+	
+			if (right == 1) {
+				direction = 1;
+				if (spacePushed == 0) {
+					gameItem.SetCurrentFrame(1);
+				}
+				Vector2D pos = gameItem.GetPosition();
+				if (gameItem.GetCurrentBBox().GetMaxPoint().x <= 1285) {
+					pos.x += 5f;
+					recentcameraX = camera.GetX();
+					camera.MoveRight(5f);
+					newcameraX = camera.GetX();
+				/*if(pos.x >= 400 && pos.x <=2960){
+				camera.SetPosition(pos.x, pos.y);}*/
+				gameItem.SetPosition(pos); }
+			}
+	
+	
+			if (right == 0 && left == 0 && down == 0 && speedY == 0 && gameItem.GetY() == 235) {
+				if (direction == 1) {
+					gameItem.SetCurrentFrame(0);
+				} else {
+					gameItem.SetCurrentFrame(7);
+				}
 			}
 		}
+
+
 
 		if ((speedY > 2 || speedY < 0) && isAttacking == 0 && CharacterIsAlive == 1) {
 			if (direction == 1) {
@@ -509,11 +620,66 @@ public class DummyGame implements IGameLogic {
 		}
 
 
+
 	}
 
-	@Override
-	public void update(float interval) {
+	private boolean visible = true;
 
+	
+	@Override
+	public void update(float interval) {		
+		
+		
+		if (state == GSTATE.MENU && visible == true){
+			gameItem.SetVisible(false);
+			for (int i=0;i< AllItems.size();i++){
+				AllItems.get(i).SetVisible(false);
+			}
+			for (int i=0;i< Alltestfold.size();i++){
+				Alltestfold.get(i).SetVisible(false);
+			}
+			for (int i=0;i< AllLebegoFold.size();i++){
+				AllLebegoFold.get(i).SetVisible(false);
+			}
+			
+			menuButton.SetVisible(true);
+			visible = false;
+		}
+			if (state == GSTATE.GAME && visible == false){
+			gameItem.SetVisible(true);
+			for (int i=0;i< AllItems.size();i++){
+				AllItems.get(i).SetVisible(true);
+			}
+			for (int i=0;i< Alltestfold.size();i++){
+				Alltestfold.get(i).SetVisible(true);
+			}
+			for (int i=0;i< AllLebegoFold.size();i++){
+				AllLebegoFold.get(i).SetVisible(true);
+			}
+			
+			menuButton.SetVisible(false);
+			visible = true;
+		}
+		
+			//SetAllBBox();
+			
+			if (menuButton.GetCurrentBBox().CheckOverlapping(new BoundingBox2D(new Vector2D((float) mousePosX,(float)mousePosY),new Vector2D((float) mousePosX+1,(float)mousePosY+1)))){
+				inside = true;
+			}else{
+				inside = false;
+			}
+			
+		
+		//System.out.println(gameItem.mBBoxTransformed.CheckOverlapping(AllItems.get(1).GetCurrentBBox()));
+
+		//gameItem.SetBoundingBox();
+		//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
+		//gameItem.DrawBoundingBox();
+		if(state == GSTATE.GAME){
+		SetAllBBox();
+		float cameranakx = gameItem.GetPositionX();
+		//camera.SetXAndGetKulonbseg(cameranakx);
+		//System.out.println("karakter: " + gameItem.GetX() + " camera: " + camera.GetX());
 
 
 		zombAttackBBox.Setpoints(zomB.GetCurrentBBox().GetMinPoint().x - 40f, zomB.GetCurrentBBox().GetMinPoint().y - 40f, zomB.GetCurrentBBox().GetMaxPoint().x + 40f, zomB.GetCurrentBBox().GetMaxPoint().y + 40f);
@@ -693,7 +859,12 @@ public class DummyGame implements IGameLogic {
 				AllItems.get(i).SetVisible(true);
 			}
 		}
+		}
 	}
+
+	@Override
+	public void render(Window window) {
+		renderer.render(window, camera, gameItem, Alltestfold);
 
 	public void Reset() {
 		gameItem.SetPosition(400, 200);
@@ -760,6 +931,7 @@ public class DummyGame implements IGameLogic {
 			}
 			zombIsAlive = 0;
 		}
+
 
 	}
 
