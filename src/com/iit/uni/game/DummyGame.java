@@ -486,138 +486,87 @@ public class DummyGame implements IGameLogic {
 			} else {
 				right = 0;
 			}
-	
+
 			if (window.isKeyPressed(GLFW_KEY_LEFT)) {
 				left = 1;
 			} else {
 				left = 0;
 			}
-	
+
 			if (window.isKeyPressed(GLFW_KEY_DOWN)) {
 				down = 1;
-
-
-		if (window.isKeyPressed(GLFW_KEY_UP) && spacePushed == 0 && CharacterIsAlive == 1) {
-			speedY = -30f;
-			up = 1;
-			spacePushed = 1;
-		}
-
-		if (window.isKeyPressed(GLFW_KEY_SPACE) && CharacterIsAlive == 1) {
-			isAttacking = 1;
-			if(direction == 1) {
-				if(speedY <= 2f && spacePushed == 0) {
-					gameItem.SetCurrentFrame(8);
-				} else gameItem.SetCurrentFrame(10);
-			}
-			else {
-				if(speedY <= 2f && spacePushed == 0) {
-					gameItem.SetCurrentFrame(9);
-				} else gameItem.SetCurrentFrame(11);
-			}
-		}
-
-		if(window.isKeyReleased(GLFW_KEY_SPACE) && CharacterIsAlive == 1) {
-			isAttacking = 0;
-		}
-
-		/*if (down == 1 && right ==1) {
-
-		}*/
-
-		if (left == 1 && CharacterIsAlive == 1) {
-			direction = -1;
-			if (spacePushed == 0 && speedY <= 2f  && isAttacking == 0) {
-				gameItem.SetCurrentFrame(2);
-			}
-			Vector2D pos = gameItem.GetPosition();
-			pos.x -= 5f;
-			camera.MoveLeft(5f);
-			gameItem.SetPosition(pos);
-		}
-
-
-		if (right == 1 && CharacterIsAlive == 1) {
-			direction = 1;
-			if (spacePushed == 0 && speedY <= 2f && isAttacking == 0) {
-				gameItem.SetCurrentFrame(1);
-			}
-			Vector2D pos = gameItem.GetPosition();
-			pos.x += 5f;
-			camera.MoveRight(5f);
-			gameItem.SetPosition(pos);
-		}
-
-
-		if (right == 0 && left == 0 && down == 0 && spacePushed == 0 && speedY <= 2f && isAttacking == 0 && CharacterIsAlive == 1) {
-			if (direction == 1) {
-				gameItem.SetCurrentFrame(0);
 			} else {
 				down = 0;
 			}
-	
-			if (window.isKeyPressed(GLFW_KEY_SPACE) && spacePushed == 0) {
-				speedY = -25;
+
+			if (window.isKeyPressed(GLFW_KEY_UP) && spacePushed == 0 && CharacterIsAlive == 1) {
+				speedY = -30f;
 				up = 1;
 				spacePushed = 1;
 			}
-	
-			/*if (down == 1 && right ==1) {
-	
-			}*/
-	
-			if (left == 1) {
+
+			if (window.isKeyPressed(GLFW_KEY_SPACE) && CharacterIsAlive == 1) {
+				isAttacking = 1;
+				if(direction == 1) {
+					if(speedY <= 2f && spacePushed == 0) {
+						gameItem.SetCurrentFrame(8);
+					} else gameItem.SetCurrentFrame(10);
+				}
+				else {
+					if(speedY <= 2f && spacePushed == 0) {
+						gameItem.SetCurrentFrame(9);
+					} else gameItem.SetCurrentFrame(11);
+				}
+			}
+
+			if(window.isKeyReleased(GLFW_KEY_SPACE) && CharacterIsAlive == 1) {
+				isAttacking = 0;
+			}
+
+		/*if (down == 1 && right ==1) {
+		}*/
+
+			if (left == 1 && CharacterIsAlive == 1) {
 				direction = -1;
-				if (spacePushed == 0) {
+				if (spacePushed == 0 && speedY <= 2f  && isAttacking == 0) {
 					gameItem.SetCurrentFrame(2);
 				}
 				Vector2D pos = gameItem.GetPosition();
-				if (gameItem.GetCurrentBBox().GetMinPoint().x >= 5) {
-					pos.x -= 5f;
-					recentcameraX = camera.GetX();
-					camera.MoveLeft(5f);
-					newcameraX = camera.GetX();
-				/*if(pos.x>=400 && pos.x<=2960){
-				camera.SetPosition(pos.x, pos.y);}*/
-				gameItem.SetPosition(pos); }
+				pos.x -= 5f;
+				camera.MoveLeft(5f);
+				gameItem.SetPosition(pos);
 			}
-	
-	
-			if (right == 1) {
+
+
+			if (right == 1 && CharacterIsAlive == 1) {
 				direction = 1;
-				if (spacePushed == 0) {
+				if (spacePushed == 0 && speedY <= 2f && isAttacking == 0) {
 					gameItem.SetCurrentFrame(1);
 				}
 				Vector2D pos = gameItem.GetPosition();
-				if (gameItem.GetCurrentBBox().GetMaxPoint().x <= 1285) {
-					pos.x += 5f;
-					recentcameraX = camera.GetX();
-					camera.MoveRight(5f);
-					newcameraX = camera.GetX();
-				/*if(pos.x >= 400 && pos.x <=2960){
-				camera.SetPosition(pos.x, pos.y);}*/
-				gameItem.SetPosition(pos); }
+				pos.x += 5f;
+				camera.MoveRight(5f);
+				gameItem.SetPosition(pos);
 			}
-	
-	
-			if (right == 0 && left == 0 && down == 0 && speedY == 0 && gameItem.GetY() == 235) {
+
+
+			if (right == 0 && left == 0 && down == 0 && spacePushed == 0 && speedY <= 2f && isAttacking == 0 && CharacterIsAlive == 1) {
 				if (direction == 1) {
 					gameItem.SetCurrentFrame(0);
 				} else {
 					gameItem.SetCurrentFrame(7);
 				}
 			}
-		}
 
-
-
-		if ((speedY > 2 || speedY < 0) && isAttacking == 0 && CharacterIsAlive == 1) {
-			if (direction == 1) {
-				gameItem.SetCurrentFrame(3);
-			} else {
-				gameItem.SetCurrentFrame(4);
+			if ((speedY > 2 || speedY < 0) && isAttacking == 0 && CharacterIsAlive == 1) {
+				if (direction == 1) {
+					gameItem.SetCurrentFrame(3);
+				} else {
+					gameItem.SetCurrentFrame(4);
+				}
 			}
 		}
+
 
 
 
@@ -627,88 +576,85 @@ public class DummyGame implements IGameLogic {
 
 	
 	@Override
-	public void update(float interval) {		
-		
-		
-		if (state == GSTATE.MENU && visible == true){
-			gameItem.SetVisible(false);
-			for (int i=0;i< AllItems.size();i++){
-				AllItems.get(i).SetVisible(false);
-			}
-			for (int i=0;i< Alltestfold.size();i++){
-				Alltestfold.get(i).SetVisible(false);
-			}
-			for (int i=0;i< AllLebegoFold.size();i++){
-				AllLebegoFold.get(i).SetVisible(false);
-			}
-			
-			menuButton.SetVisible(true);
-			visible = false;
-		}
-			if (state == GSTATE.GAME && visible == false){
-			gameItem.SetVisible(true);
-			for (int i=0;i< AllItems.size();i++){
-				AllItems.get(i).SetVisible(true);
-			}
-			for (int i=0;i< Alltestfold.size();i++){
-				Alltestfold.get(i).SetVisible(true);
-			}
-			for (int i=0;i< AllLebegoFold.size();i++){
-				AllLebegoFold.get(i).SetVisible(true);
-			}
-			
-			menuButton.SetVisible(false);
-			visible = true;
-		}
-		
-			//SetAllBBox();
-			
-			if (menuButton.GetCurrentBBox().CheckOverlapping(new BoundingBox2D(new Vector2D((float) mousePosX,(float)mousePosY),new Vector2D((float) mousePosX+1,(float)mousePosY+1)))){
-				inside = true;
-			}else{
-				inside = false;
-			}
-			
-		
-		//System.out.println(gameItem.mBBoxTransformed.CheckOverlapping(AllItems.get(1).GetCurrentBBox()));
-
-		//gameItem.SetBoundingBox();
-		//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
-		//gameItem.DrawBoundingBox();
-		if(state == GSTATE.GAME){
-		SetAllBBox();
-		float cameranakx = gameItem.GetPositionX();
-		//camera.SetXAndGetKulonbseg(cameranakx);
-		//System.out.println("karakter: " + gameItem.GetX() + " camera: " + camera.GetX());
+	public void update(float interval){
 
 
-		zombAttackBBox.Setpoints(zomB.GetCurrentBBox().GetMinPoint().x - 40f, zomB.GetCurrentBBox().GetMinPoint().y - 40f, zomB.GetCurrentBBox().GetMaxPoint().x + 40f, zomB.GetCurrentBBox().GetMaxPoint().y + 40f);
+				if (state == GSTATE.MENU && visible == true) {
+					gameItem.SetVisible(false);
+					for (int i = 0; i < AllItems.size(); i++) {
+						AllItems.get(i).SetVisible(false);
+					}
+					for (int i = 0; i < Alltestfold.size(); i++) {
+						Alltestfold.get(i).SetVisible(false);
+					}
+					for (int i = 0; i < AllLebegoFold.size(); i++) {
+						AllLebegoFold.get(i).SetVisible(false);
+					}
 
+					menuButton.SetVisible(true);
+					visible = false;
+				}
+				if (state == GSTATE.GAME && visible == false) {
+					gameItem.SetVisible(true);
+					for (int i = 0; i < AllItems.size(); i++) {
+						AllItems.get(i).SetVisible(true);
+					}
+					for (int i = 0; i < Alltestfold.size(); i++) {
+						Alltestfold.get(i).SetVisible(true);
+					}
+					for (int i = 0; i < AllLebegoFold.size(); i++) {
+						AllLebegoFold.get(i).SetVisible(true);
+					}
 
-		UtkozesekVizsgalata();
-		Gravity();
-		Fall();
-		ZomBMove();
+					menuButton.SetVisible(false);
+					visible = true;
+				}
 
-		if(CharacterIsAlive == 0) {
-			if(gameItem.GetCurrentFrameCurrentSprite() > 8){
-				if(direction == 1) {
-					gameItem.SetCurrentFrame(14);
-					Reset();
+				//SetAllBBox();
+
+				if (menuButton.GetCurrentBBox().CheckOverlapping(new BoundingBox2D(new Vector2D((float) mousePosX, (float) mousePosY), new Vector2D((float) mousePosX + 1, (float) mousePosY + 1)))) {
+					inside = true;
 				} else {
-					gameItem.SetCurrentFrame(15);
-					Reset();
+					inside = false;
+				}
+
+
+				//System.out.println(gameItem.mBBoxTransformed.CheckOverlapping(AllItems.get(1).GetCurrentBBox()));
+
+				//gameItem.SetBoundingBox();
+				//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
+				//gameItem.DrawBoundingBox();
+				if (state == GSTATE.GAME) {
+
+					float cameranakx = gameItem.GetPositionX();
+					//camera.SetXAndGetKulonbseg(cameranakx);
+					//System.out.println("karakter: " + gameItem.GetX() + " camera: " + camera.GetX());
+
+
+					zombAttackBBox.Setpoints(zomB.GetCurrentBBox().GetMinPoint().x - 40f, zomB.GetCurrentBBox().GetMinPoint().y - 40f, zomB.GetCurrentBBox().GetMaxPoint().x + 40f, zomB.GetCurrentBBox().GetMaxPoint().y + 40f);
+
+
+					UtkozesekVizsgalata();
+					Gravity();
+					Fall();
+					ZomBMove();
+
+					if (CharacterIsAlive == 0) {
+						if (gameItem.GetCurrentFrameCurrentSprite() > 8) {
+							if (direction == 1) {
+								gameItem.SetCurrentFrame(14);
+								Reset();
+							} else {
+								gameItem.SetCurrentFrame(15);
+								Reset();
+							}
+						}
+					}
+
 				}
 			}
-		}
 
-	}
 
-	@Override
-	public void render(Window window) {
-		renderer.render(window, camera, gameItem, Alltestfold);
-
-	}
 
 	@Override
 	public void cleanup() {
@@ -859,12 +805,12 @@ public class DummyGame implements IGameLogic {
 				AllItems.get(i).SetVisible(true);
 			}
 		}
-		}
-	}
+			}
 
 	@Override
-	public void render(Window window) {
-		renderer.render(window, camera, gameItem, Alltestfold);
+	public void render(Window window){
+				renderer.render(window, camera, gameItem, Alltestfold);
+			}
 
 	public void Reset() {
 		gameItem.SetPosition(400, 200);
