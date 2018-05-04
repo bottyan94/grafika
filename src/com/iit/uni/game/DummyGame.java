@@ -32,6 +32,7 @@ public class DummyGame implements IGameLogic {
 	private int zombdirection = 1;
 	private int zombIsAlive = 1;
 	private int CharacterIsAlive = 1;
+	private int megszerzettPont = 0;
 
 	private BoundingBox2D zombAttackBBox;
 
@@ -610,7 +611,6 @@ public class DummyGame implements IGameLogic {
 					visible = true;
 				}
 
-				//SetAllBBox();
 
 				if (menuButton.GetCurrentBBox().CheckOverlapping(new BoundingBox2D(new Vector2D((float) mousePosX, (float) mousePosY), new Vector2D((float) mousePosX + 1, (float) mousePosY + 1)))) {
 					inside = true;
@@ -619,11 +619,8 @@ public class DummyGame implements IGameLogic {
 				}
 
 
-				//System.out.println(gameItem.mBBoxTransformed.CheckOverlapping(AllItems.get(1).GetCurrentBBox()));
-
-				//gameItem.SetBoundingBox();
 				//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
-				//gameItem.DrawBoundingBox();
+
 				if (state == GSTATE.GAME) {
 
 					float cameranakx = gameItem.GetPositionX();
@@ -652,6 +649,9 @@ public class DummyGame implements IGameLogic {
 					}
 
 				}
+
+				System.out.println("megszerzett: " + megszerzettPont);
+
 			}
 
 
@@ -722,8 +722,10 @@ public class DummyGame implements IGameLogic {
 
 				if (AllItems.get(i).GetID() == 1) {
 					System.out.println("gem");
+					megszerzettPont += 5;
 				} else if (AllItems.get(i).GetID() == 2) {
 					System.out.println("poti");
+					megszerzettPont += 2;
 				}
 			}
 		}
