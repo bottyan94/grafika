@@ -310,4 +310,8 @@ public class CSprite {
 		return m_vFrames.get(m_iActualFrame).GetWidth();
 	}
 
+	public int GetCurrentFrame() {
+		return m_iActualFrame;
+	}
+
 }
