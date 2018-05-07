@@ -573,9 +573,9 @@ public class DummyGame implements IGameLogic {
 			}
 
 			if (window.isKeyPressed(GLFW_KEY_UP) && spacePushed == 0 && CharacterIsAlive == 1) {
-				speedY = -30f;
+				if(speedY<+3){speedY = -30f;
 				up = 1;
-				spacePushed = 1;
+				spacePushed = 1;}
 			}
 
 			if (window.isKeyPressed(GLFW_KEY_SPACE) && CharacterIsAlive == 1) {
