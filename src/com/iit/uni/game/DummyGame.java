@@ -364,13 +364,13 @@ public class DummyGame implements IGameLogic {
 		float bw = background.GetWidth();
 		Texture2D background0 = new Texture2D();
 		background0.CreateTexture("textures/background/sky.png");
-		background0.setPosition(0-bw, 0, -1);
+		background0.setPosition(0-bw, -100, -1);
 		Texture2D background1 = new Texture2D();
 		background1.CreateTexture("textures/background/sky.png");
-		background1.setPosition(bw, 0, -1);
+		background1.setPosition(bw, -100, -1);
 		Texture2D background2 = new Texture2D();
 		background2.CreateTexture("textures/background/sky.png");
-		background2.setPosition(bw*2, 0, -1);
+		background2.setPosition(bw*2, -100, -1);
 
 		// Create a cloud layer
 		Texture2D clouds = new Texture2D();
@@ -380,10 +380,10 @@ public class DummyGame implements IGameLogic {
 		Texture2D clouds1 = new Texture2D();
 		float cw = clouds.GetWidth();
 		clouds1.CreateTexture("textures/background/clouds_1.png");
-		clouds1.setPosition(cw, 0, 0);
+		clouds1.setPosition(cw, -300, 0);
 		Texture2D clouds2 = new Texture2D();
 		clouds2.CreateTexture("textures/background/clouds_1.png");
-		clouds2.setPosition(cw*2, 0, 0);
+		clouds2.setPosition(cw*2, -300, 0);
 
 
 		// Create a mountain layer
@@ -727,7 +727,7 @@ public class DummyGame implements IGameLogic {
 				}
 
 // karakter poz kiíratás
-				System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
+				//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
 
 				if (state == GSTATE.GAME) {
 
@@ -763,7 +763,7 @@ public class DummyGame implements IGameLogic {
 
 				}
 
-				System.out.println("megszerzett: " + megszerzettPont);
+				//System.out.println("megszerzett: " + megszerzettPont);
 
 			}
 
@@ -783,8 +783,15 @@ public class DummyGame implements IGameLogic {
 		if ( speedY < 30) {
 			speedY = speedY + gravity;
 		}
-		//float seged=gameItem.GetPositionY()-karakterStartPoz;
-		//camera.MoveRelative(camera.GetX(),camera.GetY()-seged);
+		//System.out.println(gameItem.GetPositionY());
+		if(gameItem.GetPositionY()<=50){
+			if(camera.GetY()<60)camera.MoveUp(12f);
+			System.out.println(camera.GetY());
+			System.out.println("Fent van");}
+		if(gameItem.GetPositionY()>=110){
+			if(camera.GetY()>0)
+				camera.MoveUp(-12f);
+			System.out.println("Lent van");}
 		gameItem.SetPosition(pos);
 	}
 
