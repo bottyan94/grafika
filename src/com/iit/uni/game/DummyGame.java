@@ -282,7 +282,7 @@ public class DummyGame implements IGameLogic {
 		gameItem.SetAnimationSpeed(8, 13);
 
 
-		gameItem.SetPosition(400, 0);
+		gameItem.SetPosition(400, -300);
 		gameItem.SetScale(0.5f);
 		gameItem.SetBoundingBox(gameItem.GetHeight(), gameItem.GetWidth());
 
@@ -531,7 +531,8 @@ public class DummyGame implements IGameLogic {
 
 
 		camera = new CCamera2D();
-
+		gameItem.SetVisible(false);
+		//gameItem.isCollidable();
 
 	}
 
@@ -865,12 +866,12 @@ public class DummyGame implements IGameLogic {
 
 	@Override
 	public void render(Window window){
-		renderer.render(window, camera, gameItem, Alltestfold);
+		renderer.render(window, camera, gameItem, AllItems);
 	}
 
 	public void Fall() {
 		if( gameItem.GetBBoxMinY() > 1300){
-			gameItem.SetPosition(400, 200);
+			gameItem.SetPosition(400, -300);
 			camera.SetPosition(0, 0);
 			CharacterIsAlive = 1;
 			zombIsAlive = 1;
@@ -890,7 +891,7 @@ public class DummyGame implements IGameLogic {
 
 
 	public void Reset() {
-		gameItem.SetPosition(400, 200);
+		gameItem.SetPosition(400, -300);
 		camera.SetPosition(0, 0);
 		CharacterIsAlive = 1;
 		zombIsAlive = 1;
