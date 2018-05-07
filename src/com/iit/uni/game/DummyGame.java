@@ -62,6 +62,7 @@ public class DummyGame implements IGameLogic {
 	private GameObject2D bokor;
 	private GameObject2D doboz;
 	private GameObject2D skull;
+	private GameObject2D bones;
 	private GameObject2D zomB;
 
 
@@ -127,29 +128,49 @@ public class DummyGame implements IGameLogic {
 		decor = new ArrayList<>();
 		CSprite TablaStart = new CSprite("textures/decor/ArrowSign",1,128,128);
 		CSprite TablaDie= new CSprite("textures/decor/ArrowSign1",1,128,128);
-		table = new GameObject2D();
-		table.AddFrame(TablaStart);
-		table.SetPosition(300,510);
-		decor.add(table);
+		CSprite Dead1= new CSprite("textures/decor/TombStone (1)",1,128,128);
+		CSprite Dead2= new CSprite("textures/decor/TombStone (2)",1,128,128);
+
+		for(int i=0; i<=3; i++){
+			table = new GameObject2D();
+
+			if(i==0){table.AddFrame(TablaStart);table.SetPosition(300,510);}
+			if(i==1){table.AddFrame(TablaStart);table.SetPosition(2850,170);}
+			if(i==2){table.AddFrame(Dead1);table.SetPosition(2440,200);}
+			if(i==3){table.AddFrame(Dead2);table.SetPosition(2610,180);}
+			decor.add(table);}
 		tableDie = new GameObject2D();
 		tableDie.AddFrame(TablaDie);
 		tableDie.SetPosition(80,510);
 		decor.add(tableDie);
 		CSprite Bokor = new CSprite("textures/decor/Bush (2)",1,128,128);
-		bokor = new GameObject2D();
-		bokor.AddFrame(Bokor);
-		bokor.SetPosition(180,530);
-		decor.add(bokor);
+		CSprite DeadBokor = new CSprite("textures/decor/DeadBush",1,128,128);
+		CSprite DeadTree = new CSprite("textures/decor/Tree",1,128,128);
+		for(int i=0; i<=4; i++){
+			bokor = new GameObject2D();
+
+			if(i==0){bokor.AddFrame(Bokor);bokor.SetPosition(180,530);}
+			if(i==1){bokor.AddFrame(Bokor);bokor.SetPosition(2250,190);}
+			if(i==2){bokor.AddFrame(Bokor);bokor.SetPosition(2700,190);}
+			if(i==3){bokor.AddFrame(DeadBokor); bokor.SetPosition(1200,530);}
+			if(i==4){bokor.AddFrame(DeadTree); bokor.SetPosition(2400,20);}
+			decor.add(bokor);
+		}
 		CSprite TableSign = new CSprite("textures/decor/Sign",1,128,128);
 		tableSign = new GameObject2D();
 		tableSign.AddFrame(TableSign);
 		tableSign.SetPosition(830,500);
 		decor.add(tableSign);
 		CSprite Skull = new CSprite("textures/decor/Skull",1,128,128);
+		CSprite Bones = new CSprite("textures/decor/bones",1,128,128);
 		skull = new GameObject2D();
 		skull.AddFrame(Skull);
 		skull.SetPosition(1710,510);
 		decor.add(skull);
+		bones = new GameObject2D();
+		bones.AddFrame(Bones);
+		bones.SetPosition(1600,550);
+		decor.add(bones);
 
 
 
@@ -185,7 +206,7 @@ public class DummyGame implements IGameLogic {
 		CSprite testBal = new CSprite("textures/platform/Tile (1)", 1, 128, 128);
 		CSprite testJob = new CSprite("textures/platform/Tile (3)", 1, 128, 128);
 
-		for (int i = 1; i <= 40; i++) {
+		for (int i = 1; i <= 35; i++) {
 			if (i == 1 || i==9 || i==23){
 				testfold = new GameObject2D();
 				testfold.AddFrame(testBal);
@@ -194,7 +215,7 @@ public class DummyGame implements IGameLogic {
 				//testfold.SetID(11);
 				Alltestfold.add(testfold);
 
-			} else if (i == 6 || i==15) {
+			} else if (i == 6 || i==15 || i==35) {
 				testfold = new GameObject2D();
 				testfold.AddFrame(testJob);
 				testfold.SetPosition(0 + i * 128, 595);
@@ -204,8 +225,7 @@ public class DummyGame implements IGameLogic {
 
 			}else if(i==7 || i==8||i==16||i==17||i==18||i==19||i==20||i==21||i==22){
 				continue;
-			}else
-				testfold = new GameObject2D();
+			}else testfold = new GameObject2D();
 			testfold.AddFrame(test);
 			testfold.SetPosition(0 + i * 128, 595);
 			testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
@@ -661,7 +681,7 @@ public class DummyGame implements IGameLogic {
 					inside = false;
 				}
 
-
+// karakter poz kiíratás
 				System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
 
 				if (state == GSTATE.GAME) {
