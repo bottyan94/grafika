@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 import com.iit.uni.engine.*;
 import com.iit.uni.engine.math.Vector2D;
+import javafx.scene.control.Tab;
+import sun.plugin.javascript.navig4.Layer;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -40,28 +42,35 @@ public class DummyGame implements IGameLogic {
 	private int direction = 1;
 
 	// 2D Texture items
-	private Texture2D[] backgrounds;
+	//private Texture2D[] backgrounds;
 	private CCamera2D camera;
 
 
 	// 2D GameObject items
 	public GameObject2D gameItem;
 	private GameObject2D itemsOnGround;
+
 	private GameObject2D platform;
 	private GameObject2D testfold;
 
 	private GameObject2D testfold2;
 	
 	private GameObject2D menuButton;
-
+	private GameObject2D table;
+	private GameObject2D tableDie;
+	private GameObject2D tableSign;
+	private GameObject2D bokor;
 	private GameObject2D doboz;
+	private GameObject2D skull;
 	private GameObject2D zomB;
+
 
 
 	private ArrayList<GameObject2D> AllItems;
 	private ArrayList<GameObject2D> Alltestfold;
 	private ArrayList<GameObject2D> AllLebegoFold;
 	private ArrayList<GameObject2D> AllDoboz;
+	private ArrayList<GameObject2D> decor;
 
 	private double mousePosX;
 	private double mousePosY;
@@ -105,7 +114,7 @@ public class DummyGame implements IGameLogic {
 
 		AllDoboz = new ArrayList<>();
 		int k=1;
-		CSprite Doboz = new CSprite("textures/items/Crate", 1, 128, 128);
+		CSprite Doboz = new CSprite("textures/decor/Crate", 1, 128, 128);
 		for(int i=3;i>=0;i--){
 			for(int j=3; j>=k;j--){
 				doboz = new GameObject2D();
@@ -115,6 +124,33 @@ public class DummyGame implements IGameLogic {
 				k+=1;
 			}
 		}
+		decor = new ArrayList<>();
+		CSprite TablaStart = new CSprite("textures/decor/ArrowSign",1,128,128);
+		CSprite TablaDie= new CSprite("textures/decor/ArrowSign1",1,128,128);
+		table = new GameObject2D();
+		table.AddFrame(TablaStart);
+		table.SetPosition(300,510);
+		decor.add(table);
+		tableDie = new GameObject2D();
+		tableDie.AddFrame(TablaDie);
+		tableDie.SetPosition(80,510);
+		decor.add(tableDie);
+		CSprite Bokor = new CSprite("textures/decor/Bush (2)",1,128,128);
+		bokor = new GameObject2D();
+		bokor.AddFrame(Bokor);
+		bokor.SetPosition(180,530);
+		decor.add(bokor);
+		CSprite TableSign = new CSprite("textures/decor/Sign",1,128,128);
+		tableSign = new GameObject2D();
+		tableSign.AddFrame(TableSign);
+		tableSign.SetPosition(830,500);
+		decor.add(tableSign);
+		CSprite Skull = new CSprite("textures/decor/Skull",1,128,128);
+		skull = new GameObject2D();
+		skull.AddFrame(Skull);
+		skull.SetPosition(1710,510);
+		decor.add(skull);
+
 
 
 
@@ -127,22 +163,16 @@ public class DummyGame implements IGameLogic {
 			if(i==1){
 				platform.AddFrame(lebegoBal);
 				platform.SetPosition(2000, 250);
-				//platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
-				//	platform.SetID(12);
 				AllLebegoFold.add(platform);
 			}else if(i==6){
 				platform = new GameObject2D();
 				platform.AddFrame(lebegoJob);
 				platform.SetPosition(2000+128*i, 250);
-				//platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth())
-				//	platform.SetID(12);
-				AllLebegoFold.add(platform);
+					AllLebegoFold.add(platform);
 			}else
 				platform = new GameObject2D();
 			platform.AddFrame(lebegoKozep);
 			platform.SetPosition(2000+128*i, 250);
-			//platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
-			//platform.SetID(12);
 			AllLebegoFold.add(platform);}
 
 
@@ -277,6 +307,9 @@ public class DummyGame implements IGameLogic {
 		background.CreateTexture("textures/background/sky.png");
 		background.setPosition(0, -100, -1);
 		float bw = background.GetWidth();
+		Texture2D background0 = new Texture2D();
+		background0.CreateTexture("textures/background/sky.png");
+		background0.setPosition(0-bw, 0, -1);
 		Texture2D background1 = new Texture2D();
 		background1.CreateTexture("textures/background/sky.png");
 		background1.setPosition(bw, 0, -1);
@@ -297,23 +330,29 @@ public class DummyGame implements IGameLogic {
 		clouds2.CreateTexture("textures/background/clouds_1.png");
 		clouds2.setPosition(cw*2, 0, 0);
 
-		Texture2D felho = new Texture2D();
-		felho.CreateTexture("textures/background/clouds_2");
 
 		// Create a mountain layer
-		Texture2D mountains = new Texture2D();
-		mountains.CreateTexture("textures/background/grounds2.png");
-		mountains.setScale(0.7f);
-        mountains.setPosition(-300, -300, 0);
-        float mw = mountains.GetWidth()*0.7f;
-        Texture2D mountains1 = new Texture2D();
-        mountains1.CreateTexture("textures/background/grounds2.png");
-        mountains1.setScale(0.7f);
-        mountains1.setPosition(mw-300, -300, 0);
-        Texture2D mountains2 = new Texture2D();
-        mountains2.CreateTexture("textures/background/grounds2.png");
-        mountains2.setScale(0.7f);
-        mountains2.setPosition((mw*2)-300, -300, 0);
+		Texture2D grounds0 = new Texture2D();
+		grounds0.CreateTexture("textures/background/grounds2.png");
+		grounds0.setScale(0.7f);
+		grounds0.setPosition(-300, -300, 0);
+		float mw = grounds0.GetWidth()*0.7f;
+		Texture2D grounds1 = new Texture2D();
+		grounds1.CreateTexture("textures/background/grounds2.png");
+		grounds1.setScale(0.7f);
+		grounds1.setPosition(0-mw-300, -300, 0);
+        Texture2D grounds2 = new Texture2D();
+		grounds2.CreateTexture("textures/background/grounds2.png");
+		grounds2.setScale(0.7f);
+		grounds2.setPosition(mw-300, -300, 0);
+        Texture2D grounds3 = new Texture2D();
+		grounds3.CreateTexture("textures/background/grounds2.png");
+		grounds3.setScale(0.7f);
+		grounds3.setPosition((mw*2)-300, -300, 0);
+		Texture2D grounds4 = new Texture2D();
+		grounds4.CreateTexture("textures/background/grounds2.png");
+		grounds4.setScale(0.7f);
+		grounds4.setPosition((mw*3)-300, -300, 0);
 
 
 
@@ -333,37 +372,37 @@ public class DummyGame implements IGameLogic {
 		// Create graphics layer
 		C2DGraphicsLayer layerBG = new C2DGraphicsLayer();
 		layerBG.AddTexture(background);
+		layerBG.AddTexture(background0);
         layerBG.AddTexture(background1);
         layerBG.AddTexture(background2);
 
 		// Create graphics layer
-		C2DGraphicsLayer layer1 = new C2DGraphicsLayer();
-		layer1.AddTexture(clouds);
-        layer1.AddTexture(clouds1);
-        layer1.AddTexture(clouds2);
+		C2DGraphicsLayer cloudsLayer = new C2DGraphicsLayer();
+		cloudsLayer.AddTexture(clouds);
+		cloudsLayer.AddTexture(clouds1);
+		cloudsLayer.AddTexture(clouds2);
 		// Create graphics layer
-		C2DGraphicsLayer layer2 = new C2DGraphicsLayer();
-		layer2.AddTexture(rocks);
-        layer2.AddTexture(rocks1);
-        layer2.AddTexture(rocks2);
+		C2DGraphicsLayer rocksLayer = new C2DGraphicsLayer();
+		rocksLayer.AddTexture(rocks);
+		rocksLayer.AddTexture(rocks1);
+		rocksLayer.AddTexture(rocks2);
 
-		C2DGraphicsLayer layer3 = new C2DGraphicsLayer();
-		layer3.AddTexture(mountains);
-        layer3.AddTexture(mountains1);
-        layer3.AddTexture(mountains2);
+		C2DGraphicsLayer groundLayer = new C2DGraphicsLayer();
+		groundLayer.AddTexture(grounds0);
+		groundLayer.AddTexture(grounds1);
+		groundLayer.AddTexture(grounds2);
+		groundLayer.AddTexture(grounds3);
+		groundLayer.AddTexture(grounds4);
 
-        C2DGraphicsLayer layer4 = new C2DGraphicsLayer();
-		layer4.AddTexture(felho);
-        /*layer4.AddTexture(ground);
-        layer4.AddTexture(ground1);
-        layer4.AddTexture(ground2);
-*/
+
+
         C2DGraphicsLayer playerLayer = new C2DGraphicsLayer();
 		playerLayer.AddGameObject(gameItem);
 		playerLayer.AddGameObject(platform);
 		playerLayer.AddGameObject(Alltestfold);
 		playerLayer.AddGameObject(AllLebegoFold);
 		playerLayer.AddGameObject(AllDoboz);
+		playerLayer.AddGameObject(decor);
 		playerLayer.AddGameObject(zomB);
 
 		//ItemsOnGround--------------------------------------------------------------------------------------------
@@ -412,7 +451,6 @@ public class DummyGame implements IGameLogic {
 			potion.add(itemsOnGround);
 		}
 
-
 		AllItems.addAll(gems);
 		AllItems.addAll(potion);
 
@@ -443,17 +481,22 @@ public class DummyGame implements IGameLogic {
 		
 		// register layer at the scene
 		scene.RegisterLayer(layerBG);
-		scene.RegisterLayer(layer2);
-        //scene.RegisterLayer(layer4);
-        scene.RegisterLayer(layer3);
-        scene.RegisterLayer(layer1);
+		scene.RegisterLayer(rocksLayer);
+        scene.RegisterLayer(groundLayer);
+        scene.RegisterLayer(cloudsLayer);
         scene.RegisterLayer(playerLayer);
 		scene.RegisterLayer(itemLayer);
-		
-		
+
+		C2DGraphicsLayer hatter = new C2DGraphicsLayer();
+		Texture2D menuHatter = new Texture2D();
+		menuHatter.CreateTexture("textures/background/menu.png");
+		menuHatter.setPosition(0, 0, 0);
+		hatter.AddTexture(menuHatter);
+
+
+
+		sceneMenu.RegisterLayer(hatter);
 		sceneMenu.RegisterLayer(menuLayer);
-
-
 		// Register scene at the manager
 		sceneManager.RegisterScene(scene);
 		sceneManagerMenu.RegisterScene(sceneMenu);
@@ -619,7 +662,7 @@ public class DummyGame implements IGameLogic {
 				}
 
 
-				//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
+				System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
 
 				if (state == GSTATE.GAME) {
 
