@@ -160,6 +160,7 @@ public class DummyGame implements IGameLogic {
 			if(i==9){bokor.AddFrame(DeadTree); bokor.SetPosition(3900,360);}
 			decor.add(bokor);
 		}
+
 		CSprite TableSign = new CSprite("textures/decor/Sign",1,128,128);
 		tableSign = new GameObject2D();
 		tableSign.AddFrame(TableSign);
