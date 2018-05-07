@@ -407,6 +407,10 @@ public class DummyGame implements IGameLogic {
 		grounds4.CreateTexture("textures/background/grounds2.png");
 		grounds4.setScale(0.7f);
 		grounds4.setPosition((mw*3)-300, -300, 0);
+		Texture2D grounds5 = new Texture2D();
+		grounds5.CreateTexture("textures/background/grounds2.png");
+		grounds5.setScale(0.7f);
+		grounds5.setPosition((mw*4)-300, -300, 0);
 
 
 
@@ -447,6 +451,7 @@ public class DummyGame implements IGameLogic {
 		groundLayer.AddTexture(grounds2);
 		groundLayer.AddTexture(grounds3);
 		groundLayer.AddTexture(grounds4);
+		groundLayer.AddTexture(grounds5);
 
 
 
@@ -456,10 +461,8 @@ public class DummyGame implements IGameLogic {
 		playerLayer.AddGameObject(Alltestfold);
 		playerLayer.AddGameObject(AllLebegoFold);
 		playerLayer.AddGameObject(AllDoboz);
-
-		playerLayer.AddGameObject(Zombik);
-
 		playerLayer.AddGameObject(decor);
+		playerLayer.AddGameObject(Zombik);
 		playerLayer.AddGameObject(zomB);
 
 
