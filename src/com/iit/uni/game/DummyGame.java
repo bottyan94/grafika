@@ -10,12 +10,14 @@ import com.iit.uni.engine.IGameLogic;
 import com.iit.uni.engine.Texture2D;
 import com.iit.uni.engine.Window;
 
+import java.awt.Font;
 import java.util.ArrayList;
 
 import com.iit.uni.engine.*;
 import com.iit.uni.engine.math.Vector2D;
 import javafx.scene.control.Tab;
-import sun.plugin.javascript.navig4.Layer;
+//import sun.plugin.javascript.navig4.Layer;
+import sun.font.TrueTypeFont;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -105,7 +107,7 @@ public class DummyGame implements IGameLogic {
 		renderer = new Renderer();
 	}
 
-	private int a = 5;
+	
 
 	@Override
 	public void init(Window window) throws Exception {
@@ -468,7 +470,9 @@ public class DummyGame implements IGameLogic {
 
 
 		//ItemsOnGround--------------------------------------------------------------------------------------------
-
+		
+		int a = 15;
+		int b = 5;
 		AllItems = new ArrayList<>();
 		//itemsOnGround = new GameObject2D();
 
@@ -484,9 +488,10 @@ public class DummyGame implements IGameLogic {
 			itemsOnGround = new GameObject2D();
 			gem.SetScale(2);
 			itemsOnGround.AddFrame(gem);
-			itemsOnGround.SetPosition(500 + i * 130, 200);
+			itemsOnGround.SetScale(3);
+			//itemsOnGround.SetPosition(2250 + i * 130, 200);
 			itemsOnGround.SetID(1);
-			ID++;
+			
 			//itemsOnGround.SetBoundingBox(gem.GetHeight(), gem.GetWidth());
 
 			gems.add(itemsOnGround);
@@ -495,31 +500,49 @@ public class DummyGame implements IGameLogic {
 			//System.out.println(ar.get(i).GetPosition().getX());
 		}
 
+		for(int i=0;i<gems.size();i++){
+			
+			if(i<5)
+				gems.get(i).SetPosition(1300 + i * 150, 550);
+			else if(i>=5 && i<10)
+				gems.get(i).SetPosition(1600 + i * 130, 200);
+			else
+				gems.get(i).SetPosition(2000 + i * 130, 550);
+
+		}
 
 
 		ArrayList<GameObject2D> potion = new ArrayList<>();
 		CSprite Potion = new CSprite("textures/items/glass02blue", 1, 200, 200);
 
-		for (int i = 0; i < a; i++) {
+		for (int i = 0; i < b; i++) {
 			itemsOnGround = new GameObject2D();
 			Potion.SetScale(1);
 			itemsOnGround.AddFrame(Potion);
-			itemsOnGround.SetPosition(450 + i * 150, 560);
+			itemsOnGround.SetPosition(1300 + i * 150, 550);
 			itemsOnGround.SetID(2);
-			ID++;
-
 			//itemsOnGround.SetBoundingBox(Potion.GetHeight(), Potion.GetWidth());
 
 			potion.add(itemsOnGround);
 		}
 
+		
+		CSprite Chalice = new CSprite("textures/items/chalice000", 7, 200, 200, 5);
+		
+		itemsOnGround = new GameObject2D();
+		Chalice.SetScale(2);
+		itemsOnGround.AddFrame(Chalice);
+		itemsOnGround.SetID(3);
+		itemsOnGround.SetPosition(4450, 430);
+		
 		AllItems.addAll(gems);
-		AllItems.addAll(potion);
+		//AllItems.addAll(potion);
+		AllItems.add(itemsOnGround);
 
 
-		for (int i = 0; i < AllItems.size(); i++) {
+		/*for (int i = 0; i < AllItems.size(); i++) {
 			System.out.println("ID:" + AllItems.get(i).GetID());
-		}
+		}*/
 
 		itemLayer.AddGameObject(AllItems);
 		//ItemsOnGround--------------------------------------------------------------------------------------------END
@@ -588,25 +611,25 @@ public class DummyGame implements IGameLogic {
 		//System.out.println("x:"+window.getMouseX()+ " y:"+window.getMouseY());
 			
 		if(state == GSTATE.GAME){
-			if (window.isKeyPressed(GLFW_KEY_RIGHT)) {
+			if (window.isKeyPressed(GLFW_KEY_RIGHT) || (window.isKeyPressed(GLFW_KEY_D))) {
 				right = 1;
 			} else {
 				right = 0;
 			}
 
-			if (window.isKeyPressed(GLFW_KEY_LEFT)) {
+			if (window.isKeyPressed(GLFW_KEY_LEFT) || (window.isKeyPressed(GLFW_KEY_A))) {
 				left = 1;
 			} else {
 				left = 0;
 			}
 
-			if (window.isKeyPressed(GLFW_KEY_DOWN)) {
+			if (window.isKeyPressed(GLFW_KEY_DOWN) || (window.isKeyPressed(GLFW_KEY_S))){
 				down = 1;
 			} else {
 				down = 0;
 			}
 
-			if (window.isKeyPressed(GLFW_KEY_UP) && spacePushed == 0 && CharacterIsAlive == 1) {
+			if ((window.isKeyPressed(GLFW_KEY_UP) || (window.isKeyPressed(GLFW_KEY_W))) && spacePushed == 0 && CharacterIsAlive == 1) {
 				if(speedY<+3){speedY = -30f;
 				up = 1;
 				spacePushed = 1;
@@ -739,7 +762,7 @@ public class DummyGame implements IGameLogic {
 						ZombAttackBBox.get(i).Setpoints(Zombik.get(i).GetCurrentBBox().GetMinPoint().x - 40f, Zombik.get(i).GetCurrentBBox().GetMinPoint().y - 40f, Zombik.get(i).GetCurrentBBox().GetMaxPoint().x + 40f, Zombik.get(i).GetCurrentBBox().GetMaxPoint().y + 40f);
 					}
 
-
+					itemPickUp();
 					UtkozesekVizsgalata();
 					Gravity();
 					Fall();
@@ -788,6 +811,32 @@ public class DummyGame implements IGameLogic {
 		gameItem.SetPosition(pos);
 	}
 
+	
+	
+	public void itemPickUp(){
+		for (int i = 0; i < AllItems.size(); i++) {
+
+			if ((gameItem.GetBBox().CheckOverlapping(AllItems.get(i).GetCurrentBBox()) == true) && (AllItems.get(i).GetVisible() == true)) {
+
+
+				AllItems.get(i).SetVisible(false);
+
+
+				if (AllItems.get(i).GetID() == 1) {
+					System.out.println("gem");
+					megszerzettPont += 5;
+				} else if (AllItems.get(i).GetID() == 2) {
+					System.out.println("poti");
+					megszerzettPont += 2;
+				} else if (AllItems.get(i).GetID() == 3) {
+					System.out.println("YAY");
+					megszerzettPont += 1000;
+				}
+			}
+		}
+	}
+	
+	
 	public void UtkozesekVizsgalata() {
 		for(int k=0; k<Alltestfold.size(); k++) {
 			if (gameItem.GetCurrentBBox().CheckOverlapping(Alltestfold.get(k).GetCurrentBBox())) {
@@ -827,23 +876,6 @@ public class DummyGame implements IGameLogic {
 			}
 		}
 
-		for (int i = 0; i < AllItems.size(); i++) {
-
-			if ((gameItem.GetBBox().CheckOverlapping(AllItems.get(i).GetCurrentBBox()) == true) && (AllItems.get(i).GetVisible() == true)) {
-
-
-				AllItems.get(i).SetVisible(false);
-
-
-				if (AllItems.get(i).GetID() == 1) {
-					System.out.println("gem");
-					megszerzettPont += 5;
-				} else if (AllItems.get(i).GetID() == 2) {
-					System.out.println("poti");
-					megszerzettPont += 2;
-				}
-			}
-		}
 
 		for(int i=0; i<Zombik.size(); i++){
 			if((Zombik.get(i).GetPosition().x - gameItem.GetPosition().x) < 300f ){
