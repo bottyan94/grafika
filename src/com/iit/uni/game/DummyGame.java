@@ -62,6 +62,9 @@ public class DummyGame implements IGameLogic {
 	private GameObject2D skull;
 	private GameObject2D bones;
 	private GameObject2D zomB;
+    private GameObject2D elet;
+    private GameObject2D sziv;
+    private GameObject2D szivures;
 
     private Texture2D clouds;
     private Texture2D clouds1;
@@ -186,6 +189,11 @@ public class DummyGame implements IGameLogic {
 		bones.AddFrame(Bones);
 		bones.SetPosition(1600,550);
 		decor.add(bones);
+        CSprite EletFelirat = new CSprite("textures/decor/Lives",1,128,128);
+      /*  elet = new GameObject2D();
+		elet.AddFrame(EletFelirat);
+		elet.SetPosition(0,0);
+		decor.add(elet);*/
 
 
 
@@ -742,12 +750,11 @@ public class DummyGame implements IGameLogic {
                         clouds2.setPosition(clouds2.getPositionx() - 3.0f, clouds2.getPositiony(), clouds2.getPositionz());
                         clouds.setPosition(clouds.getPositionx() - 1.0f, clouds.getPositiony(), clouds.getPositionz());
                     }
-                        // clouds.MoveLeft(-10f);
 
 
-					float cameranakx = gameItem.GetPositionX();
-					//camera.SetXAndGetKulonbseg(cameranakx);
-					//System.out.println("karakter: " + gameItem.GetX() + " camera: " + camera.GetX());
+
+
+
 
 					for(int i=0; i<Zombik.size(); i++){
 						ZombAttackBBox.get(i).Setpoints(Zombik.get(i).GetCurrentBBox().GetMinPoint().x - 40f, Zombik.get(i).GetCurrentBBox().GetMinPoint().y - 40f, Zombik.get(i).GetCurrentBBox().GetMaxPoint().x + 40f, Zombik.get(i).GetCurrentBBox().GetMaxPoint().y + 40f);
@@ -792,23 +799,26 @@ public class DummyGame implements IGameLogic {
 	}
 
 	public void Gravity() {
-		Vector2D pos = gameItem.GetPosition();
-		pos.y += speedY;
-		if ( speedY < 30) {
-			speedY = speedY + gravity;
-		}
-		//System.out.println(gameItem.GetPositionY());
-		if(gameItem.GetPositionY()<=50) {
-            if (camera.GetY() < 60) camera.MoveUp(12f);
-            //System.out.println(camera.GetY());
-            //	System.out.println("Fent van");
+        Vector2D pos = gameItem.GetPosition();
+        pos.y += speedY;
+        if (speedY < 30) {
+            speedY = speedY + gravity;
         }
-		if(gameItem.GetPositionY()>=110){
-			if(camera.GetY()>0)
-				camera.MoveUp(-12f);}
-			//System.out.println("Lent van");
-		gameItem.SetPosition(pos);
-	}
+        //System.out.println(gameItem.GetPositionY());
+        if (gameItem.GetPositionY() <= 50) {
+            if (camera.GetY() < 60) {
+                camera.MoveUp(12f);
+            }
+
+        }
+        if (gameItem.GetPositionY() >= 110) {
+            if (camera.GetY() > 0) {
+                camera.MoveUp(-12f);
+            }
+
+            gameItem.SetPosition(pos);
+        }
+    }
 
 	public void UtkozesekVizsgalata() {
 		for(int k=0; k<Alltestfold.size(); k++) {

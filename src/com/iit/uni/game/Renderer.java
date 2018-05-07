@@ -224,6 +224,37 @@ mRenderer=this;
         shaderProgram.unbind();
 
     }
+    public void render(Window window,  CCamera2D camera, GameObject2D gameItem, ArrayList<GameObject2D> items, Texture2D texture) {
+        clear();
+
+        if (window.isResized()) {
+            glViewport(0, 0, window.getWidth(), window.getHeight());
+            window.setResized(false);
+        }
+
+        shaderProgram.bind();
+
+        shaderProgram.setUniform("projectionMatrix", projectionMatrix);
+        shaderProgram.setUniform("texture_sampler", 0);
+
+        MATRIX4X4 viewMatrix = camera.GetViewMatrix();
+
+        shaderProgram.setUniform("viewMatrix", viewMatrix);
+
+        //DummyGame.sceneManager.Render();
+
+        if (DummyGame.state == GSTATE.MENU){
+            DummyGame.sceneManagerMenu.Render();
+        } else if (DummyGame.state == GSTATE.GAME){
+            DummyGame.sceneManager.Render();
+        }
+
+        //texture.setPosition();
+
+        gameItem.Draw();
+        shaderProgram.unbind();
+
+    }
 
 
 
