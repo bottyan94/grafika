@@ -156,8 +156,8 @@ public class DummyGame implements IGameLogic {
 			if(i==5){bokor.AddFrame(Bokor);bokor.SetPosition(3100,530);}
 			if(i==6){bokor.AddFrame(Bokor);bokor.SetPosition(3700,530);}
 			if(i==7){bokor.AddFrame(Bokor);bokor.SetPosition(4300,530);}
-			if(i==8){bokor.AddFrame(DeadTree); bokor.SetPosition(3300,300);}
-			if(i==9){bokor.AddFrame(DeadTree); bokor.SetPosition(3900,300);}
+			if(i==8){bokor.AddFrame(DeadTree); bokor.SetPosition(3300,360);}
+			if(i==9){bokor.AddFrame(DeadTree); bokor.SetPosition(3900,360);}
 			decor.add(bokor);
 		}
 		CSprite TableSign = new CSprite("textures/decor/Sign",1,128,128);
@@ -167,7 +167,7 @@ public class DummyGame implements IGameLogic {
 		decor.add(tableSign);
 		CSprite Skull = new CSprite("textures/decor/Skull",1,128,128);
 		CSprite Bones = new CSprite("textures/decor/bones",1,128,128);
-		for(int i=0;i<=4;i++){
+		for(int i=0;i<=2;i++){
 			skull = new GameObject2D();
 			skull.AddFrame(Skull);
 			if (i==0)skull.SetPosition(3000,510);
