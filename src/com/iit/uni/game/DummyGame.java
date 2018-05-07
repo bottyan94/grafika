@@ -302,16 +302,16 @@ public class DummyGame implements IGameLogic {
 
 		// Create a mountain layer
 		Texture2D mountains = new Texture2D();
-		mountains.CreateTexture("textures/background/grounds.png");
+		mountains.CreateTexture("textures/background/grounds2.png");
 		mountains.setScale(0.7f);
         mountains.setPosition(-300, -300, 0);
         float mw = mountains.GetWidth()*0.7f;
         Texture2D mountains1 = new Texture2D();
-        mountains1.CreateTexture("textures/background/grounds.png");
+        mountains1.CreateTexture("textures/background/grounds2.png");
         mountains1.setScale(0.7f);
         mountains1.setPosition(mw-300, -300, 0);
         Texture2D mountains2 = new Texture2D();
-        mountains2.CreateTexture("textures/background/grounds.png");
+        mountains2.CreateTexture("textures/background/grounds2.png");
         mountains2.setScale(0.7f);
         mountains2.setPosition((mw*2)-300, -300, 0);
 
