@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 import com.iit.uni.engine.*;
 import com.iit.uni.engine.math.Vector2D;
+import javafx.scene.control.Tab;
+import sun.plugin.javascript.navig4.Layer;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -30,6 +32,7 @@ public class DummyGame implements IGameLogic {
 	private int spacePushed = 0;
 	private int isAttacking = 0;
 	private int CharacterIsAlive = 1;
+	private int megszerzettPont = 0;
 
 	private BoundingBox2D zombAttackBBox;
 
@@ -37,32 +40,43 @@ public class DummyGame implements IGameLogic {
 	private int direction = 1;
 
 	// 2D Texture items
-	private Texture2D[] backgrounds;
+	//private Texture2D[] backgrounds;
 	private CCamera2D camera;
 
 
 	// 2D GameObject items
 	public GameObject2D gameItem;
 	private GameObject2D itemsOnGround;
+
 	private GameObject2D platform;
 	private GameObject2D testfold;
 
 	private GameObject2D testfold2;
 	
 	private GameObject2D menuButton;
-
+	private GameObject2D table;
+	private GameObject2D tableDie;
+	private GameObject2D tableSign;
+	private GameObject2D bokor;
 	private GameObject2D doboz;
+	private GameObject2D skull;
+	private GameObject2D bones;
 	private GameObject2D zomB;
+
 
 
 	private ArrayList<GameObject2D> AllItems;
 	private ArrayList<GameObject2D> Alltestfold;
 	private ArrayList<GameObject2D> AllLebegoFold;
 	private ArrayList<GameObject2D> AllDoboz;
+
 	private ArrayList<BoundingBox2D> ZombAttackBBox;
 	private ArrayList<GameObject2D> Zombik;
 	private ArrayList<Integer> zomBIsAlive;
 	private ArrayList<Integer> zomBDirection;
+
+	private ArrayList<GameObject2D> decor;
+
 
 	private double mousePosX;
 	private double mousePosY;
@@ -106,7 +120,7 @@ public class DummyGame implements IGameLogic {
 
 		AllDoboz = new ArrayList<>();
 		int k=1;
-		CSprite Doboz = new CSprite("textures/items/Crate", 1, 128, 128);
+		CSprite Doboz = new CSprite("textures/decor/Crate", 1, 128, 128);
 		for(int i=3;i>=0;i--){
 			for(int j=3; j>=k;j--){
 				doboz = new GameObject2D();
@@ -116,6 +130,61 @@ public class DummyGame implements IGameLogic {
 				k+=1;
 			}
 		}
+		decor = new ArrayList<>();
+		CSprite TablaStart = new CSprite("textures/decor/ArrowSign",1,128,128);
+		CSprite TablaDie= new CSprite("textures/decor/ArrowSign1",1,128,128);
+		CSprite Dead1= new CSprite("textures/decor/TombStone (1)",1,128,128);
+		CSprite Dead2= new CSprite("textures/decor/TombStone (2)",1,128,128);
+
+		for(int i=0; i<=3; i++){
+			table = new GameObject2D();
+
+			if(i==0){table.AddFrame(TablaStart);table.SetPosition(300,510);}
+			if(i==1){table.AddFrame(TablaStart);table.SetPosition(2850,170);}
+			if(i==2){table.AddFrame(Dead1);table.SetPosition(2440,200);}
+			if(i==3){table.AddFrame(Dead2);table.SetPosition(2610,180);}
+			decor.add(table);}
+		tableDie = new GameObject2D();
+		tableDie.AddFrame(TablaDie);
+		tableDie.SetPosition(80,510);
+		decor.add(tableDie);
+		CSprite Bokor = new CSprite("textures/decor/Bush (2)",1,128,128);
+		CSprite DeadBokor = new CSprite("textures/decor/DeadBush",1,128,128);
+		CSprite DeadTree = new CSprite("textures/decor/Tree",1,128,128);
+		for(int i=0; i<=9; i++){
+			bokor = new GameObject2D();
+			if(i==0){bokor.AddFrame(Bokor);bokor.SetPosition(180,530);}
+			if(i==1){bokor.AddFrame(Bokor);bokor.SetPosition(2250,190);}
+			if(i==2){bokor.AddFrame(Bokor);bokor.SetPosition(2700,190);}
+			if(i==3){bokor.AddFrame(DeadBokor); bokor.SetPosition(1200,530);}
+			if(i==4){bokor.AddFrame(DeadTree); bokor.SetPosition(2400,20);}
+			if(i==5){bokor.AddFrame(Bokor);bokor.SetPosition(3100,530);}
+			if(i==6){bokor.AddFrame(Bokor);bokor.SetPosition(3700,530);}
+			if(i==7){bokor.AddFrame(Bokor);bokor.SetPosition(4300,530);}
+			if(i==8){bokor.AddFrame(DeadTree); bokor.SetPosition(3300,360);}
+			if(i==9){bokor.AddFrame(DeadTree); bokor.SetPosition(3900,360);}
+			decor.add(bokor);
+		}
+		CSprite TableSign = new CSprite("textures/decor/Sign",1,128,128);
+		tableSign = new GameObject2D();
+		tableSign.AddFrame(TableSign);
+		tableSign.SetPosition(830,500);
+		decor.add(tableSign);
+		CSprite Skull = new CSprite("textures/decor/Skull",1,128,128);
+		CSprite Bones = new CSprite("textures/decor/bones",1,128,128);
+		for(int i=0;i<=2;i++){
+			skull = new GameObject2D();
+			skull.AddFrame(Skull);
+			if (i==0)skull.SetPosition(3000,510);
+			if (i==1)skull.SetPosition(1710,510);
+			if (i==2)skull.SetPosition(2780,180);
+			decor.add(skull);
+		}
+		bones = new GameObject2D();
+		bones.AddFrame(Bones);
+		bones.SetPosition(1600,550);
+		decor.add(bones);
+
 
 
 
@@ -128,22 +197,16 @@ public class DummyGame implements IGameLogic {
 			if(i==1){
 				platform.AddFrame(lebegoBal);
 				platform.SetPosition(2000, 250);
-				//platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
-				//	platform.SetID(12);
 				AllLebegoFold.add(platform);
 			}else if(i==6){
 				platform = new GameObject2D();
 				platform.AddFrame(lebegoJob);
 				platform.SetPosition(2000+128*i, 250);
-				//platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth())
-				//	platform.SetID(12);
-				AllLebegoFold.add(platform);
+					AllLebegoFold.add(platform);
 			}else
 				platform = new GameObject2D();
 			platform.AddFrame(lebegoKozep);
 			platform.SetPosition(2000+128*i, 250);
-			//platform.SetBoundingBox(platform.GetHeight(), platform.GetWidth());
-			//platform.SetID(12);
 			AllLebegoFold.add(platform);}
 
 
@@ -156,7 +219,7 @@ public class DummyGame implements IGameLogic {
 		CSprite testBal = new CSprite("textures/platform/Tile (1)", 1, 128, 128);
 		CSprite testJob = new CSprite("textures/platform/Tile (3)", 1, 128, 128);
 
-		for (int i = 1; i <= 40; i++) {
+		for (int i = 1; i <= 35; i++) {
 			if (i == 1 || i==9 || i==23){
 				testfold = new GameObject2D();
 				testfold.AddFrame(testBal);
@@ -165,7 +228,7 @@ public class DummyGame implements IGameLogic {
 				//testfold.SetID(11);
 				Alltestfold.add(testfold);
 
-			} else if (i == 6 || i==15) {
+			} else if (i == 6 || i==15 || i==35) {
 				testfold = new GameObject2D();
 				testfold.AddFrame(testJob);
 				testfold.SetPosition(0 + i * 128, 595);
@@ -175,8 +238,7 @@ public class DummyGame implements IGameLogic {
 
 			}else if(i==7 || i==8||i==16||i==17||i==18||i==19||i==20||i==21||i==22){
 				continue;
-			}else
-				testfold = new GameObject2D();
+			}else testfold = new GameObject2D();
 			testfold.AddFrame(test);
 			testfold.SetPosition(0 + i * 128, 595);
 			testfold.SetBoundingBox(testfold.GetHeight(), testfold.GetWidth());
@@ -225,7 +287,7 @@ public class DummyGame implements IGameLogic {
 		gameItem.SetAnimationSpeed(8, 13);
 
 
-		gameItem.SetPosition(400, 0);
+		gameItem.SetPosition(400, -300);
 		gameItem.SetScale(0.5f);
 		gameItem.SetBoundingBox(gameItem.GetHeight(), gameItem.GetWidth());
 
@@ -299,6 +361,9 @@ public class DummyGame implements IGameLogic {
 		background.CreateTexture("textures/background/sky.png");
 		background.setPosition(0, -100, -1);
 		float bw = background.GetWidth();
+		Texture2D background0 = new Texture2D();
+		background0.CreateTexture("textures/background/sky.png");
+		background0.setPosition(0-bw, 0, -1);
 		Texture2D background1 = new Texture2D();
 		background1.CreateTexture("textures/background/sky.png");
 		background1.setPosition(bw, 0, -1);
@@ -319,23 +384,29 @@ public class DummyGame implements IGameLogic {
 		clouds2.CreateTexture("textures/background/clouds_1.png");
 		clouds2.setPosition(cw*2, 0, 0);
 
-		Texture2D felho = new Texture2D();
-		felho.CreateTexture("textures/background/clouds_2");
 
 		// Create a mountain layer
-		Texture2D mountains = new Texture2D();
-		mountains.CreateTexture("textures/background/grounds.png");
-		mountains.setScale(0.7f);
-        mountains.setPosition(-300, -300, 0);
-        float mw = mountains.GetWidth()*0.7f;
-        Texture2D mountains1 = new Texture2D();
-        mountains1.CreateTexture("textures/background/grounds.png");
-        mountains1.setScale(0.7f);
-        mountains1.setPosition(mw-300, -300, 0);
-        Texture2D mountains2 = new Texture2D();
-        mountains2.CreateTexture("textures/background/grounds.png");
-        mountains2.setScale(0.7f);
-        mountains2.setPosition((mw*2)-300, -300, 0);
+		Texture2D grounds0 = new Texture2D();
+		grounds0.CreateTexture("textures/background/grounds2.png");
+		grounds0.setScale(0.7f);
+		grounds0.setPosition(-300, -300, 0);
+		float mw = grounds0.GetWidth()*0.7f;
+		Texture2D grounds1 = new Texture2D();
+		grounds1.CreateTexture("textures/background/grounds2.png");
+		grounds1.setScale(0.7f);
+		grounds1.setPosition(0-mw-300, -300, 0);
+        Texture2D grounds2 = new Texture2D();
+		grounds2.CreateTexture("textures/background/grounds2.png");
+		grounds2.setScale(0.7f);
+		grounds2.setPosition(mw-300, -300, 0);
+        Texture2D grounds3 = new Texture2D();
+		grounds3.CreateTexture("textures/background/grounds2.png");
+		grounds3.setScale(0.7f);
+		grounds3.setPosition((mw*2)-300, -300, 0);
+		Texture2D grounds4 = new Texture2D();
+		grounds4.CreateTexture("textures/background/grounds2.png");
+		grounds4.setScale(0.7f);
+		grounds4.setPosition((mw*3)-300, -300, 0);
 
 
 
@@ -355,38 +426,42 @@ public class DummyGame implements IGameLogic {
 		// Create graphics layer
 		C2DGraphicsLayer layerBG = new C2DGraphicsLayer();
 		layerBG.AddTexture(background);
+		layerBG.AddTexture(background0);
         layerBG.AddTexture(background1);
         layerBG.AddTexture(background2);
 
 		// Create graphics layer
-		C2DGraphicsLayer layer1 = new C2DGraphicsLayer();
-		layer1.AddTexture(clouds);
-        layer1.AddTexture(clouds1);
-        layer1.AddTexture(clouds2);
+		C2DGraphicsLayer cloudsLayer = new C2DGraphicsLayer();
+		cloudsLayer.AddTexture(clouds);
+		cloudsLayer.AddTexture(clouds1);
+		cloudsLayer.AddTexture(clouds2);
 		// Create graphics layer
-		C2DGraphicsLayer layer2 = new C2DGraphicsLayer();
-		layer2.AddTexture(rocks);
-        layer2.AddTexture(rocks1);
-        layer2.AddTexture(rocks2);
+		C2DGraphicsLayer rocksLayer = new C2DGraphicsLayer();
+		rocksLayer.AddTexture(rocks);
+		rocksLayer.AddTexture(rocks1);
+		rocksLayer.AddTexture(rocks2);
 
-		C2DGraphicsLayer layer3 = new C2DGraphicsLayer();
-		layer3.AddTexture(mountains);
-        layer3.AddTexture(mountains1);
-        layer3.AddTexture(mountains2);
+		C2DGraphicsLayer groundLayer = new C2DGraphicsLayer();
+		groundLayer.AddTexture(grounds0);
+		groundLayer.AddTexture(grounds1);
+		groundLayer.AddTexture(grounds2);
+		groundLayer.AddTexture(grounds3);
+		groundLayer.AddTexture(grounds4);
 
-        C2DGraphicsLayer layer4 = new C2DGraphicsLayer();
-		layer4.AddTexture(felho);
-        /*layer4.AddTexture(ground);
-        layer4.AddTexture(ground1);
-        layer4.AddTexture(ground2);
-*/
+
+
         C2DGraphicsLayer playerLayer = new C2DGraphicsLayer();
 		playerLayer.AddGameObject(gameItem);
 		playerLayer.AddGameObject(platform);
 		playerLayer.AddGameObject(Alltestfold);
 		playerLayer.AddGameObject(AllLebegoFold);
 		playerLayer.AddGameObject(AllDoboz);
+
 		playerLayer.AddGameObject(Zombik);
+
+		playerLayer.AddGameObject(decor);
+		playerLayer.AddGameObject(zomB);
+
 
 		//ItemsOnGround--------------------------------------------------------------------------------------------
 
@@ -434,7 +509,6 @@ public class DummyGame implements IGameLogic {
 			potion.add(itemsOnGround);
 		}
 
-
 		AllItems.addAll(gems);
 		AllItems.addAll(potion);
 
@@ -465,24 +539,30 @@ public class DummyGame implements IGameLogic {
 		
 		// register layer at the scene
 		scene.RegisterLayer(layerBG);
-		scene.RegisterLayer(layer2);
-        //scene.RegisterLayer(layer4);
-        scene.RegisterLayer(layer3);
-        scene.RegisterLayer(layer1);
+		scene.RegisterLayer(rocksLayer);
+        scene.RegisterLayer(groundLayer);
+        scene.RegisterLayer(cloudsLayer);
         scene.RegisterLayer(playerLayer);
 		scene.RegisterLayer(itemLayer);
-		
-		
+
+		C2DGraphicsLayer hatter = new C2DGraphicsLayer();
+		Texture2D menuHatter = new Texture2D();
+		menuHatter.CreateTexture("textures/background/menu.png");
+		menuHatter.setPosition(0, 0, 0);
+		hatter.AddTexture(menuHatter);
+
+
+
+		sceneMenu.RegisterLayer(hatter);
 		sceneMenu.RegisterLayer(menuLayer);
-
-
 		// Register scene at the manager
 		sceneManager.RegisterScene(scene);
 		sceneManagerMenu.RegisterScene(sceneMenu);
 
 
 		camera = new CCamera2D();
-
+		gameItem.SetVisible(false);
+		//gameItem.isCollidable();
 
 	}
 
@@ -523,9 +603,9 @@ public class DummyGame implements IGameLogic {
 			}
 
 			if (window.isKeyPressed(GLFW_KEY_UP) && spacePushed == 0 && CharacterIsAlive == 1) {
-				speedY = -30f;
+				if(speedY<+3){speedY = -30f;
 				up = 1;
-				spacePushed = 1;
+				spacePushed = 1;}
 			}
 
 			if (window.isKeyPressed(GLFW_KEY_SPACE) && CharacterIsAlive == 1) {
@@ -633,7 +713,6 @@ public class DummyGame implements IGameLogic {
 					visible = true;
 				}
 
-				//SetAllBBox();
 
 				if (menuButton.GetCurrentBBox().CheckOverlapping(new BoundingBox2D(new Vector2D((float) mousePosX, (float) mousePosY), new Vector2D((float) mousePosX + 1, (float) mousePosY + 1)))) {
 					inside = true;
@@ -641,12 +720,9 @@ public class DummyGame implements IGameLogic {
 					inside = false;
 				}
 
+// karakter poz kiíratás
+				System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
 
-				//System.out.println(gameItem.mBBoxTransformed.CheckOverlapping(AllItems.get(1).GetCurrentBBox()));
-
-				//gameItem.SetBoundingBox();
-				//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
-				//gameItem.DrawBoundingBox();
 				if (state == GSTATE.GAME) {
 
 					float cameranakx = gameItem.GetPositionX();
@@ -680,6 +756,9 @@ public class DummyGame implements IGameLogic {
 					}
 
 				}
+
+				System.out.println("megszerzett: " + megszerzettPont);
+
 			}
 
 
@@ -750,8 +829,10 @@ public class DummyGame implements IGameLogic {
 
 				if (AllItems.get(i).GetID() == 1) {
 					System.out.println("gem");
+					megszerzettPont += 5;
 				} else if (AllItems.get(i).GetID() == 2) {
 					System.out.println("poti");
+					megszerzettPont += 2;
 				}
 			}
 		}
@@ -820,12 +901,12 @@ public class DummyGame implements IGameLogic {
 
 	@Override
 	public void render(Window window){
-		renderer.render(window, camera, gameItem, Alltestfold);
+		renderer.render(window, camera, gameItem, AllItems);
 	}
 
 	public void Fall() {
 		if( gameItem.GetBBoxMinY() > 1300){
-			gameItem.SetPosition(400, 200);
+			gameItem.SetPosition(400, -300);
 			camera.SetPosition(0, 0);
 			CharacterIsAlive = 1;
 			zomBIsAlive.set(0, 1);
@@ -835,6 +916,7 @@ public class DummyGame implements IGameLogic {
 			zomB.ResetAmitAkarsz(3);
 			gameItem.ResetAmitAkarsz(12);
 			gameItem.ResetAmitAkarsz(13);
+			megszerzettPont = 0;
 			state = GSTATE.MENU;
 			speedY = 2;
 			for(int i = 0; i < AllItems.size(); i++){
@@ -846,7 +928,7 @@ public class DummyGame implements IGameLogic {
 
 
 	public void Reset() {
-		gameItem.SetPosition(400, 200);
+		gameItem.SetPosition(400, -300);
 		camera.SetPosition(0, 0);
 		CharacterIsAlive = 1;
 		zomBIsAlive.set(0, 1);
@@ -854,6 +936,7 @@ public class DummyGame implements IGameLogic {
 		zomBIsAlive.set(2, 1);
 		zomB.ResetAmitAkarsz(2);
 		zomB.ResetAmitAkarsz(3);
+		megszerzettPont = 0;
 		state = GSTATE.MENU;
 		speedY = 2;
 		gameItem.ResetAmitAkarsz(12);
