@@ -146,14 +146,18 @@ public class DummyGame implements IGameLogic {
 		CSprite Bokor = new CSprite("textures/decor/Bush (2)",1,128,128);
 		CSprite DeadBokor = new CSprite("textures/decor/DeadBush",1,128,128);
 		CSprite DeadTree = new CSprite("textures/decor/Tree",1,128,128);
-		for(int i=0; i<=4; i++){
+		for(int i=0; i<=9; i++){
 			bokor = new GameObject2D();
-
 			if(i==0){bokor.AddFrame(Bokor);bokor.SetPosition(180,530);}
 			if(i==1){bokor.AddFrame(Bokor);bokor.SetPosition(2250,190);}
 			if(i==2){bokor.AddFrame(Bokor);bokor.SetPosition(2700,190);}
 			if(i==3){bokor.AddFrame(DeadBokor); bokor.SetPosition(1200,530);}
 			if(i==4){bokor.AddFrame(DeadTree); bokor.SetPosition(2400,20);}
+			if(i==5){bokor.AddFrame(Bokor);bokor.SetPosition(3100,530);}
+			if(i==6){bokor.AddFrame(Bokor);bokor.SetPosition(3700,530);}
+			if(i==7){bokor.AddFrame(Bokor);bokor.SetPosition(4300,530);}
+			if(i==8){bokor.AddFrame(DeadTree); bokor.SetPosition(3300,300);}
+			if(i==9){bokor.AddFrame(DeadTree); bokor.SetPosition(3900,300);}
 			decor.add(bokor);
 		}
 		CSprite TableSign = new CSprite("textures/decor/Sign",1,128,128);
@@ -163,10 +167,14 @@ public class DummyGame implements IGameLogic {
 		decor.add(tableSign);
 		CSprite Skull = new CSprite("textures/decor/Skull",1,128,128);
 		CSprite Bones = new CSprite("textures/decor/bones",1,128,128);
-		skull = new GameObject2D();
-		skull.AddFrame(Skull);
-		skull.SetPosition(1710,510);
-		decor.add(skull);
+		for(int i=0;i<=4;i++){
+			skull = new GameObject2D();
+			skull.AddFrame(Skull);
+			if (i==0)skull.SetPosition(3000,510);
+			if (i==1)skull.SetPosition(1710,510);
+			if (i==2)skull.SetPosition(2780,180);
+			decor.add(skull);
+		}
 		bones = new GameObject2D();
 		bones.AddFrame(Bones);
 		bones.SetPosition(1600,550);
