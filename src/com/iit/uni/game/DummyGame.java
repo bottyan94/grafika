@@ -263,7 +263,7 @@ public class DummyGame implements IGameLogic {
 			zomB.AddFrame(zombAttackLeft);
 
 
-			zomB.SetPosition(1400 + i * 150, 220);
+			//zomB.SetPosition(1400 + i * 150, 220);
 			zomB.SetScale(0.5f);
 			zomB.SetAnimationSpeed(6, 0);
 			zomB.SetAnimationSpeed(6, 1);
@@ -280,8 +280,12 @@ public class DummyGame implements IGameLogic {
 		}
 
 
+		Zombik.get(0).SetPosition(1400, 220);
+		Zombik.get(1).SetPosition(2350, -120);
+		Zombik.get(2).SetPosition(3250, 220);
 
-
+		stPosSet();
+		moverRange();
 
 
 		sceneManager = new C2DSceneManager();
@@ -770,7 +774,7 @@ public class DummyGame implements IGameLogic {
 					}
 					if (zomBDirection.get(i) == 0) {
 						Zombik.get(i).SetCurrentFrame(7);
-						if(Zombik.get(i).GetPosition().x > 1000 && Zombik.get(i).GetPosition().x < 1500) {
+						if(Zombik.get(i).GetPosition().x > stPos.get(i)-moveRange.get(i) && Zombik.get(i).GetPosition().x < stPos.get(i)+moveRange.get(i)) {
 							Vector2D pos = Zombik.get(i).GetPosition();
 							pos.x -= 1.5f;
 							Zombik.get(i).SetPosition(pos);
@@ -859,6 +863,25 @@ public class DummyGame implements IGameLogic {
 		}
 	}
 
+
+	ArrayList<Float> stPos = new ArrayList<>();
+	public void stPosSet(){
+
+		for(int i=0;i<Zombik.size();i++){
+			stPos.add(Zombik.get(i).GetPositionX());
+	}
+	}
+
+	ArrayList<Float> moveRange = new ArrayList<>();
+
+	public void moverRange(){
+		moveRange.add(200f);
+		moveRange.add(320f);
+		moveRange.add(300f);
+
+	}
+
+
 	public void ZomBMove (int i) {
 			if (zomBDirection.get(i) == 1 && zomBIsAlive.get(i) == 1 && (Zombik.get(i).GetPosition().x - gameItem.GetPosition().x) > 300f ) {
 				Zombik.get(i).SetCurrentFrame(0);
@@ -873,10 +896,10 @@ public class DummyGame implements IGameLogic {
 				Zombik.get(i).SetPosition(pos);
 			}
 
-			if (Zombik.get(i).GetPosition().x > 1500 && zomBIsAlive.get(i) == 1) {
+			if (Zombik.get(i).GetPosition().x > stPos.get(i)+moveRange.get(i) && zomBIsAlive.get(i) == 1) {
 				zomBDirection.set(i, 0);
 			}
-			if (Zombik.get(i).GetPosition().x < 1000 && zomBIsAlive.get(i) == 1) {
+			if (Zombik.get(i).GetPosition().x < stPos.get(i)-moveRange.get(i) && zomBIsAlive.get(i) == 1) {
 				zomBDirection.set(i, 1);
 			}
 
