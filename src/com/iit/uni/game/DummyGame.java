@@ -783,8 +783,8 @@ public class DummyGame implements IGameLogic {
 		if ( speedY < 30) {
 			speedY = speedY + gravity;
 		}
-		float seged=gameItem.GetPositionY()-karakterStartPoz;
-		camera.MoveRelative(camera.GetX(),camera.GetY()-seged);
+		//float seged=gameItem.GetPositionY()-karakterStartPoz;
+		//camera.MoveRelative(camera.GetX(),camera.GetY()-seged);
 		gameItem.SetPosition(pos);
 	}
 
