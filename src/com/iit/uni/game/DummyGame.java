@@ -21,7 +21,7 @@ import static org.lwjgl.glfw.GLFW.*;
 
 
 public class DummyGame implements IGameLogic {
-
+	private float karakterStartPoz;
 	private int down = 0;
 	private int up = 0;
 	private int right = 0;
@@ -288,6 +288,7 @@ public class DummyGame implements IGameLogic {
 
 
 		gameItem.SetPosition(400, -300);
+		karakterStartPoz=gameItem.GetPositionY();
 		gameItem.SetScale(0.5f);
 		gameItem.SetBoundingBox(gameItem.GetHeight(), gameItem.GetWidth());
 
@@ -564,7 +565,7 @@ public class DummyGame implements IGameLogic {
 
 
 		camera = new CCamera2D();
-		gameItem.SetVisible(false);
+		//gameItem.SetVisible(false);
 		//gameItem.isCollidable();
 
 	}
@@ -608,7 +609,9 @@ public class DummyGame implements IGameLogic {
 			if (window.isKeyPressed(GLFW_KEY_UP) && spacePushed == 0 && CharacterIsAlive == 1) {
 				if(speedY<+3){speedY = -30f;
 				up = 1;
-				spacePushed = 1;}
+				spacePushed = 1;
+
+				}
 			}
 
 			if (window.isKeyPressed(GLFW_KEY_SPACE) && CharacterIsAlive == 1) {
@@ -780,6 +783,8 @@ public class DummyGame implements IGameLogic {
 		if ( speedY < 30) {
 			speedY = speedY + gravity;
 		}
+		float seged=gameItem.GetPositionY()-karakterStartPoz;
+		camera.MoveRelative(camera.GetX(),camera.GetY()-seged);
 		gameItem.SetPosition(pos);
 	}
 
