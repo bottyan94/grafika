@@ -63,7 +63,9 @@ public class DummyGame implements IGameLogic {
 	private GameObject2D bones;
 	private GameObject2D zomB;
 
-
+    private Texture2D clouds;
+    private Texture2D clouds1;
+    private Texture2D clouds2;
 
 	private ArrayList<GameObject2D> AllItems;
 	private ArrayList<GameObject2D> Alltestfold;
@@ -373,15 +375,15 @@ public class DummyGame implements IGameLogic {
 		background2.setPosition(bw*2, -100, -1);
 
 		// Create a cloud layer
-		Texture2D clouds = new Texture2D();
+		clouds = new Texture2D();
 		clouds.CreateTexture("textures/background/clouds_1.png");
 		clouds.setScale(0.6f);
 		clouds.setPosition(-100,-300,0);
-		Texture2D clouds1 = new Texture2D();
+        clouds1 = new Texture2D();
 		float cw = clouds.GetWidth();
 		clouds1.CreateTexture("textures/background/clouds_1.png");
 		clouds1.setPosition(cw, -300, 0);
-		Texture2D clouds2 = new Texture2D();
+		clouds2 = new Texture2D();
 		clouds2.CreateTexture("textures/background/clouds_1.png");
 		clouds2.setPosition(cw*2, -300, 0);
 
@@ -688,6 +690,7 @@ public class DummyGame implements IGameLogic {
 	public void update(float interval){
 
 
+
 				if (state == GSTATE.MENU && visible == true) {
 					gameItem.SetVisible(false);
 					for (int i = 0; i < AllItems.size(); i++) {
@@ -730,6 +733,17 @@ public class DummyGame implements IGameLogic {
 				//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
 
 				if (state == GSTATE.GAME) {
+                    if(clouds.getPositionx()<=-2000 ||clouds1.getPositionx()<=-2000||clouds2.getPositionx()<=-2000  ){
+                        clouds.setPosition(4500,clouds.getPositiony(),clouds.getPositionz());
+                        clouds1.setPosition(4500,clouds1.getPositiony(),clouds1.getPositionz());
+                        clouds2.setPosition(4500,clouds2.getPositiony(),clouds2.getPositionz());
+                    } else
+                        clouds1.setPosition(clouds1.getPositionx() - 5.0f, clouds1.getPositiony(), clouds1.getPositionz());
+                        clouds2.setPosition(clouds2.getPositionx() - 3.0f, clouds2.getPositiony(), clouds2.getPositionz());
+                        clouds.setPosition(clouds.getPositionx() - 1.0f, clouds.getPositiony(), clouds.getPositionz());
+                    }
+                        // clouds.MoveLeft(-10f);
+
 
 					float cameranakx = gameItem.GetPositionX();
 					//camera.SetXAndGetKulonbseg(cameranakx);
@@ -761,7 +775,7 @@ public class DummyGame implements IGameLogic {
 						}
 					}
 
-				}
+
 
 				//System.out.println("megszerzett: " + megszerzettPont);
 
@@ -784,14 +798,15 @@ public class DummyGame implements IGameLogic {
 			speedY = speedY + gravity;
 		}
 		//System.out.println(gameItem.GetPositionY());
-		if(gameItem.GetPositionY()<=50){
-			if(camera.GetY()<60)camera.MoveUp(12f);
-			System.out.println(camera.GetY());
-			System.out.println("Fent van");}
+		if(gameItem.GetPositionY()<=50) {
+            if (camera.GetY() < 60) camera.MoveUp(12f);
+            //System.out.println(camera.GetY());
+            //	System.out.println("Fent van");
+        }
 		if(gameItem.GetPositionY()>=110){
 			if(camera.GetY()>0)
-				camera.MoveUp(-12f);
-			System.out.println("Lent van");}
+				camera.MoveUp(-12f);}
+			//System.out.println("Lent van");
 		gameItem.SetPosition(pos);
 	}
 

@@ -182,6 +182,18 @@ public class Texture2D {
 	public Vector3f getPosition() {
 		return position;
 	}
+	public float getPositionx() {
+		return position.x;
+	}
+	public float getPositiony() {
+		return position.y;
+	}
+	public float getPositionz() {
+		return position.z;
+	}
+	public void MoveLeft(float value) {
+		position.x += value;
+	}
 
 	public void setPosition(float x, float y, float z) {
 		this.position.x = x;
