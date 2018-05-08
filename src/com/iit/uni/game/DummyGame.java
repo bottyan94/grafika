@@ -819,6 +819,12 @@ public class DummyGame implements IGameLogic {
 /*		for (int i = 0; i < backgrounds.length; i++)
 			backgrounds[i].cleanup();
 */		gameItem.cleanUp();
+		for(int i=0; i<Zombik.size(); i++){
+			Zombik.get(i).cleanUp();
+		}
+		clouds.cleanup();
+		clouds1.cleanup();
+		clouds2.cleanup();
 	}
 
 	public void Gravity() {
