@@ -17,8 +17,19 @@ import com.iit.uni.engine.math.Vector2D;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
+
 
 public class DummyGame implements IGameLogic {
+
+	String SoundJump;
+	String SoundBackground;
+	SoundEffect se = new SoundEffect();
 
 	private int down = 0;
 	private int up = 0;
@@ -68,6 +79,8 @@ public class DummyGame implements IGameLogic {
 	private double mousePosY;
 	
 	private boolean inside = false;
+
+
 	
 	public static enum GSTATE{
 		MENU,
@@ -93,9 +106,44 @@ public class DummyGame implements IGameLogic {
 
 	private int a = 5;
 
+
+	public static class Zene extends Thread {
+		private Thread ez;
+		private FileInputStream backgroundmusic;
+		private Player player;
+		private Boolean running = new Boolean(true);
+
+		public void run() {
+			while (running) {
+				try {
+					backgroundmusic = new FileInputStream("mario.wav");
+					player = new Player(backgroundmusic);
+					player.play();
+
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (JavaLayerException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		public void interrupt(){
+			running= false;
+		}
+
+		public void inditas(){
+			running= true;
+		}
+
+	}
+
 	@Override
 	public void init(Window window) throws Exception {
 		renderer.init(window);
+
+
+		SoundBackground = "/sounds/proba.wav";
 
 
 		/**
@@ -504,6 +552,20 @@ public class DummyGame implements IGameLogic {
 		//System.out.println("x:"+window.getMouseX()+ " y:"+window.getMouseY());
 			
 		if(state == GSTATE.GAME){
+
+			if(window.isKeyPressed(GLFW_KEY_L)) {
+				Thread Zene = new Zene();
+				Zene.start();
+
+				/*se.setFile(SoundBackground);
+				se.play();*/
+
+			}
+
+			if(window.isKeyPressed(GLFW_KEY_K)){
+
+			}
+
 			if (window.isKeyPressed(GLFW_KEY_RIGHT)) {
 				right = 1;
 			} else {
