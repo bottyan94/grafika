@@ -97,7 +97,7 @@ public class DummyGame implements IGameLogic {
 	
 	public static GSTATE state = GSTATE.MENU;
 
-
+	private boolean quest= false;
 	
 	private int ID = 0;
 
@@ -552,6 +552,32 @@ public class DummyGame implements IGameLogic {
 		AllItems.addAll(gems);
 		//AllItems.addAll(potion);
 		AllItems.add(itemsOnGround);
+		
+		
+		
+		CSprite quest = new CSprite("textures/items/quest", 1, 200, 200, 5);
+		
+		itemsOnGround = new GameObject2D();
+		quest.SetScale(2);
+		itemsOnGround.AddFrame(quest);
+		itemsOnGround.SetID(4);
+		itemsOnGround.SetPosition(760, 500);
+		
+		AllItems.add(itemsOnGround);
+		
+		
+		CSprite Qtext = new CSprite("textures/items/questText", 1, 200, 200, 5);
+		
+		itemsOnGround = new GameObject2D();
+		Qtext.SetScale(1);
+		itemsOnGround.AddFrame(Qtext);
+		itemsOnGround.SetVisible(false);
+		itemsOnGround.SetID(5);
+		itemsOnGround.SetPosition(600, -300);
+		
+		AllItems.add(itemsOnGround);
+
+
 
 
 		/*for (int i = 0; i < AllItems.size(); i++) {
@@ -610,8 +636,13 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void input(Window window) {
 
-		if (window.isKeyPressed(GLFW_KEY_ENTER) && state == GSTATE.MENU){
-			state = GSTATE.GAME;
+		if (window.isKeyPressed(GLFW_KEY_ENTER) && quest == true){
+			for(int i=0;i<AllItems.size();i++){
+					if(AllItems.get(i).GetID()==5){
+						AllItems.get(i).SetVisible(false);
+						quest = false;
+					}
+				}
 		}
 
 		
@@ -624,7 +655,7 @@ public class DummyGame implements IGameLogic {
 		
 		//System.out.println("x:"+window.getMouseX()+ " y:"+window.getMouseY());
 			
-		if(state == GSTATE.GAME){
+		if(state == GSTATE.GAME && quest == false){
 			if (window.isKeyPressed(GLFW_KEY_RIGHT) || (window.isKeyPressed(GLFW_KEY_D))) {
 				right = 1;
 			} else {
@@ -787,6 +818,7 @@ public class DummyGame implements IGameLogic {
 						ZombAttackBBox.get(i).Setpoints(Zombik.get(i).GetCurrentBBox().GetMinPoint().x - 40f, Zombik.get(i).GetCurrentBBox().GetMinPoint().y - 40f, Zombik.get(i).GetCurrentBBox().GetMaxPoint().x + 40f, Zombik.get(i).GetCurrentBBox().GetMaxPoint().y + 40f);
 					}
 
+					quest();
 					itemPickUp();
 					UtkozesekVizsgalata();
 					Gravity();
@@ -853,7 +885,17 @@ public class DummyGame implements IGameLogic {
         }
     }
 
-	
+	public void quest(){
+		if(quest == true){
+		for(int i=0;i<AllItems.size();i++){
+				if(AllItems.get(i).GetID()==5){
+					AllItems.get(i).SetVisible(true);
+					AllItems.get(i).SetPosition(600, 75);
+					gameItem.SetCurrentFrame(0);
+				}
+			}
+		}
+	}
 	
 	public void itemPickUp(){
 		for (int i = 0; i < AllItems.size(); i++) {
@@ -873,6 +915,10 @@ public class DummyGame implements IGameLogic {
 				} else if (AllItems.get(i).GetID() == 3) {
 					System.out.println("YAY");
 					megszerzettPont += 1000;
+				} else if (AllItems.get(i).GetID() == 4) {
+					quest = true;
+						
+					
 				}
 			}
 		}
