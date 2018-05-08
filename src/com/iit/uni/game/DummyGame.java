@@ -573,7 +573,7 @@ public class DummyGame implements IGameLogic {
 		itemsOnGround.AddFrame(Qtext);
 		itemsOnGround.SetVisible(false);
 		itemsOnGround.SetID(5);
-		itemsOnGround.SetPosition(600, -300);
+		itemsOnGround.SetPosition(600, -3000);
 		
 		AllItems.add(itemsOnGround);
 
@@ -640,7 +640,7 @@ public class DummyGame implements IGameLogic {
 			for(int i=0;i<AllItems.size();i++){
 					if(AllItems.get(i).GetID()==5){
 						AllItems.get(i).SetVisible(false);
-						AllItems.get(i).SetPosition(600, -300);
+						AllItems.get(i).SetPosition(600, -3000);
 						quest = false;
 					}
 				}
@@ -1050,6 +1050,9 @@ public class DummyGame implements IGameLogic {
 			speedY = 2;
 			for(int i = 0; i < AllItems.size(); i++){
 				AllItems.get(i).SetVisible(true);
+				if (AllItems.get(i).GetID() == 5){
+					AllItems.get(i).SetVisible(false);
+				}
 			}
 		}
 			}
