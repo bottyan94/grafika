@@ -640,6 +640,7 @@ public class DummyGame implements IGameLogic {
 			for(int i=0;i<AllItems.size();i++){
 					if(AllItems.get(i).GetID()==5){
 						AllItems.get(i).SetVisible(false);
+						AllItems.get(i).SetPosition(600, -300);
 						quest = false;
 					}
 				}
