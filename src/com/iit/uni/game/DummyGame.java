@@ -371,57 +371,60 @@ public class DummyGame implements IGameLogic {
 
 		// Create a background texture
 		Texture2D background = new Texture2D();
-		background.CreateTexture("textures/background/sky.png");
+		String bg = "textures/background/sky.png";
+		background.CreateTexture(bg);
 		background.setPosition(0, -100, -1);
 		float bw = background.GetWidth();
 		Texture2D background0 = new Texture2D();
-		background0.CreateTexture("textures/background/sky.png");
+		background0.CreateTexture(bg);
 		background0.setPosition(0-bw, -100, -1);
 		Texture2D background1 = new Texture2D();
-		background1.CreateTexture("textures/background/sky.png");
+		background1.CreateTexture(bg);
 		background1.setPosition(bw, -100, -1);
 		Texture2D background2 = new Texture2D();
-		background2.CreateTexture("textures/background/sky.png");
+		background2.CreateTexture(bg);
 		background2.setPosition(bw*2, -100, -1);
 
 		// Create a cloud layer
 		clouds = new Texture2D();
-		clouds.CreateTexture("textures/background/clouds_1.png");
+		String cloud="textures/background/clouds_1.png";
+		clouds.CreateTexture(cloud);
 		clouds.setScale(0.6f);
 		clouds.setPosition(-100,-300,0);
         clouds1 = new Texture2D();
 		float cw = clouds.GetWidth();
-		clouds1.CreateTexture("textures/background/clouds_1.png");
+		clouds1.CreateTexture(cloud);
 		clouds1.setPosition(cw, -300, 0);
 		clouds2 = new Texture2D();
-		clouds2.CreateTexture("textures/background/clouds_1.png");
+		clouds2.CreateTexture(cloud);
 		clouds2.setPosition(cw*2, -300, 0);
 
 
 		// Create a mountain layer
 		Texture2D grounds0 = new Texture2D();
-		grounds0.CreateTexture("textures/background/grounds2.png");
+		String grounds ="textures/background/grounds2.png";
+		grounds0.CreateTexture(grounds);
 		grounds0.setScale(0.7f);
 		grounds0.setPosition(-300, -300, 0);
 		float mw = grounds0.GetWidth()*0.7f;
 		Texture2D grounds1 = new Texture2D();
-		grounds1.CreateTexture("textures/background/grounds2.png");
+		grounds1.CreateTexture(grounds);
 		grounds1.setScale(0.7f);
 		grounds1.setPosition(0-mw-300, -300, 0);
         Texture2D grounds2 = new Texture2D();
-		grounds2.CreateTexture("textures/background/grounds2.png");
+		grounds2.CreateTexture(grounds);
 		grounds2.setScale(0.7f);
 		grounds2.setPosition(mw-300, -300, 0);
         Texture2D grounds3 = new Texture2D();
-		grounds3.CreateTexture("textures/background/grounds2.png");
+		grounds3.CreateTexture(grounds);
 		grounds3.setScale(0.7f);
 		grounds3.setPosition((mw*2)-300, -300, 0);
 		Texture2D grounds4 = new Texture2D();
-		grounds4.CreateTexture("textures/background/grounds2.png");
+		grounds4.CreateTexture(grounds);
 		grounds4.setScale(0.7f);
 		grounds4.setPosition((mw*3)-300, -300, 0);
 		Texture2D grounds5 = new Texture2D();
-		grounds5.CreateTexture("textures/background/grounds2.png");
+		grounds5.CreateTexture(grounds);
 		grounds5.setScale(0.7f);
 		grounds5.setPosition((mw*4)-300, -300, 0);
 
@@ -429,14 +432,15 @@ public class DummyGame implements IGameLogic {
 
         // Create a tree layer
 		Texture2D rocks = new Texture2D();
-		rocks.CreateTexture("textures/background/rocks.png");
+		String rock="textures/background/rocks.png";
+		rocks.CreateTexture(rock);
 		rocks.setPosition(0, -300, -1);
         float gw1 = rocks.GetWidth();
 		Texture2D rocks1 = new Texture2D();
-		rocks1.CreateTexture("textures/background/rocks.png");
+		rocks1.CreateTexture(rock);
 		rocks1.setPosition(gw1, -300, 0);
 		Texture2D rocks2 = new Texture2D();
-		rocks2.CreateTexture("textures/background/rocks.png");
+		rocks2.CreateTexture(rock);
 		rocks2.setPosition(gw1*2, -300, 0);
 
 
