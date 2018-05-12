@@ -216,7 +216,7 @@ mRenderer=this;
         
         if (DummyGame.state == GSTATE.MENU){
         	DummyGame.sceneManagerMenu.Render();
-        } else if (DummyGame.state == GSTATE.GAME){
+        } else if (DummyGame.state == GSTATE.GAME || DummyGame.state == GSTATE.VICTORY){
         	DummyGame.sceneManager.Render();
         }
 

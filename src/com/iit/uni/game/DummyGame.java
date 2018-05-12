@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 import com.iit.uni.engine.*;
 import com.iit.uni.engine.math.Vector2D;
+
+import javafx.scene.Camera;
 import javafx.scene.control.Tab;
 //import sun.plugin.javascript.navig4.Layer;
 import sun.font.TrueTypeFont;
@@ -93,6 +95,7 @@ public class DummyGame implements IGameLogic {
 	public static enum GSTATE{
 		MENU,
 		GAME,
+		VICTORY,
 	};
 	
 	public static GSTATE state = GSTATE.MENU;
@@ -577,8 +580,29 @@ public class DummyGame implements IGameLogic {
 		
 		AllItems.add(itemsOnGround);
 
+		
+		CSprite Victory = new CSprite("textures/items/Victory", 3, 200, 200, 5);
+		
+		itemsOnGround = new GameObject2D();
+		Victory.SetScale(1);
+		itemsOnGround.AddFrame(Victory);
+		itemsOnGround.SetID(6);
+		itemsOnGround.SetVisible(false);
+		itemsOnGround.SetPosition(2000, 2000);
+		
+		AllItems.add(itemsOnGround);
 
+		
 
+		CSprite death = new CSprite("textures/items/death", 1, 200, 200);
+		
+		itemsOnGround = new GameObject2D();
+		Victory.SetScale(1);
+		itemsOnGround.AddFrame(death);
+		itemsOnGround.SetID(7);
+		itemsOnGround.SetPosition(2000, 2000);
+		
+		AllItems.add(itemsOnGround);
 
 		/*for (int i = 0; i < AllItems.size(); i++) {
 			System.out.println("ID:" + AllItems.get(i).GetID());
@@ -644,6 +668,10 @@ public class DummyGame implements IGameLogic {
 						quest = false;
 					}
 				}
+		}
+		
+		if (window.isKeyPressed(GLFW_KEY_ENTER) && CharacterIsAlive == 0){
+				Reset();
 		}
 
 		
@@ -818,26 +846,33 @@ public class DummyGame implements IGameLogic {
 					for(int i=0; i<Zombik.size(); i++){
 						ZombAttackBBox.get(i).Setpoints(Zombik.get(i).GetCurrentBBox().GetMinPoint().x - 40f, Zombik.get(i).GetCurrentBBox().GetMinPoint().y - 40f, Zombik.get(i).GetCurrentBBox().GetMaxPoint().x + 40f, Zombik.get(i).GetCurrentBBox().GetMaxPoint().y + 40f);
 					}
-
+					
+					dead();
 					quest();
 					itemPickUp();
 					UtkozesekVizsgalata();
 					Gravity();
 					Fall();
+					
+						
 					for(int i=0; i< Zombik.size();i++){
 						ZomBMove(i);
 					}
 
-
+					if(CharacterIsAlive == 0){
+						for(int i=0; i< Zombik.size();i++){
+							Zombik.get(i).SetVisible(false);
+						}
+					}
 
 					if (CharacterIsAlive == 0) {
 						if (gameItem.GetCurrentFrameCurrentSprite() > 8) {
 							if (direction == 1) {
 								gameItem.SetCurrentFrame(14);
-								Reset();
+								//Reset();
 							} else {
 								gameItem.SetCurrentFrame(15);
-								Reset();
+								//Reset();
 							}
 						}
 					}
@@ -848,8 +883,19 @@ public class DummyGame implements IGameLogic {
 
 			}
 
-
-
+	
+	public void dead(){
+		if (CharacterIsAlive == 0 ){
+			for(int i=0;i< AllItems.size();i++){
+				if (AllItems.get(i).GetID() == 7){
+					AllItems.get(i).SetPosition(-camera.GetX(),-camera.GetY()-50);
+					System.out.println("tru");
+					AllItems.get(i).SetVisible(true);
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void cleanup() {
 		renderer.cleanup();
@@ -916,11 +962,23 @@ public class DummyGame implements IGameLogic {
 				} else if (AllItems.get(i).GetID() == 3) {
 					System.out.println("YAY");
 					megszerzettPont += 1000;
+					showVictory();
 				} else if (AllItems.get(i).GetID() == 4) {
 					quest = true;
 						
 					
 				}
+			}
+		}
+	}
+	
+	public void showVictory(){
+		for(int i=0;i< AllItems.size();i++){
+			if (AllItems.get(i).GetID() == 6){
+				AllItems.get(i).SetPosition(-camera.GetX(),-camera.GetY());
+				AllItems.get(i).SetVisible(true);
+				gameItem.SetCurrentFrame(0);
+				state = GSTATE.VICTORY;
 			}
 		}
 	}
@@ -1035,7 +1093,11 @@ public class DummyGame implements IGameLogic {
 
 	public void Fall() {
 		if( gameItem.GetBBoxMinY() > 1300){
-			gameItem.SetPosition(400, -300);
+			CharacterIsAlive =0;
+			
+			//Reset();
+
+			/*gameItem.SetPosition(400, -300);
 			camera.SetPosition(0, 0);
 			CharacterIsAlive = 1;
 			zomBIsAlive.set(0, 1);
@@ -1048,14 +1110,25 @@ public class DummyGame implements IGameLogic {
 			megszerzettPont = 0;
 			state = GSTATE.MENU;
 			speedY = 2;
+			
+			for(int i=0;i<Zombik.size();i++){
+				Zombik.get(i).SetVisible(true);
+			}
+			
 			for(int i = 0; i < AllItems.size(); i++){
 				AllItems.get(i).SetVisible(true);
 				if (AllItems.get(i).GetID() == 5){
 					AllItems.get(i).SetVisible(false);
 				}
-			}
+				if (AllItems.get(i).GetID() == 6){
+					AllItems.get(i).SetVisible(false);
+				}
+				if (AllItems.get(i).GetID() == 7){
+					AllItems.get(i).SetVisible(false);
+				}
+			}*/
 		}
-			}
+	}
 
 
 
@@ -1070,11 +1143,27 @@ public class DummyGame implements IGameLogic {
 		zomB.ResetAmitAkarsz(3);
 		megszerzettPont = 0;
 		state = GSTATE.MENU;
+		
 		speedY = 2;
 		gameItem.ResetAmitAkarsz(12);
 		gameItem.ResetAmitAkarsz(13);
+		for(int i=0;i<Zombik.size();i++){
+			Zombik.get(i).SetVisible(true);
+		}
+		
 		for(int i = 0; i < AllItems.size(); i++){
 			AllItems.get(i).SetVisible(true);
+			if (AllItems.get(i).GetID() == 5){
+				AllItems.get(i).SetVisible(false);
+			}
+			if (AllItems.get(i).GetID() == 6){
+				AllItems.get(i).SetVisible(false);
+			}
+			if (AllItems.get(i).GetID() == 7){
+				System.out.println("fsl");
+				AllItems.get(i).SetVisible(false);
+				AllItems.get(i).SetPosition(2000, 2000);
+			}
 		}
 	}
 
