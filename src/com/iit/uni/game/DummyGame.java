@@ -670,7 +670,7 @@ public class DummyGame implements IGameLogic {
 				}
 		}
 		
-		if (window.isKeyPressed(GLFW_KEY_ENTER) && CharacterIsAlive == 0){
+		if (window.isKeyPressed(GLFW_KEY_ENTER) && (CharacterIsAlive == 0 || state == GSTATE.VICTORY)){
 				Reset();
 		}
 
