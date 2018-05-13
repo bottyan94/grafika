@@ -1158,6 +1158,7 @@ public class DummyGame implements IGameLogic {
 			}
 			if (AllItems.get(i).GetID() == 6){
 				AllItems.get(i).SetVisible(false);
+				AllItems.get(i).SetPosition(2000, 2000);
 			}
 			if (AllItems.get(i).GetID() == 7){
 				System.out.println("fsl");
