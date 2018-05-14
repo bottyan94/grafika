@@ -58,6 +58,7 @@ public class DummyGame implements IGameLogic {
 	private GameObject2D testfold2;
 	
 	private GameObject2D menuButton;
+	private GameObject2D numB;
 	private GameObject2D table;
 	private GameObject2D tableDie;
 	private GameObject2D tableSign;
@@ -78,6 +79,7 @@ public class DummyGame implements IGameLogic {
 	private ArrayList<GameObject2D> Alltestfold;
 	private ArrayList<GameObject2D> AllLebegoFold;
 	private ArrayList<GameObject2D> AllDoboz;
+	private ArrayList<GameObject2D> Numbers;
 
 	private ArrayList<BoundingBox2D> ZombAttackBBox;
 	private ArrayList<GameObject2D> Zombik;
@@ -85,7 +87,8 @@ public class DummyGame implements IGameLogic {
 	private ArrayList<Integer> zomBDirection;
 
 	private ArrayList<GameObject2D> decor;
-
+	
+	private float sc;
 
 	private double mousePosX;
 	private double mousePosY;
@@ -111,6 +114,10 @@ public class DummyGame implements IGameLogic {
 	private C2DScene scene;
 	private C2DScene sceneMenu;
 
+	
+	private int WinH = 0;
+	private int WinW = 0;
+	
 	public DummyGame() {
 		renderer = new Renderer();
 	}
@@ -125,7 +132,9 @@ public class DummyGame implements IGameLogic {
 		/**
 		 * Creating an animated game object
 		 */
-
+		
+		WinH = window.getHeight();
+		WinW = window.getWidth();
 
 
 		AllDoboz = new ArrayList<>();
@@ -194,7 +203,7 @@ public class DummyGame implements IGameLogic {
 		bones.AddFrame(Bones);
 		bones.SetPosition(1600,550);
 		decor.add(bones);
-        CSprite EletFelirat = new CSprite("textures/decor/Lives",1,128,128);
+        //CSprite EletFelirat = new CSprite("textures/decor/Lives",1,128,128);
       /*  elet = new GameObject2D();
 		elet.AddFrame(EletFelirat);
 		elet.SetPosition(0,0);
@@ -302,7 +311,7 @@ public class DummyGame implements IGameLogic {
 		gameItem.SetAnimationSpeed(8, 13);
 
 
-		gameItem.SetPosition(400, -300);
+		gameItem.SetPosition(400, -1000);
 		karakterStartPoz=gameItem.GetPositionY();
 		gameItem.SetScale(0.5f);
 		gameItem.SetBoundingBox(gameItem.GetHeight(), gameItem.GetWidth());
@@ -597,7 +606,7 @@ public class DummyGame implements IGameLogic {
 		CSprite death = new CSprite("textures/items/death", 1, 200, 200);
 		
 		itemsOnGround = new GameObject2D();
-		Victory.SetScale(1);
+		death.SetScale(1);
 		itemsOnGround.AddFrame(death);
 		itemsOnGround.SetID(7);
 		itemsOnGround.SetPosition(2000, 2000);
@@ -610,6 +619,72 @@ public class DummyGame implements IGameLogic {
 
 		itemLayer.AddGameObject(AllItems);
 		//ItemsOnGround--------------------------------------------------------------------------------------------END
+		
+		C2DGraphicsLayer NumberLayer = new C2DGraphicsLayer();
+		Numbers = new ArrayList<>();
+		
+		/*CSprite Num1 = new CSprite("textures/numbers/n1", 1, 200, 200, 0);
+		CSprite Num2 = new CSprite("textures/numbers/n2", 1, 200, 200, 0);
+		CSprite Num3 = new CSprite("textures/numbers/n3", 1, 200, 200, 0);
+		CSprite Num4 = new CSprite("textures/numbers/n4", 1, 200, 200, 0);
+		CSprite Num5 = new CSprite("textures/numbers/n5", 1, 200, 200, 0);
+		CSprite Num6 = new CSprite("textures/numbers/n6", 1, 200, 200, 0);
+		CSprite Num7 = new CSprite("textures/numbers/n7", 1, 200, 200, 0);
+		CSprite Num8 = new CSprite("textures/numbers/n8", 1, 200, 200, 0);
+		CSprite Num9 = new CSprite("textures/numbers/n9", 1, 200, 200, 0);
+		CSprite Num0 = new CSprite("textures/numbers/n10", 1, 200, 200, 0);*/
+		
+		CSprite Num1 = new CSprite("textures/numbers/1f", 1, 200, 200, 0);
+		CSprite Num2 = new CSprite("textures/numbers/2f", 1, 200, 200, 0);
+		CSprite Num3 = new CSprite("textures/numbers/3f", 1, 200, 200, 0);
+		CSprite Num4 = new CSprite("textures/numbers/4f", 1, 200, 200, 0);
+		CSprite Num5 = new CSprite("textures/numbers/5f", 1, 200, 200, 0);
+		CSprite Num6 = new CSprite("textures/numbers/6f", 1, 200, 200, 0);
+		CSprite Num7 = new CSprite("textures/numbers/7f", 1, 200, 200, 0);
+		CSprite Num8 = new CSprite("textures/numbers/8f", 1, 200, 200, 0);
+		CSprite Num9 = new CSprite("textures/numbers/9f", 1, 200, 200, 0);
+		CSprite Num0 = new CSprite("textures/numbers/0f", 1, 200, 200, 0);
+		
+		sc = (float) 1;
+		for(int i=0;i<4;i++){
+			numB = new GameObject2D();
+			
+			Num0.SetScale(sc);
+			Num1.SetScale(sc);
+			Num2.SetScale(sc);
+			Num3.SetScale(sc);
+			Num4.SetScale(sc);
+			Num5.SetScale(sc);
+			Num6.SetScale(sc);
+			Num7.SetScale(sc);
+			Num8.SetScale(sc);
+			Num9.SetScale(sc);
+			
+		
+			numB.AddFrame(Num0);
+			numB.AddFrame(Num1);
+			numB.AddFrame(Num2);
+			numB.AddFrame(Num3);
+			numB.AddFrame(Num4);
+			numB.AddFrame(Num5);
+			numB.AddFrame(Num6);
+			numB.AddFrame(Num7);
+			numB.AddFrame(Num8);
+			numB.AddFrame(Num9);
+			
+			
+			
+			
+			numB.SetID(i);
+			numB.SetPosition(50+i*100, 50);
+			
+			numB.SetZIndex(3);
+			
+			Numbers.add(numB);
+		}
+		
+		NumberLayer.AddGameObject(Numbers);
+		
 
 		//Men�-----------------------------------------------------------------------------------------------------
 		C2DGraphicsLayer menuLayer = new C2DGraphicsLayer();
@@ -635,6 +710,7 @@ public class DummyGame implements IGameLogic {
         scene.RegisterLayer(cloudsLayer);
         scene.RegisterLayer(playerLayer);
 		scene.RegisterLayer(itemLayer);
+		scene.RegisterLayer(NumberLayer);
 
 		C2DGraphicsLayer hatter = new C2DGraphicsLayer();
 		Texture2D menuHatter = new Texture2D();
@@ -654,6 +730,7 @@ public class DummyGame implements IGameLogic {
 		camera = new CCamera2D();
 		//gameItem.SetVisible(false);
 		//gameItem.isCollidable();
+		
 
 	}
 
@@ -784,7 +861,7 @@ public class DummyGame implements IGameLogic {
 	@Override
 	public void update(float interval){
 
-
+		
 
 				if (state == GSTATE.MENU && visible == true) {
 					gameItem.SetVisible(false);
@@ -828,15 +905,18 @@ public class DummyGame implements IGameLogic {
 				//System.out.println("x: " + gameItem.GetX() + " y: " + gameItem.GetY() + " speed: " +speedY);
 
 				if (state == GSTATE.GAME) {
-                    if(clouds.getPositionx()<=-2000 ||clouds1.getPositionx()<=-2000||clouds2.getPositionx()<=-2000  ){
-                        clouds.setPosition(4500,clouds.getPositiony(),clouds.getPositionz());
-                        clouds1.setPosition(4500,clouds1.getPositiony(),clouds1.getPositionz());
-                        clouds2.setPosition(4500,clouds2.getPositiony(),clouds2.getPositionz());
-                    } else
+                    if(clouds.getPositionx()<=-4000){
+                        clouds.setPosition(5500,clouds.getPositiony(),clouds.getPositionz());                  
+                    } else if(clouds1.getPositionx()<=-4000){
+                    	clouds1.setPosition(5500,clouds1.getPositiony(),clouds1.getPositionz());
+                    } else if(clouds2.getPositionx()<=-4000){
+                    	clouds2.setPosition(5500,clouds2.getPositiony(),clouds2.getPositionz());
+                    } 
+                    
                         clouds1.setPosition(clouds1.getPositionx() - 5.0f, clouds1.getPositiony(), clouds1.getPositionz());
                         clouds2.setPosition(clouds2.getPositionx() - 3.0f, clouds2.getPositiony(), clouds2.getPositionz());
                         clouds.setPosition(clouds.getPositionx() - 1.0f, clouds.getPositiony(), clouds.getPositionz());
-                    }
+				}
 
 
 
@@ -847,11 +927,15 @@ public class DummyGame implements IGameLogic {
 						ZombAttackBBox.get(i).Setpoints(Zombik.get(i).GetCurrentBBox().GetMinPoint().x - 40f, Zombik.get(i).GetCurrentBBox().GetMinPoint().y - 40f, Zombik.get(i).GetCurrentBBox().GetMaxPoint().x + 40f, Zombik.get(i).GetCurrentBBox().GetMaxPoint().y + 40f);
 					}
 					
+					
+					NumberDraw();
 					dead();
 					quest();
 					itemPickUp();
 					UtkozesekVizsgalata();
-					Gravity();
+					if (state == GSTATE.GAME) {
+						Gravity();
+					}
 					Fall();
 					
 						
@@ -869,9 +953,11 @@ public class DummyGame implements IGameLogic {
 						if (gameItem.GetCurrentFrameCurrentSprite() > 8) {
 							if (direction == 1) {
 								gameItem.SetCurrentFrame(14);
+								gameItem.SetVisible(false);
 								//Reset();
 							} else {
 								gameItem.SetCurrentFrame(15);
+								gameItem.SetVisible(false);
 								//Reset();
 							}
 						}
@@ -882,6 +968,71 @@ public class DummyGame implements IGameLogic {
 				//System.out.println("megszerzett: " + megszerzettPont);
 
 			}
+	
+
+	
+	int[] szamJegyek;
+	
+	public void NumberDraw(){
+		szamJegyek = NumberToDigits(megszerzettPont);
+		
+		if(CharacterIsAlive == 1 && state !=GSTATE.VICTORY){
+			for(int i=0;i<Numbers.size();i++){
+				Numbers.get(i).SetScale((float) sc);
+				Numbers.get(i).SetPosition(-camera.GetX()-20+i*100, -camera.GetY()-45);
+			}
+		}
+		
+		for(int i=0;i<szamJegyek.length;i++){
+			//Numbers.get(i).SetCurrentFrame(szamJegyek[i]);
+			
+			
+			switch(szamJegyek.length) {
+			case 1:
+				Numbers.get(3-i).SetCurrentFrame(szamJegyek[i]);
+				break;
+			case 2:
+				Numbers.get(3-i).SetCurrentFrame(szamJegyek[i]);
+				break;
+			case 3:
+				Numbers.get(3-i).SetCurrentFrame(szamJegyek[i]);
+				break;
+			case 4:
+				Numbers.get(3-i).SetCurrentFrame(szamJegyek[i]);
+				break;
+			}
+			
+		}
+		
+		//Numbers.get(1).SetCurrentFrame(szamJegyek[1]);
+		//System.out.println(szamJegyek[0]);
+	}
+	
+	public int[] NumberToDigits(int n){
+		
+		int length = String.valueOf(n).length();
+		int[] szamok = new int[length];
+		
+		int i=0;
+		while (n > 0) {
+			szamok[i]=n % 10;
+			i++;
+		    n = n / 10;
+		}
+	
+		return szamok;
+	}
+	
+	
+	public void pontokReset(){
+		
+		szamJegyek = null;
+		
+		for(int i=0;i<Numbers.size();i++){
+			Numbers.get(i).SetCurrentFrame(0);
+		}
+	}
+	
 
 	
 	public void dead(){
@@ -889,10 +1040,14 @@ public class DummyGame implements IGameLogic {
 			for(int i=0;i< AllItems.size();i++){
 				if (AllItems.get(i).GetID() == 7){
 					AllItems.get(i).SetPosition(-camera.GetX(),-camera.GetY()-50);
-					System.out.println("tru");
 					AllItems.get(i).SetVisible(true);
 				}
 			}
+			
+			for(int i=0;i< Numbers.size();i++){
+				Numbers.get(i).SetPosition((-camera.GetX()+i*100)+(WinW/2)-220, -camera.GetY()+(WinH/2)-170);
+			}
+			//gameItem.SetVisible(false);
 		}
 	}
 	
@@ -917,13 +1072,13 @@ public class DummyGame implements IGameLogic {
             speedY = speedY + gravity;
         }
         //System.out.println(gameItem.GetPositionY());
-        if (gameItem.GetPositionY() <= 50) {
+        if (gameItem.GetPositionY() <= 50 && state == GSTATE.GAME) {
             if (camera.GetY() < 60) {
                 camera.MoveUp(12f);
             }
 
         }
-        if (gameItem.GetPositionY() >= 110) {
+        if (gameItem.GetPositionY() >= 110 && state == GSTATE.GAME) {
             if (camera.GetY() > 0) {
                 camera.MoveUp(-12f);
             }
@@ -955,10 +1110,10 @@ public class DummyGame implements IGameLogic {
 
 				if (AllItems.get(i).GetID() == 1) {
 					System.out.println("gem");
-					megszerzettPont += 5;
+					megszerzettPont += 50;
 				} else if (AllItems.get(i).GetID() == 2) {
 					System.out.println("poti");
-					megszerzettPont += 2;
+					megszerzettPont += 20;
 				} else if (AllItems.get(i).GetID() == 3) {
 					System.out.println("YAY");
 					megszerzettPont += 1000;
@@ -973,9 +1128,17 @@ public class DummyGame implements IGameLogic {
 	}
 	
 	public void showVictory(){
+		
+		gameItem.SetVisible(false);
+		
+		for(int i=0;i< Numbers.size();i++){
+			Numbers.get(i).SetScale(2);
+			Numbers.get(i).SetPosition((-camera.GetX()+i*150)+(WinW/2)-300, -camera.GetY()+(WinH/2));
+		}
+		
 		for(int i=0;i< AllItems.size();i++){
 			if (AllItems.get(i).GetID() == 6){
-				AllItems.get(i).SetPosition(-camera.GetX(),-camera.GetY());
+				AllItems.get(i).SetPosition(-camera.GetX(),-camera.GetY()-50);
 				AllItems.get(i).SetVisible(true);
 				gameItem.SetCurrentFrame(0);
 				state = GSTATE.VICTORY;
@@ -1133,7 +1296,7 @@ public class DummyGame implements IGameLogic {
 
 
 	public void Reset() {
-		gameItem.SetPosition(400, -300);
+		gameItem.SetPosition(400, -1000);
 		camera.SetPosition(0, 0);
 		CharacterIsAlive = 1;
 		zomBIsAlive.set(0, 1);
@@ -1147,9 +1310,13 @@ public class DummyGame implements IGameLogic {
 		speedY = 2;
 		gameItem.ResetAmitAkarsz(12);
 		gameItem.ResetAmitAkarsz(13);
+		direction = 1;
+		gameItem.SetVisible(true);
 		for(int i=0;i<Zombik.size();i++){
 			Zombik.get(i).SetVisible(true);
 		}
+		
+		pontokReset();
 		
 		for(int i = 0; i < AllItems.size(); i++){
 			AllItems.get(i).SetVisible(true);
@@ -1161,7 +1328,6 @@ public class DummyGame implements IGameLogic {
 				AllItems.get(i).SetPosition(2000, 2000);
 			}
 			if (AllItems.get(i).GetID() == 7){
-				System.out.println("fsl");
 				AllItems.get(i).SetVisible(false);
 				AllItems.get(i).SetPosition(2000, 2000);
 			}
@@ -1256,7 +1422,7 @@ public class DummyGame implements IGameLogic {
 			CharacterIsAlive = 0;
 		}
 	}
-
+	
 	//lets try it
 
 }
