@@ -131,7 +131,7 @@ public class DummyGame implements IGameLogic {
 
 
 	private String SoundBackground;
-	private Thread GameZene;
+	public static Thread GameZene;
 
 
 

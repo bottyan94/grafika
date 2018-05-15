@@ -1,5 +1,7 @@
 package com.iit.uni.engine;
 
+import com.iit.uni.game.DummyGame;
+
 /**
  * Simple Class for representing engine functions
  * 
@@ -80,6 +82,9 @@ public class GameEngine implements Runnable {
 				sync();
 			}
 		}
+
+		DummyGame.GameZene.stop();
+
 	}
 
 	protected void cleanup() {
