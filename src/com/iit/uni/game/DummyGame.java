@@ -131,9 +131,8 @@ public class DummyGame implements IGameLogic {
 
 
 	private String SoundBackground;
-	private String CoinSound;
 	private Thread GameZene;
-	private Thread EffectSound;
+
 
 
 	@Override
@@ -141,16 +140,12 @@ public class DummyGame implements IGameLogic {
 		renderer.init(window);
 
 		SoundBackground = "sounds/mario.wav";
-		CoinSound = "sounds/coin.wav";
+
 
 
 		GameZene = new Zene();
 		GameZene.setName(SoundBackground);
 		GameZene.start();
-
-		EffectSound = new Zene();
-		EffectSound.setName(SoundBackground);
-		//EffectSound.start();
 
 
 
@@ -1147,7 +1142,6 @@ public class DummyGame implements IGameLogic {
 				if (AllItems.get(i).GetID() == 1) {
 					System.out.println("gem");
 					megszerzettPont += 50;
-					EffectSound.start();
 				} else if (AllItems.get(i).GetID() == 2) {
 					System.out.println("poti");
 					megszerzettPont += 20;

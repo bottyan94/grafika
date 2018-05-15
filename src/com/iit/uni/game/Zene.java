@@ -1,7 +1,5 @@
 package com.iit.uni.game;
 
-import org.lwjgl.openal.AL10;
-
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
