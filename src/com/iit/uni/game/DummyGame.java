@@ -16,6 +16,13 @@ import java.util.ArrayList;
 import com.iit.uni.engine.*;
 import com.iit.uni.engine.math.Vector2D;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
+
 import javafx.scene.Camera;
 import javafx.scene.control.Tab;
 //import sun.plugin.javascript.navig4.Layer;
@@ -122,11 +129,29 @@ public class DummyGame implements IGameLogic {
 		renderer = new Renderer();
 	}
 
-	
+
+	private String SoundBackground;
+	private String CoinSound;
+	private Thread GameZene;
+	private Thread EffectSound;
+
 
 	@Override
 	public void init(Window window) throws Exception {
 		renderer.init(window);
+
+		SoundBackground = "sounds/mario.wav";
+		CoinSound = "sounds/coin.wav";
+
+
+		GameZene = new Zene();
+		GameZene.setName(SoundBackground);
+		GameZene.start();
+
+		EffectSound = new Zene();
+		EffectSound.setName(SoundBackground);
+		//EffectSound.start();
+
 
 
 		/**
@@ -730,6 +755,8 @@ public class DummyGame implements IGameLogic {
 		camera = new CCamera2D();
 		//gameItem.SetVisible(false);
 		//gameItem.isCollidable();
+
+
 		
 
 	}
@@ -762,6 +789,16 @@ public class DummyGame implements IGameLogic {
 		//System.out.println("x:"+window.getMouseX()+ " y:"+window.getMouseY());
 			
 		if(state == GSTATE.GAME && quest == false){
+
+			if(window.isKeyPressed(GLFW_KEY_L)) {
+
+				GameZene.stop();
+
+				/*se.setFile(SoundBackground);
+				se.play();*/
+
+			}
+
 			if (window.isKeyPressed(GLFW_KEY_RIGHT) || (window.isKeyPressed(GLFW_KEY_D))) {
 				right = 1;
 			} else {
@@ -1107,10 +1144,10 @@ public class DummyGame implements IGameLogic {
 
 				AllItems.get(i).SetVisible(false);
 
-
 				if (AllItems.get(i).GetID() == 1) {
 					System.out.println("gem");
 					megszerzettPont += 50;
+					EffectSound.start();
 				} else if (AllItems.get(i).GetID() == 2) {
 					System.out.println("poti");
 					megszerzettPont += 20;
