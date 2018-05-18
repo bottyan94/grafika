@@ -129,9 +129,15 @@ public class DummyGame implements IGameLogic {
 		renderer = new Renderer();
 	}
 
-
-	private String SoundBackground;
 	public static Thread GameZene;
+	public static int soundStatement;
+
+	/*  0 ---> hang OFFFF
+		1 ---> háttérzene
+		2 ---> coin felvétel
+
+		99 ---> Várakozó, nem szól semmi. Csak a kezdéshez.
+	 */
 
 
 
@@ -139,12 +145,10 @@ public class DummyGame implements IGameLogic {
 	public void init(Window window) throws Exception {
 		renderer.init(window);
 
-		SoundBackground = "sounds/mario.wav";
 
-
+		soundStatement = 99;
 
 		GameZene = new Zene();
-		GameZene.setName(SoundBackground);
 		GameZene.start();
 
 
@@ -786,12 +790,11 @@ public class DummyGame implements IGameLogic {
 		if(state == GSTATE.GAME && quest == false){
 
 			if(window.isKeyPressed(GLFW_KEY_L)) {
+				soundStatement = 1;
+			}
 
-				GameZene.stop();
-
-				/*se.setFile(SoundBackground);
-				se.play();*/
-
+			if(window.isKeyPressed(GLFW_KEY_K)){
+				soundStatement = 0;
 			}
 
 			if (window.isKeyPressed(GLFW_KEY_RIGHT) || (window.isKeyPressed(GLFW_KEY_D))) {
@@ -813,11 +816,16 @@ public class DummyGame implements IGameLogic {
 			}
 
 			if ((window.isKeyPressed(GLFW_KEY_UP) || (window.isKeyPressed(GLFW_KEY_W))) && spacePushed == 0 && CharacterIsAlive == 1) {
-				if(speedY<+3){speedY = -30f;
+				if(speedY<+3){
+				soundStatement = 3;
+				speedY = -30f;
 				up = 1;
 				spacePushed = 1;
-
 				}
+			}
+
+			if(window.isKeyReleased(GLFW_KEY_UP)){
+				soundStatement = 99;
 			}
 
 			if (window.isKeyPressed(GLFW_KEY_SPACE) && CharacterIsAlive == 1) {
@@ -836,6 +844,7 @@ public class DummyGame implements IGameLogic {
 
 			if(window.isKeyReleased(GLFW_KEY_SPACE) && CharacterIsAlive == 1) {
 				isAttacking = 0;
+				//soundStatement = 99;
 			}
 
 		/*if (down == 1 && right ==1) {
@@ -1068,17 +1077,21 @@ public class DummyGame implements IGameLogic {
 
 	
 	public void dead(){
+
 		if (CharacterIsAlive == 0 ){
 			for(int i=0;i< AllItems.size();i++){
 				if (AllItems.get(i).GetID() == 7){
 					AllItems.get(i).SetPosition(-camera.GetX(),-camera.GetY()-50);
 					AllItems.get(i).SetVisible(true);
+					soundStatement = 99;
 				}
 			}
 			
 			for(int i=0;i< Numbers.size();i++){
 				Numbers.get(i).SetPosition((-camera.GetX()+i*100)+(WinW/2)-220, -camera.GetY()+(WinH/2)-170);
 			}
+
+
 			//gameItem.SetVisible(false);
 		}
 	}
@@ -1173,6 +1186,7 @@ public class DummyGame implements IGameLogic {
 				AllItems.get(i).SetVisible(true);
 				gameItem.SetCurrentFrame(0);
 				state = GSTATE.VICTORY;
+				soundStatement = 6;
 			}
 		}
 	}
@@ -1253,9 +1267,11 @@ public class DummyGame implements IGameLogic {
 			if (gameItem.GetCurrentBBox().CheckOverlapping(ZombAttackBBox.get(i)) == true)  {
 				if (isAttacking == 1) {
 					if (zomBDirection.get(i) == 1) {
+						soundStatement = 8;
 						ZomBDie(i);
 					}
 					if (zomBDirection.get(i) == 0) {
+						soundStatement = 8;
 						ZomBDie(i);
 					}
 				}
@@ -1287,6 +1303,9 @@ public class DummyGame implements IGameLogic {
 
 	public void Fall() {
 		if( gameItem.GetBBoxMinY() > 1300){
+			if(CharacterIsAlive == 1){
+				soundStatement = 5;
+			}
 			CharacterIsAlive =0;
 			
 			//Reset();
@@ -1424,12 +1443,14 @@ public class DummyGame implements IGameLogic {
 	}
 
 	public void ZomBDie(int i) {
+
 		if(zomBDirection.get(i) == 1 && zomBIsAlive.get(i) == 1){
 			Zombik.get(i).SetCurrentFrame(2);
 			if(Zombik.get(i).GetCurrentFrameCurrentSprite() > 10){
 				Zombik.get(i).SetCurrentFrame(4);
 			}
 			zomBIsAlive.set(i, 0);
+			soundStatement = 99;
 		}
 		if(zomBDirection.get(i) == 0 && zomBIsAlive.get(i) == 1){
 			Zombik.get(i).SetCurrentFrame(3);
@@ -1437,6 +1458,7 @@ public class DummyGame implements IGameLogic {
 				Zombik.get(i).SetCurrentFrame(5);
 			}
 			zomBIsAlive.set(i, 0);
+			soundStatement = 99;
 		}
 
 
@@ -1444,6 +1466,9 @@ public class DummyGame implements IGameLogic {
 
 	public void NinjaDie(int i) {
 		if (zomBIsAlive.get(i) == 1) {
+			if(CharacterIsAlive == 1){
+				soundStatement = 5;
+			}
 			if (direction == 1) {
 				gameItem.SetCurrentFrame(12);
 			} else {
