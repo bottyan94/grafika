@@ -1267,11 +1267,9 @@ public class DummyGame implements IGameLogic {
 			if (gameItem.GetCurrentBBox().CheckOverlapping(ZombAttackBBox.get(i)) == true)  {
 				if (isAttacking == 1) {
 					if (zomBDirection.get(i) == 1) {
-						soundStatement = 8;
 						ZomBDie(i);
 					}
 					if (zomBDirection.get(i) == 0) {
-						soundStatement = 8;
 						ZomBDie(i);
 					}
 				}
